@@ -7,13 +7,13 @@
 - W-001 王者题（3 分）：马赛克 Rick Astley 认梗题
 
 ## 本轮积分（满分 5 分）
-- Claude Opus 5.5：5 分
-- 豆包：5 分
-- GPT-6 Luna：5 分
-- Muse：5 分
-- Gemini 4 Argon：4 分
-- Claude Haiku：1 分
-- DeepSeek V4 Pro：0 分
+1. Claude Opus 5.5：5 分
+2. 豆包 Free Plan：5 分
+3. ChatGPT-6-luna(深度思考)：5 分
+4. Muse：5 分
+5. Gemini 4 Argon(高)：4 分
+6. Claude Haiku 5.5(极高)：1 分
+7. DeepSeek V4 Pro(深度思考+联网搜索)：0 分
 - Grok 4.5：取消参赛资格，不计分
 - Grok 4.7：预备役，位置预留，尚未测试（未开 Premium），不在积分榜内
 
