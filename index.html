@@ -6,57 +6,72 @@
 <title>火眼金睛 · AI 识图赛</title>
 <meta name="description" content="火眼金睛 AI 识图赛：题库、AI 选手、计分规则、AI 热度榜，R-001 荣耀题、W-001 王者题。">
 <style>
-:root{--ink:#2b2b3a;--mut:#6b6b80;--pink:#ffd9e8;--mint:#d3f2e3;--lav:#e2dcff;--amber:#ffe9b8;--card:#ffffff;--line:#ece6f5}
+:root{--ink:#2b2b3a;--mut:#6b6b80;--pink:#ffd9e8;--mint:#d3f2e3;--amber:#ffe9b8;--card:#fff;--line:#ece6f5}
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);background:linear-gradient(180deg,#fff6f8 0%,#f3f7ff 38%,#f0fff6 72%,#fffaf0 100%)}
-a{color:#6a5acd}
-.wrap{max-width:980px;margin:0 auto;padding:0 18px 48px}
-.brand{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
-.brand b{font-size:20px}
-.brand b span{color:#ff6b9d}
-.brand small{color:var(--mut);font-size:13px}
-.hero{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px 26px;box-shadow:0 12px 30px rgba(120,100,180,.08)}
-.hero .tag{display:inline-block;background:var(--pink);padding:6px 12px;border-radius:99px;font-size:13px;font-weight:700}
-.hero h1{font-size:38px;line-height:1.15;margin:16px 0 10px}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);background:linear-gradient(180deg,#fff6f8 0%,#f3f7ff 38%,#f0fff6 72%,#fffaf0 100%);line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 48px}
+/* 顶栏：标题和英文副标各占一行，绝不把“赛”字孤零零甩到下一行 */
+.brand{padding:20px 2px 16px}
+.brand-title{font-size:22px;font-weight:800;white-space:nowrap}
+.brand-title span{color:#ff6b9d}
+.brand-sub{margin-top:4px;font-size:12px;letter-spacing:2px;color:var(--mut);white-space:nowrap}
+.hero{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px 22px;box-shadow:0 12px 30px rgba(120,100,180,.08)}
+.hero .tag{display:inline-block;background:var(--pink);padding:7px 14px;border-radius:99px;font-size:14px;font-weight:700;white-space:nowrap}
+.hero h1{font-size:clamp(26px,7vw,38px);line-height:1.3;margin:16px 0 10px;text-wrap:balance}
 .hero h1 em{font-style:normal;color:#ff6b9d}
-.hero p{color:var(--mut);line-height:1.8;margin:0}
-.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 0}
-.tabs button{border:1px solid var(--line);background:#fff;color:var(--ink);font-size:16px;font-weight:700;padding:12px 20px;border-radius:99px;cursor:pointer}
+.hero p{color:var(--mut);line-height:1.85;margin:0;font-size:16px}
+/* 列表按钮：手机 2 列、桌面 4 列，文字不换行挤压 */
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0 0}
+.tabs button{border:1px solid var(--line);background:#fff;color:var(--ink);font-size:16px;font-weight:700;padding:13px 8px;border-radius:99px;cursor:pointer;white-space:nowrap}
 .tabs button.active{background:#2b2b3a;color:#fff;border-color:#2b2b3a}
 .panel{display:none}
 .panel.active{display:block}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;text-align:center}
-.stat strong{font-size:26px;display:block}
+.stat strong{font-size:24px;display:block;white-space:nowrap}
 .stat span{color:var(--mut);font-size:13px}
-h2{font-size:22px;margin:30px 0 14px}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+h2{font-size:21px;margin:28px 0 14px;line-height:1.4}
+.cards{display:grid;grid-template-columns:1fr;gap:14px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
 .card h3{margin:0 0 8px;font-size:17px}
-.card p{color:var(--mut);line-height:1.7;margin:0;font-size:14px}
-.card .num{font-size:13px;font-weight:800}
-table{width:100%;border-collapse:collapse;background:#fff;border-radius:20px;overflow:hidden}
-th,td{padding:14px 12px;text-align:left;border-bottom:1px solid #f0ebf7;font-size:15px}
-th{color:var(--mut);font-size:13px}
-tr:last-child td{border-bottom:0}
-.rank{font-weight:900}
-.pill{display:inline-block;padding:4px 9px;border-radius:99px;font-size:12px;font-weight:700;background:var(--mint)}
+.card p{color:var(--mut);line-height:1.75;margin:0;font-size:15px}
+.card .num{font-size:13px;font-weight:800;white-space:nowrap}
+/* 积分榜：不用表格，改成卡片行，分数用不换行徽章，手机上再也不会竖着排字 */
+.board{display:grid;gap:12px}
+.row{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+.row-top{display:flex;align-items:center;gap:10px}
+.row-rank{flex:0 0 auto;font-weight:800;font-size:14px;white-space:nowrap}
+.row-name{flex:1;font-weight:800;font-size:17px;min-width:0}
+.row-total{flex:0 0 auto;background:#2b2b3a;color:#fff;font-weight:800;font-size:15px;padding:6px 12px;border-radius:99px;white-space:nowrap}
+.row-scores{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.score{font-size:14px;background:#f7f4ff;padding:6px 11px;border-radius:99px;white-space:nowrap}
+.score b{white-space:nowrap}
+.pill{display:inline-block;padding:6px 11px;border-radius:99px;font-size:13px;font-weight:700;background:var(--mint);white-space:nowrap}
 .pill.wait{background:var(--amber)}
 .pill.out{background:#ffe0e0}
-.note{background:#fffbe6;border:1px solid #ffe9b8;border-radius:16px;padding:14px 16px;color:#6b5a2a;line-height:1.7;font-size:14px}
-.q{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.q img{width:100%;border-radius:16px;border:1px solid var(--line);background:#fff}
-.answer{background:#f7f4ff;border-radius:14px;padding:12px 14px;margin-top:12px;line-height:1.7;font-size:14px}
+.note{background:#fffbe6;border:1px solid #ffe9b8;border-radius:16px;padding:14px 16px;color:#6b5a2a;line-height:1.75;font-size:14px}
+.q{display:grid;grid-template-columns:1fr;gap:14px}
+.q img{width:100%;border-radius:16px;border:1px solid var(--line);background:#fff;display:block}
+.answer{background:#f7f4ff;border-radius:14px;padding:12px 14px;margin-top:12px;line-height:1.75;font-size:14px}
 .answer b{color:#6a5acd}
-.heat{display:flex;align-items:center;gap:12px}
-.heat .fire{font-size:22px}
-footer{color:var(--mut);font-size:13px;line-height:1.8;text-align:center;margin-top:36px}
-@media(max-width:680px){.hero h1{font-size:30px}.stats{grid-template-columns:repeat(2,1fr)}.cards,.q{grid-template-columns:1fr}}
+.small{color:var(--mut);font-size:14px;line-height:1.75}
+footer{color:var(--mut);font-size:13px;line-height:1.9;text-align:center;margin-top:36px;padding:0 8px}
+@media(min-width:700px){
+  .tabs{grid-template-columns:repeat(4,1fr)}
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .cards{grid-template-columns:repeat(3,1fr)}
+  .q{grid-template-columns:1fr 1fr}
+  .hero{padding:28px 26px}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="brand"><b>👁 <span>火眼金睛</span> · AI 识图赛</b><small>HUOYANJINJING · AIMATCH</small></div>
+  <header class="brand">
+    <div class="brand-title">👁 <span>火眼金睛</span> · AI 识图赛</div>
+    <div class="brand-sub">HUOYANJINJING · AIMATCH</div>
+  </header>
 
   <section class="hero">
     <span class="tag">以识图功能为主 · 多模型同题对比</span>
@@ -71,7 +86,6 @@ footer{color:var(--mut);font-size:13px;line-height:1.8;text-align:center;margin-
     <button data-panel="hot">🔥 AI 热度榜</button>
   </nav>
 
-  <!-- 题库 -->
   <section class="panel active" id="panel-bank">
     <div class="stats">
       <div class="stat"><strong>2</strong><span>本轮题目</span></div>
@@ -95,24 +109,22 @@ footer{color:var(--mut);font-size:13px;line-height:1.8;text-align:center;margin-
     </div>
   </section>
 
-  <!-- AI 选手 -->
   <section class="panel" id="panel-players">
     <h2>AI 选手 · 本轮积分榜</h2>
-    <table>
-      <tr><th>排名</th><th>模型</th><th>R-001 荣耀</th><th>W-001 王者</th><th>总分</th></tr>
-      <tr><td class="rank">🥇 并列</td><td><b>Claude Opus 5.5</b></td><td>2 分 · 秒答</td><td>3 分 · 秒答</td><td><b>5 分</b></td></tr>
-      <tr><td class="rank">🥇 并列</td><td><b>豆包</b></td><td>2 分 · 最终答对</td><td>3 分</td><td><b>5 分</b></td></tr>
-      <tr><td class="rank">🥇 并列</td><td><b>GPT-6 Luna</b></td><td>2 分 · 未拿额外加分</td><td>3 分</td><td><b>5 分</b></td></tr>
-      <tr><td>4</td><td>Gemini 4 Argon</td><td>1 分 · 答对一半</td><td>3 分 · 秒答</td><td><b>4 分</b></td></tr>
-      <tr><td>5</td><td>Claude Haiku</td><td>1 分 · 答对一半</td><td>0 分</td><td><b>1 分</b></td></tr>
-      <tr><td>—</td><td>Grok 4.5</td><td colspan="2"><span class="pill out">取消参赛资格</span></td><td><b>0 分</b></td></tr>
-      <tr><td>—</td><td>DeepSeek V4 Pro</td><td>0 分</td><td>0 分</td><td><b>0 分</b></td></tr>
-      <tr><td>—</td><td>Grok 4.7</td><td colspan="2"><span class="pill wait">位置预留 · 未开 Premium，尚未测试</span></td><td>—</td></tr>
-    </table>
-    <p style="color:var(--mut);font-size:13px;line-height:1.7">豆包第一题起初只对一半（把官方《罗德岛学院》PV 说成二创），但最终两题都答对，故按满分计。Grok 免费版即 Grok 4.5，4.7 付费版尚未测试。</p>
+    <div class="board">
+      <div class="row"><div class="row-top"><span class="row-rank">🥇 并列</span><span class="row-name">Claude Opus 5.5</span><span class="row-total">5 分</span></div><div class="row-scores"><span class="score">R-001：<b>2 分 · 秒答</b></span><span class="score">W-001：<b>3 分 · 秒答</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🥇 并列</span><span class="row-name">豆包</span><span class="row-total">5 分</span></div><div class="row-scores"><span class="score">R-001：<b>2 分 · 最终答对</b></span><span class="score">W-001：<b>3 分</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🥇 并列</span><span class="row-name">GPT-6 Luna</span><span class="row-total">5 分</span></div><div class="row-scores"><span class="score">R-001：<b>2 分 · 未拿额外加分</b></span><span class="score">W-001：<b>3 分</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🥇 并列</span><span class="row-name">Muse</span><span class="row-total">5 分</span></div><div class="row-scores"><span class="score">R-001：<b>2 分 · 慢答后全对</b></span><span class="score">W-001：<b>3 分 · 慢答后全对</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">第 5 名</span><span class="row-name">Gemini 4 Argon</span><span class="row-total">4 分</span></div><div class="row-scores"><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>3 分 · 秒答</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">第 6 名</span><span class="row-name">Claude Haiku</span><span class="row-total">1 分</span></div><div class="row-scores"><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>0 分</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">—</span><span class="row-name">Grok 4.5</span><span class="row-total">0 分</span></div><div class="row-scores"><span class="pill out">取消参赛资格</span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">—</span><span class="row-name">DeepSeek V4 Pro</span><span class="row-total">0 分</span></div><div class="row-scores"><span class="score">R-001：<b>0 分</b></span><span class="score">W-001：<b>0 分</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">—</span><span class="row-name">Grok 4.7</span><span class="row-total">—</span></div><div class="row-scores"><span class="pill wait">位置预留 · 未开 Premium，尚未测试</span></div></div>
+    </div>
+    <p class="small">豆包第一题起初只对一半（把官方《罗德岛学院》PV 说成二创），但最终两题都答对，故按满分计。Grok 免费版即 Grok 4.5，4.7 付费版尚未测试。Muse 两题均为慢答后全对，按你定的 5 分计入。</p>
   </section>
 
-  <!-- 计分规则 -->
   <section class="panel" id="panel-rules">
     <h2>赛制 · 花果山 → 灵台方寸山</h2>
     <div class="cards">
@@ -129,20 +141,19 @@ footer{color:var(--mut);font-size:13px;line-height:1.8;text-align:center;margin-
     </div>
   </section>
 
-  <!-- AI 热度榜 -->
   <section class="panel" id="panel-hot">
     <h2>AI 热度榜 · 本轮</h2>
-    <p style="color:var(--mut);line-height:1.7">按本轮成绩与场上讨论度排序，非外部投票票数；Grok 4.7 未参赛，位置预留，不参与本轮热度排名。</p>
-    <table>
-      <tr><th>热度</th><th>模型</th><th>理由</th><th>本轮分</th></tr>
-      <tr><td class="heat"><span class="fire">🔥🔥🔥</span></td><td><b>Claude Opus 5.5</b></td><td>两题直接秒答，本轮最强表现</td><td><b>5 分</b></td></tr>
-      <tr><td class="heat"><span class="fire">🔥🔥🔥</span></td><td><b>豆包</b></td><td>两题都对，第一题起初的二创误判也成了话题</td><td><b>5 分</b></td></tr>
-      <tr><td class="heat"><span class="fire">🔥🔥</span></td><td><b>GPT-6 Luna</b></td><td>两题都对，稳但没拿到额外加分</td><td><b>5 分</b></td></tr>
-      <tr><td class="heat"><span class="fire">🔥🔥</span></td><td>Gemini 4 Argon</td><td>王者题秒答，荣耀题只对一半，偏科明显</td><td><b>4 分</b></td></tr>
-      <tr><td class="heat"><span class="fire">🔥</span></td><td>Claude Haiku</td><td>只拿到荣耀题一半的 1 分</td><td><b>1 分</b></td></tr>
-      <tr><td>—</td><td>DeepSeek V4 Pro</td><td>两题全错，反向热度</td><td><b>0 分</b></td></tr>
-      <tr><td>—</td><td>Grok 4.5 / 4.7</td><td>4.5 取消资格；4.7 位置预留，尚未测试</td><td>—</td></tr>
-    </table>
+    <p class="small">按本轮成绩与场上讨论度排序，非外部投票票数；Grok 4.7 未参赛，位置预留，不参与本轮热度排名。</p>
+    <div class="board">
+      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥🔥</span><span class="row-name">Claude Opus 5.5</span><span class="row-total">5 分</span></div><p class="small" style="margin:8px 0 0">两题直接秒答，本轮最强表现</p></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥🔥</span><span class="row-name">豆包</span><span class="row-total">5 分</span></div><p class="small" style="margin:8px 0 0">两题都对，第一题起初的二创误判也成了话题</p></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥</span><span class="row-name">GPT-6 Luna</span><span class="row-total">5 分</span></div><p class="small" style="margin:8px 0 0">两题都对，稳但没拿到额外加分</p></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥</span><span class="row-name">Muse</span><span class="row-total">5 分</span></div><p class="small" style="margin:8px 0 0">两题慢答后全对，靠提示才锁定答案</p></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥</span><span class="row-name">Gemini 4 Argon</span><span class="row-total">4 分</span></div><p class="small" style="margin:8px 0 0">王者题秒答，荣耀题只对一半，偏科明显</p></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🔥</span><span class="row-name">Claude Haiku</span><span class="row-total">1 分</span></div><p class="small" style="margin:8px 0 0">只拿到荣耀题一半的 1 分</p></div>
+      <div class="row"><div class="row-top"><span class="row-rank">—</span><span class="row-name">DeepSeek V4 Pro</span><span class="row-total">0 分</span></div><p class="small" style="margin:8px 0 0">两题全错，反向热度</p></div>
+      <div class="row"><div class="row-top"><span class="row-rank">—</span><span class="row-name">Grok 4.5 / 4.7</span><span class="row-total">—</span></div><p class="small" style="margin:8px 0 0">4.5 取消资格；4.7 位置预留，尚未测试</p></div>
+    </div>
   </section>
 
   <footer>
