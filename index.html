@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>火眼金睛 · AI 识图赛</title>
+<meta name="description" content="火眼金睛 AI 识图赛：以识图功能为主的多模型对比，R-001 荣耀题、W-001 王者题积分榜与赛制。">
+<style>
+:root{--ink:#2b2b3a;--mut:#6b6b80;--pink:#ffd9e8;--mint:#d3f2e3;--lav:#e2dcff;--amber:#ffe9b8;--blue:#d6ecff;--card:#ffffff;--line:#ece6f5}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);background:linear-gradient(180deg,#fff6f8 0%,#f3f7ff 38%,#f0fff6 72%,#fffaf0 100%)}
+a{color:#6a5acd}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px 48px}
+.brand{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.brand b{font-size:20px;letter-spacing:.5px}
+.brand b span{color:#ff6b9d}
+.brand small{color:var(--mut);font-size:13px}
+.hero{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px 26px;box-shadow:0 12px 30px rgba(120,100,180,.08)}
+.hero .tag{display:inline-block;background:var(--pink);padding:6px 12px;border-radius:99px;font-size:13px;font-weight:700}
+.hero h1{font-size:38px;line-height:1.15;margin:16px 0 10px}
+.hero h1 em{font-style:normal;color:#ff6b9d}
+.hero p{color:var(--mut);line-height:1.8;margin:0 0 20px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.cta a{text-decoration:none;font-weight:700;padding:12px 20px;border-radius:99px}
+.cta .main{background:#2b2b3a;color:#fff}
+.cta .sub{background:#f3f0ff;color:#2b2b3a;border:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;text-align:center}
+.stat strong{font-size:26px;display:block}
+.stat span{color:var(--mut);font-size:13px}
+h2{font-size:22px;margin:34px 0 14px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
+.card h3{margin:0 0 8px;font-size:17px}
+.card p{color:var(--mut);line-height:1.7;margin:0;font-size:14px}
+.card .num{font-size:13px;font-weight:800;letter-spacing:.5px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:20px;overflow:hidden}
+th,td{padding:14px 12px;text-align:left;border-bottom:1px solid #f0ebf7;font-size:15px}
+th{color:var(--mut);font-size:13px}
+tr:last-child td{border-bottom:0}
+.rank{font-weight:900}
+.pill{display:inline-block;padding:4px 9px;border-radius:99px;font-size:12px;font-weight:700;background:var(--mint)}
+.pill.wait{background:var(--amber)}
+.pill.out{background:#ffe0e0}
+.note{background:#fffbe6;border:1px solid #ffe9b8;border-radius:16px;padding:14px 16px;color:#6b5a2a;line-height:1.7;font-size:14px}
+.q{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.q .card b{font-size:28px}
+footer{color:var(--mut);font-size:13px;line-height:1.8;text-align:center;margin-top:36px}
+@media(max-width:680px){.hero h1{font-size:30px}.stats{grid-template-columns:repeat(2,1fr)}.cards,.q{grid-template-columns:1fr}table{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><b>👁 <span>火眼金睛</span> · AI 识图赛</b><small>HUOYANJINJING · AIMATCH</small></div>
+
+  <section class="hero">
+    <span class="tag">以识图功能为主 · 多模型同题对比</span>
+    <h1>看图识人，<em>一眼定胜负</em></h1>
+    <p>这不是拼谁会写代码，也不是拼谁会聊天。同一张图发给不同的 AI，看谁能认出图里是谁、图出自哪里。官方图、二创图、梗图、马赛克图，越往后越难，越模糊越见真功夫。</p>
+    <div class="cta">
+      <a class="main" href="#standings">查看积分榜 ↓</a>
+      <a class="sub" href="#rules">先看赛制 →</a>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><strong>7</strong><span>参赛模型</span></div>
+    <div class="stat"><strong>2</strong><span>本轮题目</span></div>
+    <div class="stat"><strong>5 分</strong><span>本轮满分</span></div>
+    <div class="stat"><strong>1</strong><span>预留席位</span></div>
+  </div>
+
+  <h2 id="standings">积分榜 · 本轮</h2>
+  <table>
+    <tr><th>排名</th><th>模型</th><th>R-001 荣耀</th><th>W-001 王者</th><th>总分</th></tr>
+    <tr><td class="rank">🥇 并列</td><td><b>Claude Opus 5.5</b></td><td>2 分 · 秒答</td><td>3 分 · 秒答</td><td><b>5 分</b></td></tr>
+    <tr><td class="rank">🥇 并列</td><td><b>豆包</b></td><td>2 分 · 最终答对</td><td>3 分</td><td><b>5 分</b></td></tr>
+    <tr><td class="rank">🥇 并列</td><td><b>GPT-6 Luna</b></td><td>2 分 · 未拿额外加分</td><td>3 分</td><td><b>5 分</b></td></tr>
+    <tr><td>4</td><td>Gemini 4 Argon</td><td>1 分 · 答对一半</td><td>3 分 · 秒答</td><td><b>4 分</b></td></tr>
+    <tr><td>5</td><td>Claude Haiku</td><td>1 分 · 答对一半</td><td>0 分</td><td><b>1 分</b></td></tr>
+    <tr><td>—</td><td>Grok 4.5</td><td colspan="2"><span class="pill out">取消参赛资格</span></td><td><b>0 分</b></td></tr>
+    <tr><td>—</td><td>DeepSeek V4 Pro</td><td>0 分</td><td>0 分</td><td><b>0 分</b></td></tr>
+    <tr><td>—</td><td>Grok 4.7</td><td colspan="2"><span class="pill wait">位置预留 · 未开 Premium，尚未测试</span></td><td>—</td></tr>
+  </table>
+  <p style="color:var(--mut);font-size:13px;line-height:1.7">计分说明：荣耀题满分 2 分，答对一半算 1 分；王者题满分 3 分。豆包第一题起初只对一半，但最终两题都答对，故按满分计。</p>
+
+  <h2 id="questions">本轮题目</h2>
+  <div class="q">
+    <div class="card" style="background:#fff5f8"><b>R-001</b><h3>荣耀题 · 2 分</h3><p>能天使 Q 版图：红发、倾斜光环、领带上的红色苹果、胸前 IDENTITY CARD 工牌。考的是出处——出自《明日方舟》官方《罗德岛学院》PV，不是二创。</p></div>
+    <div class="card" style="background:#f2fbf7"><b>W-001</b><h3>王者题 · 3 分</h3><p>重度马赛克西装男：深色西装、白衬衫、斜条纹领带。五官已不可辨，考的是认梗——Rick Astley《Never Gonna Give You Up》，即 Rickroll。</p></div>
+  </div>
+
+  <h2 id="rules">赛制 · 关卡与分值</h2>
+  <div class="cards">
+    <div class="card"><div class="num" style="color:#b7791f">🥉 青铜 · 1 分</div><h3>官方图片直出</h3><p>直接从官方图片里出题，只有一次机会。</p></div>
+    <div class="card"><div class="num" style="color:#718096">🥈 白银 · 1 分</div><h3>二创随机找图</h3><p>从二创里随机找图，只有一次机会。</p></div>
+    <div class="card"><div class="num" style="color:#6b46c1">💎 钻石 · 2 分</div><h3>最新官方图 / 梗图</h3><p>从最新官方图片出题，拼速度和效率；或从二创图、国内外梗图出题，只有两次机会。</p></div>
+  </div>
+  <div class="note" style="margin-top:14px">🌸 <b>花果山分界线：</b>以上为花果山关卡。只要有一个 AI 一轮通过花果山关卡的考验，就直接进入以下难度关卡。</div>
+  <div class="cards" style="margin-top:14px">
+    <div class="card"><div class="num" style="color:#c53030">👑 荣耀 · 2 分</div><h3>官方最新视频截图</h3><p>从官方最新的视频里挑一张截图来找，或者从小众二创里找图。</p></div>
+    <div class="card"><div class="num" style="color:#2b6cb0">👑 王者 · 3 分</div><h3>小众 / 最新 / 极模糊</h3><p>从很小众官方发布的最新六小时以内的图片，或视频截图，或极其模糊的图片、马赛克图来找。</p></div>
+    <div class="card"><div class="num">📐 分值总览</div><h3>青铜到白银 1 分</h3><p>钻石到荣耀 2 分，王者 3 分。答对即给分，荣耀题答对一半算 1 分。</p></div>
+  </div>
+
+  <h2>怎么看这场比赛</h2>
+  <div class="cards">
+    <div class="card"><h3>1 · 看细节</h3><p>头发颜色、角、工牌、领带、背景星星，差一个细节就可能认错人、认错出处。</p></div>
+    <div class="card"><h3>2 · 看速度</h3><p>秒答和慢答都算对，但钻石关拼的就是速度和效率。</p></div>
+    <div class="card"><h3>3 · 看认梗</h3><p>马赛克图认的不是脸，是梗。能从“你被骗了”“点进去就放歌”反应过来，才算过关。</p></div>
+  </div>
+
+  <footer>
+    本站为民间娱乐性赛事数据展示，结果仅供娱乐参考，与各模型厂商及其真实能力无关。<br>
+    火眼金睛 · AI 识图赛 · 题目编号 R-001 / W-001
+  </footer>
+</div>
+</body>
+</html>
