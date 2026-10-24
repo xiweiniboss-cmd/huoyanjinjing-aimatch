@@ -58,7 +58,7 @@ h2{font-size:21px;margin:28px 0 14px;line-height:1.4}
 .small{color:var(--mut);font-size:14px;line-height:1.75}
 footer{color:var(--mut);font-size:13px;line-height:1.9;text-align:center;margin-top:36px;padding:0 8px}
 @media(min-width:700px){
-  .tabs{grid-template-columns:repeat(4,1fr)}
+  .tabs{grid-template-columns:repeat(5,1fr)}
   .stats{grid-template-columns:repeat(4,1fr)}
   .cards{grid-template-columns:repeat(3,1fr)}
   .q{grid-template-columns:1fr 1fr}
@@ -84,6 +84,7 @@ footer{color:var(--mut);font-size:13px;line-height:1.9;text-align:center;margin-
     <button data-panel="players">🤖 AI 选手</button>
     <button data-panel="rules">📐 计分规则</button>
     <button data-panel="hot">🔥 AI 热度榜</button>
+    <button data-panel="reserve">🪑 预备役AI选手</button>
   </nav>
 
   <section class="panel active" id="panel-bank">
@@ -120,9 +121,8 @@ footer{color:var(--mut);font-size:13px;line-height:1.9;text-align:center;margin-
       <div class="row"><div class="row-top"><span class="row-rank">第 6 名</span><span class="row-name">Claude Haiku</span><span class="row-total">1 分</span></div><div class="row-scores"><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>0 分</b></span></div></div>
       <div class="row"><div class="row-top"><span class="row-rank">—</span><span class="row-name">Grok 4.5</span><span class="row-total">0 分</span></div><div class="row-scores"><span class="pill out">取消参赛资格</span></div></div>
       <div class="row"><div class="row-top"><span class="row-rank">—</span><span class="row-name">DeepSeek V4 Pro</span><span class="row-total">0 分</span></div><div class="row-scores"><span class="score">R-001：<b>0 分</b></span><span class="score">W-001：<b>0 分</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">—</span><span class="row-name">Grok 4.7</span><span class="row-total">—</span></div><div class="row-scores"><span class="pill wait">位置预留 · 未开 Premium，尚未测试</span></div></div>
     </div>
-    <p class="small">豆包第一题起初只对一半（把官方《罗德岛学院》PV 说成二创），但最终两题都答对，故按满分计。Grok 免费版即 Grok 4.5，4.7 付费版尚未测试。Muse 两题均为慢答后全对，按你定的 5 分计入。</p>
+    <p class="small">豆包第一题起初只对一半（把官方《罗德岛学院》PV 说成二创），但最终两题都答对，故按满分计。Grok 免费版即 Grok 4.5。Grok 4.7 为预备役选手，已移出积分榜，见“预备役AI选手”。Muse 两题均为慢答后全对，按你定的 5 分计入。</p>
   </section>
 
   <section class="panel" id="panel-rules">
@@ -143,7 +143,7 @@ footer{color:var(--mut);font-size:13px;line-height:1.9;text-align:center;margin-
 
   <section class="panel" id="panel-hot">
     <h2>AI 热度榜 · 本轮</h2>
-    <p class="small">按本轮成绩与场上讨论度排序，非外部投票票数；Grok 4.7 未参赛，位置预留，不参与本轮热度排名。</p>
+    <p class="small">按本轮成绩与场上讨论度排序，非外部投票票数；预备役选手不参与本轮热度排名。</p>
     <div class="board">
       <div class="row"><div class="row-top"><span class="row-rank">🔥🔥🔥</span><span class="row-name">Claude Opus 5.5</span><span class="row-total">5 分</span></div><p class="small" style="margin:8px 0 0">两题直接秒答，本轮最强表现</p></div>
       <div class="row"><div class="row-top"><span class="row-rank">🔥🔥🔥</span><span class="row-name">豆包</span><span class="row-total">5 分</span></div><p class="small" style="margin:8px 0 0">两题都对，第一题起初的二创误判也成了话题</p></div>
@@ -152,7 +152,16 @@ footer{color:var(--mut);font-size:13px;line-height:1.9;text-align:center;margin-
       <div class="row"><div class="row-top"><span class="row-rank">🔥🔥</span><span class="row-name">Gemini 4 Argon</span><span class="row-total">4 分</span></div><p class="small" style="margin:8px 0 0">王者题秒答，荣耀题只对一半，偏科明显</p></div>
       <div class="row"><div class="row-top"><span class="row-rank">🔥</span><span class="row-name">Claude Haiku</span><span class="row-total">1 分</span></div><p class="small" style="margin:8px 0 0">只拿到荣耀题一半的 1 分</p></div>
       <div class="row"><div class="row-top"><span class="row-rank">—</span><span class="row-name">DeepSeek V4 Pro</span><span class="row-total">0 分</span></div><p class="small" style="margin:8px 0 0">两题全错，反向热度</p></div>
-      <div class="row"><div class="row-top"><span class="row-rank">—</span><span class="row-name">Grok 4.5 / 4.7</span><span class="row-total">—</span></div><p class="small" style="margin:8px 0 0">4.5 取消资格；4.7 位置预留，尚未测试</p></div>
+      <div class="row"><div class="row-top"><span class="row-rank">—</span><span class="row-name">Grok 4.5</span><span class="row-total">0 分</span></div><p class="small" style="margin:8px 0 0">取消参赛资格</p></div>
+    </div>
+  </section>
+
+
+  <section class="panel" id="panel-reserve">
+    <h2>预备役AI选手</h2>
+    <p class="small">预备役选手不在积分榜里显示，等条件具备后再上场补测，成绩到时再记。</p>
+    <div class="board">
+      <div class="row"><div class="row-top"><span class="row-rank">🪑 预留</span><span class="row-name">Grok 4.7</span><span class="row-total">—</span></div><div class="row-scores"><span class="pill wait">位置预留 · 未开 Premium，尚未测试</span></div><p class="small" style="margin:10px 0 0">免费版是 Grok 4.5，已取消参赛资格；4.7 付费版还没测，等开了 Premium 再上场。</p></div>
     </div>
   </section>
 
