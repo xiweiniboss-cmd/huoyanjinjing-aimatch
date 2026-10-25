@@ -38,7 +38,7 @@ a{color:#ff6b9d}
 <input id="customName" placeholder="例如：新选手名">
 <button class="primary" id="drawBtn" onclick="draw()">🎲 随机抽题</button>
 <button class="ghost" onclick="resetAll()">清空本机测试记录</button>
-<p class="small">题库目前只有 2 题：R-001（荣耀，2 分，两次机会）、W-001（王者，3 分，两次机会）。抽题在未出过的题里优先随机，全部出过一轮后自动重新洗牌。</p>
+<p class="small">题库目前有 3 题：B-001（青铜，1 分，一次机会，人物和游戏都答对才给分）、R-001（荣耀，2 分，两次机会）、W-001（王者，3 分，两次机会）。抽题在未出过的题里优先随机，全部出过一轮后自动重新洗牌。</p>
 </div>
 
 <div class="card" id="qcard" style="display:none">
@@ -57,7 +57,7 @@ a{color:#ff6b9d}
 <button class="bad" onclick="judge('wrong')">❌ 判错</button>
 </div>
 <p class="small" id="autoHint" style="font-weight:700"></p>
-<p class="small">判定标准：R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。全错 = 0 分。粘贴回复后会实时给出自动判定建议，点「🤖 自动判定」按建议计分；觉得判得不对，直接点右边三个按钮手动判。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
+<p class="small">判定标准：R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。B-001 须同时认出佩丽卡 + 《明日方舟：终末地》，只对一项不给分。全错 = 0 分。粘贴回复后会实时给出自动判定建议，点「🤖 自动判定」按建议计分；觉得判得不对，直接点右边三个按钮手动判。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
 <p class="small" id="keywordHint"></p>
 <div class="result" id="result"></div>
 <button class="primary" id="nextBtn" style="display:none" onclick="draw()">下一题 →</button>
@@ -74,6 +74,10 @@ a{color:#ff6b9d}
 </div>
 <script>
 const BANK=[
+ {id:'B-001',tier:'青铜',points:1,half:0,chances:1,img:'../images/B-001.jpg',
+  prompts:['这是谁？出自哪个游戏？'],
+  groups:[{name:'人物',keys:['佩丽卡','佩麗卡','Perlica']},{name:'出处',keys:['终末地','終末地','Endfield']}],
+  traps:[],given:{}},
  {id:'R-001',tier:'荣耀',points:2,half:1,chances:2,img:'../images/R-001.jpg',
   prompts:['这是谁？出自哪里？','再想想：这是明日方舟官方《罗德岛学院》PV里的角色，不是二创，图里是 Q 版形象，红色头发、头顶光环——这是谁？出自哪里？'],
   groups:[{name:'人物',keys:['能天使','Exusiai','蕾缪乐']},{name:'出处',keys:['罗德岛学院','Rhodes Island Academy']}],
@@ -147,7 +151,7 @@ function analyze(reply){
   let verdict;
   if(!real.some(r=>r.ok)) verdict='wrong';
   else if(okn===res.length) verdict='full';
-  else verdict='half';
+  else verdict=cur.half?'half':'wrong';
   return {res,verdict};
 }
 function autoText(a){
