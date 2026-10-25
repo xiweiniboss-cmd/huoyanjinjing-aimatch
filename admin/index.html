@@ -51,11 +51,13 @@ a{color:#ff6b9d}
 <label>AI 选手的回复（粘贴原文）</label>
 <textarea id="reply" placeholder="把 AI 的回答原样粘贴在这里，再点下面的判定"></textarea>
 <div>
+<button class="primary" onclick="autoJudge()">🤖 自动判定</button>
 <button class="good" onclick="judge('full')">✅ 判对 · 满分</button>
 <button class="mid" onclick="judge('half')">◐ 判对一半</button>
 <button class="bad" onclick="judge('wrong')">❌ 判错</button>
 </div>
-<p class="small">判定标准：R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。全错 = 0 分。系统会按回复里的关键词给你一个参考提示，最终以你的判定为准。</p>
+<p class="small" id="autoHint" style="font-weight:700"></p>
+<p class="small">判定标准：R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。全错 = 0 分。粘贴回复后会实时给出自动判定建议，点「🤖 自动判定」按建议计分；觉得判得不对，直接点右边三个按钮手动判。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
 <p class="small" id="keywordHint"></p>
 <div class="result" id="result"></div>
 <button class="primary" id="nextBtn" style="display:none" onclick="draw()">下一题 →</button>
@@ -74,10 +76,13 @@ a{color:#ff6b9d}
 const BANK=[
  {id:'R-001',tier:'荣耀',points:2,half:1,chances:2,img:'../images/R-001.jpg',
   prompts:['这是谁？出自哪里？','再想想：这是明日方舟官方《罗德岛学院》PV里的角色，不是二创，图里是 Q 版形象，红色头发、头顶光环——这是谁？出自哪里？'],
-  keys:['能天使','Exusiai','罗德岛学院']},
+  groups:[{name:'人物',keys:['能天使','Exusiai','蕾缪乐']},{name:'出处',keys:['罗德岛学院','Rhodes Island Academy']}],
+  traps:[{group:'出处',re:/(?<!不是|并非|不属于|非)(二创|同人|饭制|粉丝创作)/,why:'把官方 PV 说成二创'}],
+  given:{2:['出处']}},
  {id:'W-001',tier:'王者',points:3,half:1,chances:2,img:'../images/W-001.jpg',
   prompts:['这张马赛克图里的人是谁？这是什么梗？','再想想：国内外都很火，经常用于白嫖某个福利，点进去就会放一首歌——这人是谁，这是什么梗？'],
-  keys:['Rick','Astley','理查德','Rickroll','瑞克摇摆','Never Gonna Give You Up']}
+  groups:[{name:'人物',keys:['Rick Astley','Astley','理查德·艾斯利','理查德艾斯利','瑞克·艾斯利','瑞克艾斯利']},{name:'梗',keys:['Rickroll','Rick roll','Rick-roll','瑞克摇摆','瑞克摇','Never Gonna Give You Up']}],
+  traps:[],given:{}}
 ];
 let cur=null, round=0, used=JSON.parse(localStorage.getItem('hyjj_used')||'[]');
 let scores=JSON.parse(localStorage.getItem('hyjj_scores')||'{}');
@@ -93,7 +98,7 @@ function draw(){
   document.getElementById('qimg').src=cur.img;
   document.getElementById('prompt').textContent='第 1 轮提示词：'+cur.prompts[0];
   document.getElementById('hint').textContent='第 1 / '+cur.chances+' 轮，还有 '+(cur.chances-1)+' 次机会。';
-  document.getElementById('reply').value='';document.getElementById('result').textContent='';document.getElementById('keywordHint').textContent='';
+  document.getElementById('reply').value='';document.getElementById('result').textContent='';document.getElementById('keywordHint').textContent='';document.getElementById('autoHint').textContent='';
   document.getElementById('nextBtn').style.display='none';
   document.getElementById('qcard').scrollIntoView({behavior:'smooth'});
 }
@@ -101,8 +106,7 @@ function copyPrompt(){navigator.clipboard.writeText(document.getElementById('pro
 function judge(kind){
   if(!cur) return;
   const reply=document.getElementById('reply').value;
-  const hits=cur.keys.filter(k=>reply.includes(k));
-  document.getElementById('keywordHint').textContent='关键词参考：回复里命中了 '+ (hits.length?hits.join('、'):'无') +'，最终以你的判定为准。';
+  document.getElementById('keywordHint').textContent=reply.trim()?autoText(analyze(reply)):'';
   const name=playerName();
   if(kind==='full'){
     addScore(name,cur.points,`${cur.id} 全对 +${cur.points} 分`); end(`${name} 本题全对，+${cur.points} 分，本题结束。`);
@@ -114,7 +118,7 @@ function judge(kind){
       document.getElementById('prompt').textContent='第 '+round+' 轮提示词：'+cur.prompts[round-1];
       document.getElementById('hint').textContent='第 1 轮判错，还有机会。第 '+round+' / '+cur.chances+' 轮，这是最后一轮提示词。';
       document.getElementById('result').textContent='第 1 轮错了，已给出第 2 轮提示词，复制给 AI 再测一次。';
-      document.getElementById('reply').value='';
+      document.getElementById('reply').value='';document.getElementById('autoHint').textContent='';
     }else{
       addScore(name,0,`${cur.id} 全错 +0 分`); end(`${name} 本题两轮都错，+0 分，本题结束。`);
     }
@@ -128,7 +132,39 @@ function render(){
 }
 function resetAll(){if(!confirm('确定清空本机所有测试记录吗？'))return;scores={};log=[];used=[];save();}
 function copySummary(){const s=Object.entries(scores).map(([k,v])=>`${k}：${v.n} 题，${v.pts} 分`).join('\n')||'暂无记录';navigator.clipboard.writeText('火眼金睛 · 抽题测试总结\n'+s+'\n\n记录：\n'+log.join('\n'));alert('总结已复制');}
-document.getElementById('reply').addEventListener('input',()=>{});
+
+function analyze(reply){
+  const t=reply.toLowerCase().replace(/\s+/g,' ');
+  const given=(cur.given&&cur.given[round])||[];
+  const res=cur.groups.map(g=>{
+    if(given.includes(g.name)) return {name:g.name,ok:true,given:true,hits:[]};
+    const hits=g.keys.filter(k=>t.includes(k.toLowerCase()));
+    let ok=hits.length>0, why='';
+    (cur.traps||[]).forEach(tr=>{if(tr.group===g.name&&tr.re.test(reply)){ok=false;why=tr.why;}});
+    return {name:g.name,ok,hits,why};
+  });
+  const real=res.filter(r=>!r.given), okn=res.filter(r=>r.ok).length;
+  let verdict;
+  if(!real.some(r=>r.ok)) verdict='wrong';
+  else if(okn===res.length) verdict='full';
+  else verdict='half';
+  return {res,verdict};
+}
+function autoText(a){
+  const map={full:'✅ 全对',half:'◐ 对一半',wrong:'❌ 判错'};
+  return '自动判定建议：'+map[a.verdict]+'（'+a.res.map(r=>r.name+(r.given?'：提示已给出':(r.ok?'：命中 '+r.hits.join('、'):'：未命中'+(r.why?'，'+r.why:'')))).join('；')+'）';
+}
+function autoJudge(){
+  if(!cur) return;
+  const reply=document.getElementById('reply').value.trim();
+  if(!reply){alert('先把 AI 的回复粘贴进来');return;}
+  judge(analyze(reply).verdict);
+}
+document.getElementById('reply').addEventListener('input',()=>{
+  const r=document.getElementById('reply').value.trim();
+  document.getElementById('autoHint').textContent=(cur&&r)?autoText(analyze(r)):'';
+});
+
 render();
 </script>
 </body>
