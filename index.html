@@ -6,57 +6,62 @@
 <title>火眼金睛 · AI 识图赛</title>
 <meta name="description" content="火眼金睛 AI 识图赛：题库、AI 选手、计分规则、AI 热度榜，R-001 荣耀题、W-001 王者题。">
 <style>
-:root{--ink:#2b2b3a;--mut:#6b6b80;--pink:#ffd9e8;--mint:#d3f2e3;--amber:#ffe9b8;--card:#fff;--line:#ece6f5}
+:root{--ink:#d8fbff;--mut:#7fa7b3;--cyan:#00f0ff;--pink:#ff2bd6;--green:#39ff88;--amber:#ffd400;--red:#ff3860;--card:rgba(6,14,24,.78);--line:rgba(0,240,255,.28)}
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);background:linear-gradient(180deg,#fff6f8 0%,#f3f7ff 38%,#f0fff6 72%,#fffaf0 100%);line-height:1.6}
-.wrap{max-width:900px;margin:0 auto;padding:0 16px 48px}
-/* 顶栏：标题和英文副标各占一行，绝不把“赛”字孤零零甩到下一行 */
-.brand{padding:20px 2px 16px}
-.brand-title{font-size:22px;font-weight:800;white-space:nowrap}
-.brand-title span{color:#ff6b9d}
-.brand-sub{margin-top:4px;font-size:12px;letter-spacing:2px;color:var(--mut);white-space:nowrap}
-.hero{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px 22px;box-shadow:0 12px 30px rgba(120,100,180,.08)}
-.hero .tag{display:inline-block;background:var(--pink);padding:7px 14px;border-radius:99px;font-size:14px;font-weight:700;white-space:nowrap}
-.hero h1{font-size:clamp(26px,7vw,38px);line-height:1.3;margin:16px 0 10px;text-wrap:balance}
-.hero h1 em{font-style:normal;color:#ff6b9d}
-.hero p{color:var(--mut);line-height:1.85;margin:0;font-size:16px}
-/* 列表按钮：手机 2 列、桌面 4 列，文字不换行挤压 */
+html{-webkit-text-size-adjust:100%;background:#03060c}
+body{margin:0;font-family:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,"PingFang SC","Microsoft YaHei",monospace;color:var(--ink);background:radial-gradient(ellipse at 50% -10%,#0b2a3a 0%,#05080f 55%,#020308 100%);line-height:1.6;min-height:100vh}
+#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55}
+body::after{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px)}
+.wrap{position:relative;z-index:2;max-width:900px;margin:0 auto;padding:0 16px 48px}
+.brand{padding:22px 2px 16px}
+.brand-title{font-size:22px;font-weight:800;white-space:nowrap;letter-spacing:1px;text-shadow:0 0 8px rgba(0,240,255,.6)}
+.brand-title span{color:var(--pink);text-shadow:0 0 6px var(--pink),0 0 18px rgba(255,43,214,.6)}
+.brand-sub{margin-top:4px;font-size:12px;letter-spacing:4px;color:var(--cyan);white-space:nowrap;opacity:.8}
+.brand-sub::after{content:"_";animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero{position:relative;background:var(--card);border:1px solid var(--cyan);border-radius:4px;padding:24px 22px;box-shadow:0 0 0 1px rgba(255,43,214,.25) inset,0 0 24px rgba(0,240,255,.25);backdrop-filter:blur(3px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px))}
+.hero .tag{display:inline-block;background:transparent;border:1px solid var(--pink);color:var(--pink);padding:6px 12px;border-radius:2px;font-size:13px;font-weight:700;white-space:nowrap;text-shadow:0 0 6px rgba(255,43,214,.7)}
+.hero h1{font-size:clamp(26px,7vw,40px);line-height:1.3;margin:16px 0 10px;text-wrap:balance;color:#fff;text-shadow:2px 0 var(--pink),-2px 0 var(--cyan)}
+.hero h1 em{font-style:normal;color:var(--green);text-shadow:0 0 10px rgba(57,255,136,.8)}
+.hero p{color:var(--mut);line-height:1.85;margin:0;font-size:15px}
 .tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0 0}
-.tabs button{border:1px solid var(--line);background:#fff;color:var(--ink);font-size:16px;font-weight:700;padding:13px 8px;border-radius:99px;cursor:pointer;white-space:nowrap}
-.tabs button.active{background:#2b2b3a;color:#fff;border-color:#2b2b3a}
+.tabs button{border:1px solid var(--line);background:rgba(4,10,18,.85);color:var(--cyan);font-family:inherit;font-size:15px;font-weight:700;padding:12px 8px;border-radius:2px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.tabs button:hover{border-color:var(--cyan);box-shadow:0 0 12px rgba(0,240,255,.4)}
+.tabs button.active{background:var(--cyan);color:#021018;border-color:var(--cyan);box-shadow:0 0 16px rgba(0,240,255,.7)}
 .panel{display:none}
-.panel.active{display:block}
+.panel.active{display:block;animation:boot .35s ease-out}
+@keyframes boot{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;text-align:center}
-.stat strong{font-size:24px;display:block;white-space:nowrap}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:2px;padding:16px;text-align:center}
+.stat strong{font-size:24px;display:block;white-space:nowrap;color:var(--green);text-shadow:0 0 10px rgba(57,255,136,.6)}
 .stat span{color:var(--mut);font-size:13px}
-h2{font-size:21px;margin:28px 0 14px;line-height:1.4}
+h2{font-size:20px;margin:28px 0 14px;line-height:1.4;color:var(--cyan);text-shadow:0 0 8px rgba(0,240,255,.5)}
+h2::before{content:"> ";color:var(--pink)}
 .cards{display:grid;grid-template-columns:1fr;gap:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
-.card h3{margin:0 0 8px;font-size:17px}
-.card p{color:var(--mut);line-height:1.75;margin:0;font-size:15px}
-.card .num{font-size:13px;font-weight:800;white-space:nowrap}
-/* 积分榜：不用表格，改成卡片行，分数用不换行徽章，手机上再也不会竖着排字 */
+.card{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:2px;padding:18px;backdrop-filter:blur(3px)}
+.card h3{margin:0 0 8px;font-size:17px;color:#fff}
+.card p{color:var(--mut);line-height:1.75;margin:0;font-size:14px}
+.card .num{font-size:13px;font-weight:800;white-space:nowrap;color:var(--amber);letter-spacing:1px}
 .board{display:grid;gap:12px}
-.row{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+.row{background:var(--card);border:1px solid var(--line);border-radius:2px;padding:16px;transition:box-shadow .2s,border-color .2s}
+.row:hover{border-color:var(--pink);box-shadow:0 0 14px rgba(255,43,214,.35)}
 .row-top{display:flex;align-items:center;gap:10px}
-.row-rank{flex:0 0 auto;font-weight:800;font-size:14px;white-space:nowrap}
-.row-name{flex:1;font-weight:800;font-size:17px;min-width:0}
-.row-total{flex:0 0 auto;background:#2b2b3a;color:#fff;font-weight:800;font-size:15px;padding:6px 12px;border-radius:99px;white-space:nowrap}
+.row-rank{flex:0 0 auto;font-weight:800;font-size:14px;white-space:nowrap;color:var(--amber)}
+.row-name{flex:1;font-weight:800;font-size:16px;min-width:0;color:#fff}
+.row-total{flex:0 0 auto;background:transparent;border:1px solid var(--green);color:var(--green);font-weight:800;font-size:14px;padding:5px 11px;border-radius:2px;white-space:nowrap;text-shadow:0 0 6px rgba(57,255,136,.7)}
 .row-scores{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.score{font-size:14px;background:#f7f4ff;padding:6px 11px;border-radius:99px;white-space:nowrap}
-.score b{white-space:nowrap}
-.pill{display:inline-block;padding:6px 11px;border-radius:99px;font-size:13px;font-weight:700;background:var(--mint);white-space:nowrap}
-.pill.wait{background:var(--amber)}
-.pill.out{background:#ffe0e0}
-.note{background:#fffbe6;border:1px solid #ffe9b8;border-radius:16px;padding:14px 16px;color:#6b5a2a;line-height:1.75;font-size:14px}
+.score{font-size:13px;background:rgba(0,240,255,.08);border:1px solid rgba(0,240,255,.2);color:var(--ink);padding:5px 10px;border-radius:2px;white-space:nowrap}
+.score b{white-space:nowrap;color:var(--cyan)}
+.pill{display:inline-block;padding:5px 10px;border-radius:2px;font-size:13px;font-weight:700;border:1px solid var(--green);color:var(--green);white-space:nowrap}
+.pill.wait{border-color:var(--amber);color:var(--amber)}
+.pill.out{border-color:var(--red);color:var(--red)}
+.note{background:rgba(255,212,0,.06);border:1px dashed var(--amber);border-radius:2px;padding:14px 16px;color:#ffe680;line-height:1.75;font-size:14px}
 .q{display:grid;grid-template-columns:1fr;gap:14px}
-.q img{width:100%;border-radius:16px;border:1px solid var(--line);background:#fff;display:block}
-.answer{background:#f7f4ff;border-radius:14px;padding:12px 14px;margin-top:12px;line-height:1.75;font-size:14px}
-.answer b{color:#6a5acd}
-.small{color:var(--mut);font-size:14px;line-height:1.75}
-footer{color:var(--mut);font-size:13px;line-height:1.9;text-align:center;margin-top:36px;padding:0 8px}
+.q img{width:100%;border-radius:2px;border:1px solid var(--line);background:#000;display:block;margin-top:6px}
+.answer{background:rgba(57,255,136,.06);border:1px solid rgba(57,255,136,.25);border-radius:2px;padding:12px 14px;margin-top:12px;line-height:1.75;font-size:13px;color:var(--ink)}
+.answer b{color:var(--green)}
+.small{color:var(--mut);font-size:13px;line-height:1.75}
+footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-top:36px;padding:0 8px;opacity:.85}
 @media(min-width:700px){
   .tabs{grid-template-columns:repeat(3,1fr)}
   .stats{grid-template-columns:repeat(4,1fr)}
@@ -64,9 +69,11 @@ footer{color:var(--mut);font-size:13px;line-height:1.9;text-align:center;margin-
   .q{grid-template-columns:1fr 1fr}
   .hero{padding:28px 26px}
 }
+@media(prefers-reduced-motion:reduce){.panel.active{animation:none}.brand-sub::after{animation:none}}
 </style>
 </head>
 <body>
+<canvas id="rain" aria-hidden="true"></canvas>
 <div class="wrap">
   <header class="brand">
     <div class="brand-title">👁 <span>火眼金睛</span> · AI 识图赛</div>
@@ -128,15 +135,15 @@ footer{color:var(--mut);font-size:13px;line-height:1.9;text-align:center;margin-
   <section class="panel" id="panel-rules">
     <h2>赛制 · 花果山 → 灵台方寸山</h2>
     <div class="cards">
-      <div class="card"><div class="num" style="color:#b7791f">🥉 青铜 · 1 分</div><h3>官方图片直出</h3><p>直接从官方图片里出题，只有一次机会。</p></div>
-      <div class="card"><div class="num" style="color:#718096">🥈 白银 · 1 分</div><h3>二创随机找图</h3><p>从二创里随机找图，只有一次机会。</p></div>
-      <div class="card"><div class="num" style="color:#6b46c1">💎 钻石 · 2 分</div><h3>最新官方图 / 梗图</h3><p>从最新官方图片出题，拼速度和效率；或从二创图、国内外梗图出题，只有两次机会。</p></div>
+      <div class="card"><div class="num" style="color:#ffb347">🥉 青铜 · 1 分</div><h3>官方图片直出</h3><p>直接从官方图片里出题，只有一次机会。</p></div>
+      <div class="card"><div class="num" style="color:#c0d6e4">🥈 白银 · 1 分</div><h3>二创随机找图</h3><p>从二创里随机找图，只有一次机会。</p></div>
+      <div class="card"><div class="num" style="color:#b98cff">💎 钻石 · 2 分</div><h3>最新官方图 / 梗图</h3><p>从最新官方图片出题，拼速度和效率；或从二创图、国内外梗图出题，只有两次机会。</p></div>
     </div>
     <div class="note" style="margin-top:14px">🌸 <b>花果山分界线：</b>以上为花果山关卡。只要有一个 AI 一轮通过花果山关卡的考验，就直接进入以下难度关卡。</div>
     <h2>灵台方寸山 · 进阶关卡</h2>
     <div class="cards">
-      <div class="card"><div class="num" style="color:#c53030">👑 荣耀 · 2 分</div><h3>官方最新视频截图 · 两次机会</h3><p>从官方最新的视频里挑一张截图来找，或者从小众二创里找图，只有两次机会。本轮 R-001 即属此级。</p></div>
-      <div class="card"><div class="num" style="color:#2b6cb0">👑 王者 · 3 分</div><h3>小众 / 最新 / 极模糊 · 两次机会</h3><p>从很小众官方发布的最新六小时以内的图片，或视频截图，或极其模糊的图片、马赛克图来找，只有两次机会。本轮 W-001 即属此级。</p></div>
+      <div class="card"><div class="num" style="color:#ff3860">👑 荣耀 · 2 分</div><h3>官方最新视频截图 · 两次机会</h3><p>从官方最新的视频里挑一张截图来找，或者从小众二创里找图，只有两次机会。本轮 R-001 即属此级。</p></div>
+      <div class="card"><div class="num" style="color:#00f0ff">👑 王者 · 3 分</div><h3>小众 / 最新 / 极模糊 · 两次机会</h3><p>从很小众官方发布的最新六小时以内的图片，或视频截图，或极其模糊的图片、马赛克图来找，只有两次机会。本轮 W-001 即属此级。</p></div>
       <div class="card"><div class="num">📐 分值总览</div><h3>青铜到白银 1 分</h3><p>钻石到荣耀 2 分，王者 3 分。答对即给分，荣耀题答对一半算 1 分。荣耀、王者题各有两次机会，取两次中最好的一次计分。</p></div>
     </div>
   </section>
@@ -189,6 +196,26 @@ document.querySelectorAll('.tabs button').forEach(function(btn){
     window.scrollTo({top: document.querySelector('.tabs').offsetTop - 10, behavior: 'smooth'});
   });
 });
+
+(function(){
+  var c=document.getElementById('rain'),x=c.getContext('2d'),fs=16,cols,drops,dpr=Math.min(window.devicePixelRatio||1,2);
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function size(){c.width=innerWidth*dpr;c.height=innerHeight*dpr;x.setTransform(dpr,0,0,dpr,0,0);cols=Math.ceil(innerWidth/fs);drops=[];for(var i=0;i<cols;i++)drops[i]=Math.random()*-innerHeight/fs;x.fillStyle='#03060c';x.fillRect(0,0,innerWidth,innerHeight)}
+  function draw(){
+    x.fillStyle='rgba(3,6,12,.09)';x.fillRect(0,0,innerWidth,innerHeight);
+    x.font='bold '+fs+'px monospace';
+    for(var i=0;i<cols;i++){
+      var y=drops[i]*fs,ch=Math.random()<.5?'0':'1';
+      x.fillStyle=Math.random()<.04?'#ff2bd6':(Math.random()<.15?'#d8fbff':'#00f0ff');
+      x.fillText(ch,i*fs,y);
+      if(y>innerHeight&&Math.random()>.975)drops[i]=0;
+      drops[i]+=.6;
+    }
+  }
+  size();addEventListener('resize',size);
+  if(still){for(var k=0;k<60;k++)draw();return}
+  var last=0;(function loop(t){requestAnimationFrame(loop);if(t-last<45)return;last=t;if(!document.hidden)draw()})(0);
+})();
 </script>
 </body>
 </html>
