@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>火眼金睛 · AI 识图赛</title>
-<meta name="description" content="火眼金睛 AI 识图赛：题库、AI 选手、计分规则、AI 热度榜，R-001 荣耀题、W-001 王者题。">
+<meta name="description" content="火眼金睛 AI 识图赛：题库、AI 选手、计分规则、AI 热度榜，B-001 青铜题、R-001 荣耀题、W-001 王者题。">
 <style>
 :root{--ink:#b9cdd3;--mut:#6f8790;--cyan:#4fb8c4;--pink:#b0569a;--green:#5fbf88;--amber:#c9a54a;--red:#c25566;--card:rgba(8,13,20,.9);--line:rgba(79,184,196,.18)}
 *{box-sizing:border-box}
@@ -56,8 +56,23 @@ h2::before{content:"> ";color:var(--pink)}
 .pill.wait{border-color:var(--amber);color:var(--amber)}
 .pill.out{border-color:var(--red);color:var(--red)}
 .note{background:rgba(255,212,0,.06);border:1px dashed var(--amber);border-radius:2px;padding:14px 16px;color:#c9b47a;line-height:1.75;font-size:14px}
+.qhint{color:var(--mut);font-size:14px;margin:4px 0 10px}
+.qtabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 14px}
+.qtabs button{border:1px solid var(--line);background:rgba(4,10,18,.85);color:var(--cyan);font-family:inherit;padding:10px 6px;border-radius:2px;cursor:pointer;transition:all .2s;line-height:1.4}
+.qtabs button b{display:block;font-size:16px;letter-spacing:1px}
+.qtabs button span{display:block;font-size:12px;color:var(--mut);white-space:nowrap}
+.qtabs button.active{background:rgba(79,184,196,.14);color:#d6eef1;border-color:var(--cyan)}
+.qtabs button.active span{color:var(--amber)}
+.qview .qcard{display:none;max-width:560px}
+.qview .qcard.active{display:block}
+details.answer summary{cursor:pointer;color:var(--cyan);font-weight:700;list-style:none}
+details.answer summary::-webkit-details-marker{display:none}
+details.answer summary::before{content:"▸ "}
+details.answer[open] summary{margin-bottom:8px}
+details.answer[open] summary::before{content:"▾ "}
+.answer.pending{border-color:var(--line);background:rgba(255,255,255,.03);color:var(--mut)}
 .q{display:grid;grid-template-columns:1fr;gap:14px}
-.q img{width:100%;border-radius:2px;border:1px solid var(--line);background:#000;display:block;margin-top:6px}
+.q img,.qview img{width:100%;border-radius:2px;border:1px solid var(--line);background:#000;display:block;margin-top:6px}
 .answer{background:rgba(57,255,136,.06);border:1px solid rgba(57,255,136,.25);border-radius:2px;padding:12px 14px;margin-top:12px;line-height:1.75;font-size:13px;color:var(--ink)}
 .answer b{color:var(--green)}
 .small{color:var(--mut);font-size:13px;line-height:1.75}
@@ -97,23 +112,35 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
 
   <section class="panel active" id="panel-bank">
     <div class="stats">
-      <div class="stat"><strong>2</strong><span>本轮题目</span></div>
-      <div class="stat"><strong>5 分</strong><span>本轮满分</span></div>
-      <div class="stat"><strong>R-001</strong><span>荣耀题</span></div>
-      <div class="stat"><strong>W-001</strong><span>王者题</span></div>
+      <div class="stat"><strong>3</strong><span>题库题目</span></div>
+      <div class="stat"><strong>6 分</strong><span>题库满分</span></div>
+      <div class="stat"><strong>1·2·3</strong><span>青铜·荣耀·王者</span></div>
+      <div class="stat"><strong>1–2 次</strong><span>作答机会</span></div>
     </div>
-    <div class="q">
-      <div class="card">
-        <div class="num">R-001 · 荣耀 · 2 分</div>
-        <h3>这张图是谁？出自哪里？</h3>
-        <img src="images/R-001.jpg" alt="R-001 能天使 Q 版图">
-        <div class="answer"><b>答案：</b>能天使 Exusiai（蕾缪乐），《明日方舟》6★ 狙击干员，企鹅物流，拉特兰萨科塔。<br><b>出处：</b>官方《罗德岛学院》PV，不是二创。关键特征：红发、倾斜的发光光环、领带上的红色苹果、胸前 IDENTITY CARD 工牌、青绿色墙面与身后的大淡黄星星。</div>
+    <p class="qhint">点下面的题号，看看每道题长什么样：</p>
+    <div class="qtabs">
+      <button class="active" data-q="B-001"><b>B-001</b><span>青铜 · 1 分</span></button>
+      <button data-q="R-001"><b>R-001</b><span>荣耀 · 2 分</span></button>
+      <button data-q="W-001"><b>W-001</b><span>王者 · 3 分</span></button>
+    </div>
+    <div class="qview">
+      <div class="card qcard active" id="q-B-001">
+        <div class="num">B-001 · 青铜 · 1 分 · 一次机会</div>
+        <h3>这是什么角色？</h3>
+        <img src="images/B-001.jpg" alt="B-001 题目图" loading="lazy">
+        <div class="answer pending"><b>答案：</b>暂不公开，这题还在测 AI 选手。说出角色名即算全对。</div>
       </div>
-      <div class="card">
-        <div class="num">W-001 · 王者 · 3 分</div>
+      <div class="card qcard" id="q-R-001">
+        <div class="num">R-001 · 荣耀 · 2 分 · 两次机会</div>
+        <h3>这张图是谁？出自哪里？</h3>
+        <img src="images/R-001.jpg" alt="R-001 能天使 Q 版图" loading="lazy">
+        <details class="answer"><summary>查看答案</summary><b>答案：</b>能天使 Exusiai（蕾缪乐），《明日方舟》6★ 狙击干员，企鹅物流，拉特兰萨科塔。<br><b>出处：</b>官方《罗德岛学院》PV，不是二创。关键特征：红发、倾斜的发光光环、领带上的红色苹果、胸前 IDENTITY CARD 工牌、青绿色墙面与身后的大淡黄星星。</details>
+      </div>
+      <div class="card qcard" id="q-W-001">
+        <div class="num">W-001 · 王者 · 3 分 · 两次机会</div>
         <h3>这张马赛克图是谁？</h3>
-        <img src="images/W-001.jpg" alt="W-001 马赛克西装男">
-        <div class="answer"><b>答案：</b>Rick Astley（理查德·艾斯利），英国歌手。<br><b>出处 / 梗：</b>1987 年《Never Gonna Give You Up》MV，即 Rickroll / 瑞克摇摆。五官已被马赛克完全遮住，认的是梗：用“白嫖福利”做诱饵，点进去就放这首歌；深色西装、白衬衫、斜条纹领带与 MV 造型一致。</div>
+        <img src="images/W-001.jpg" alt="W-001 马赛克西装男" loading="lazy">
+        <details class="answer"><summary>查看答案</summary><b>答案：</b>Rick Astley（理查德·艾斯利），英国歌手。<br><b>出处 / 梗：</b>1987 年《Never Gonna Give You Up》MV，即 Rickroll / 瑞克摇摆。五官已被马赛克完全遮住，认的是梗：用“白嫖福利”做诱饵，点进去就放这首歌；深色西装、白衬衫、斜条纹领带与 MV 造型一致。</details>
       </div>
     </div>
   </section>
@@ -187,6 +214,14 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   </footer>
 </div>
 <script>
+document.querySelectorAll('.qtabs button').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.qtabs button').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.qview .qcard').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active');
+    document.getElementById('q-' + btn.dataset.q).classList.add('active');
+  });
+});
 document.querySelectorAll('.tabs button').forEach(function(btn){
   btn.addEventListener('click', function(){
     document.querySelectorAll('.tabs button').forEach(function(b){b.classList.remove('active')});
