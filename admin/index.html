@@ -28,6 +28,17 @@ a{color:#ff6b9d}
 <div class="wrap">
 <header><h1>火眼金睛 · <span>后台管理</span></h1><p class="sub">抽题测试专用页，地址就是本站后面加 /admin。<br>流程：选选手 → 随机抽题 → 复制提示词给 AI → 把 AI 的回复粘贴回来 → 判对 / 对一半 / 判错。<br>对了加分；错了且还有机会，就给下一轮提示词；错了且没机会了，不加分，本题结束。成绩只保存在这台设备的浏览器里（localStorage），不会自动改动首页积分榜，测完可一键复制总结再去改榜。</p><p class="sub"><a href="../">← 回首页</a></p></header>
 
+<div class="card" id="gate">
+<h2>🔐 后台密码验证</h2>
+<p class="small">请输入后台密码，通过后才能进入抽题测试。默认密码：<b>huoyanjinjing</b>（登录后可在下方改成你自己的密码，改完只在这台设备生效）。</p>
+<label>后台密码</label>
+<input id="pwInput" type="password" placeholder="请输入后台密码" onkeydown="if(event.key==='Enter')checkPw()">
+<button class="primary" onclick="checkPw()">进入后台</button>
+<p class="small" id="pwErr" style="color:#e11d48"></p>
+<p class="small">注意：这是纯前端页面做的门禁，密码写在页面源码里，懂行的人能看到，只能挡普通访客，不能当真正的后台安全锁。如果要真锁，得走 Cloudflare Worker + 环境变量那套，到时你告诉我，我再给你改。</p>
+</div>
+
+<div id="adminContent" style="display:none">
 <div class="card">
 <h2>1 · 选选手并抽题</h2>
 <label>AI 选手</label>
@@ -68,9 +79,22 @@ a{color:#ff6b9d}
 <button class="ghost" onclick="copySummary()">📋 复制测试总结</button>
 </div>
 
+<div class="card">
+<h2>改后台密码（本机）</h2>
+<label>旧密码</label><input id="oldPw" type="password">
+<label>新密码</label><input id="newPw" type="password">
+<button class="primary" onclick="changePw()">改密码</button>
+<p class="small" id="pwMsg"></p>
+</div>
+</div>
+
 <p class="small" style="text-align:center">本网站灵感来源于博主 Token就是词元，仅供学习技术参考，不代表官方品质，仅供娱乐。</p>
 </div>
 <script>
+function getPw(){return localStorage.getItem('hyjj_admin_pw')||'huoyanjinjing';}
+function checkPw(){const v=document.getElementById('pwInput').value;if(v===getPw()){sessionStorage.setItem('hyjj_admin_ok','1');document.getElementById('gate').style.display='none';document.getElementById('adminContent').style.display='block';}else{document.getElementById('pwErr').textContent='密码不对，再试一次。';}}
+function changePw(){const o=document.getElementById('oldPw').value,n=document.getElementById('newPw').value;if(o!==getPw()){document.getElementById('pwMsg').textContent='旧密码不对。';return;}if(!n){document.getElementById('pwMsg').textContent='新密码不能为空。';return;}localStorage.setItem('hyjj_admin_pw',n);document.getElementById('pwMsg').textContent='已改好，下次进后台就用新密码。';}
+if(sessionStorage.getItem('hyjj_admin_ok')==='1'){document.getElementById('gate').style.display='none';document.getElementById('adminContent').style.display='block';}
 const BANK=[
  {id:'R-001',tier:'荣耀',points:2,half:1,chances:2,img:'../images/R-001.jpg',
   prompts:['这是谁？出自哪里？','再想想：这是明日方舟官方《罗德岛学院》PV里的角色，不是二创，图里是 Q 版形象，红色头发、头顶光环——这是谁？出自哪里？'],
