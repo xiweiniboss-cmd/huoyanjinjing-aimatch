@@ -1,5 +1,8 @@
 // 火眼金睛 · Cloudflare Pages 真锁 Worker
 // 根目录放 _worker.js：/admin 走这里验签，其余走 env.ASSETS 静态资源
+// 注意：不要用 ASSETS 直接取 /admin/index.html——Pages 会把 index.html 重定向回 /admin/，
+// Worker 再取一次就形成重定向死循环。所以后台页实际存在根目录 admin-panel.html，
+// /admin 验签通过后由 Worker 内部取 admin-panel.html 直出，浏览器地址仍是 /admin。
 // 真锁原理：后台密码只存在 Cloudflare Pages 环境变量 HYJJ_ADMIN_KEY 里，
 // 绝不写进仓库、绝不写进前端页面。登录成功后服务器发一个 HMAC 签名 Cookie，
 // 每次进 /admin 都在服务器端验签，密码本身从不发给浏览器、也不存在 Cookie 里。
@@ -52,7 +55,7 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const path = url.pathname;
-    const isAdminPage = path === '/admin' || path === '/admin/' || path === '/admin/index.html';
+    const isAdminPage = path === '/admin' || path === '/admin/' || path === '/admin/index.html' || path === '/admin-panel.html';
 
     if (path === '/api/admin/login' && request.method === 'POST') {
       const key = getKey(env);
@@ -94,8 +97,8 @@ export default {
     if (isAdminPage) {
       if (!getKey(env)) return loginPage('未配置管理密码：请在 Cloudflare Pages 项目 → 设置 → 环境变量里添加 HYJJ_ADMIN_KEY，值就是你的后台密码，重新部署后再试。');
       if (!(await validCookie(request, env))) return loginPage('');
-      // 已验签：把 /admin 映射到静态 admin/index.html
-      const target = new URL('/admin/index.html', url.origin);
+      // 已验签：内部取根目录 admin-panel.html 直出，不取 /admin/index.html（会重定向回 /admin/ 死循环）
+      const target = new URL('/admin-panel.html', url.origin);
       return env.ASSETS.fetch(new Request(target, request));
     }
 

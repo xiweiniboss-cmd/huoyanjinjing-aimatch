@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>后台管理 · 抽题测试 — 火眼金睛</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:linear-gradient(180deg,#fff0f5,#eef7ff,#f0fff4,#fffbe6);color:#222}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+header{background:#fff;border-radius:16px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+h1{margin:0;font-size:24px}h1 span{color:#ff6b9d}.sub{color:#666;font-size:13px;margin-top:6px;line-height:1.6}
+.card{background:#fff;border-radius:16px;padding:18px;margin-top:14px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+h2{margin:0 0 12px;font-size:18px}label{display:block;font-size:13px;color:#555;margin:10px 0 4px}
+select,textarea,input{width:100%;padding:10px;border:1px solid #ddd;border-radius:10px;font-size:15px}
+textarea{min-height:90px;resize:vertical}
+button{border:0;border-radius:999px;padding:11px 18px;font-size:15px;font-weight:700;cursor:pointer;margin:6px 6px 0 0}
+.primary{background:#ff6b9d;color:#fff}.good{background:#22c55e;color:#fff}.mid{background:#f59e0b;color:#fff}.bad{background:#e5e7eb;color:#333}.ghost{background:#eef2ff;color:#333}
+button:disabled{opacity:.45;cursor:not-allowed}
+img{max-width:100%;border-radius:12px;display:block;margin:10px auto}
+.prompt{background:#fff7ed;border:1px dashed #f59e0b;border-radius:12px;padding:14px;font-size:17px;font-weight:700;line-height:1.6}
+.pill{display:inline-block;background:#eef2ff;border-radius:999px;padding:4px 10px;font-size:12px;margin:2px;white-space:nowrap}
+.small{color:#666;font-size:13px;line-height:1.7}.result{font-size:16px;font-weight:800;margin-top:10px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{border-bottom:1px solid #eee;padding:8px;text-align:left}
+a{color:#ff6b9d}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><h1>火眼金睛 · <span>后台管理</span></h1><p class="sub">抽题测试专用页，地址就是本站后面加 /admin。<br>流程：选选手 → 随机抽题 → 复制提示词给 AI → 把 AI 的回复粘贴回来 → 判对 / 对一半 / 判错。<br>对了加分；错了且还有机会，就给下一轮提示词；错了且没机会了，不加分，本题结束。成绩只保存在这台设备的浏览器里（localStorage），不会自动改动首页积分榜，测完可一键复制总结再去改榜。</p><p class="sub"><a href="/">← 回首页</a> · <a href="/api/admin/logout">退出登录</a></p><p class="sub">真锁：本页由服务器验签后才放行，密码只存在 Cloudflare 环境变量 HYJJ_ADMIN_KEY 里，不在页面源码里。</p></header>
+
+<div class="card">
+<h2>1 · 选选手并抽题</h2>
+<label>AI 选手</label>
+<select id="player">
+<option>Claude Opus 5.5</option><option>豆包 Free Plan</option><option>ChatGPT-6-luna(深度思考)</option><option>Muse</option><option>Gemini 4 Argon(高)</option><option>Claude Haiku 5.5(极高)</option><option>DeepSeek V4 Pro(深度思考+联网搜索)</option><option>Grok 4.7（预备役）</option><option value="custom">自定义…</option>
+</select>
+<label>自定义选手名（选自定义时填）</label>
+<input id="customName" placeholder="例如：新选手名">
+<button class="primary" id="drawBtn" onclick="draw()">🎲 随机抽题</button>
+<button class="ghost" onclick="resetAll()">清空本机测试记录</button>
+<p class="small">题库目前只有 2 题：R-001（荣耀，2 分，两次机会）、W-001（王者，3 分，两次机会）。抽题在未出过的题里优先随机，全部出过一轮后自动重新洗牌。</p>
+</div>
+
+<div class="card" id="qcard" style="display:none">
+<h2>2 · 本题</h2>
+<div id="qmeta"></div>
+<img id="qimg" alt="题目图片">
+<div class="prompt" id="prompt"></div>
+<button class="ghost" onclick="copyPrompt()">📋 复制提示词</button>
+<p class="small" id="hint"></p>
+<label>AI 选手的回复（粘贴原文）</label>
+<textarea id="reply" placeholder="把 AI 的回答原样粘贴在这里，再点下面的判定"></textarea>
+<div>
+<button class="good" onclick="judge('full')">✅ 判对 · 满分</button>
+<button class="mid" onclick="judge('half')">◐ 判对一半</button>
+<button class="bad" onclick="judge('wrong')">❌ 判错</button>
+</div>
+<p class="small">判定标准：R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。全错 = 0 分。系统会按回复里的关键词给你一个参考提示，最终以你的判定为准。</p>
+<p class="small" id="keywordHint"></p>
+<div class="result" id="result"></div>
+<button class="primary" id="nextBtn" style="display:none" onclick="draw()">下一题 →</button>
+</div>
+
+<div class="card">
+<h2>3 · 本机测试成绩</h2>
+<table><thead><tr><th>选手</th><th>已测题数</th><th>总分</th></tr></thead><tbody id="scoreBody"></tbody></table>
+<p class="small" id="log"></p>
+<button class="ghost" onclick="copySummary()">📋 复制测试总结</button>
+</div>
+
+<p class="small" style="text-align:center">本网站灵感来源于博主 Token就是词元，仅供学习技术参考，不代表官方品质，仅供娱乐。</p>
+</div>
+<script>
+const BANK=[
+ {id:'R-001',tier:'荣耀',points:2,half:1,chances:2,img:'images/R-001.jpg',
+  prompts:['这是谁？出自哪里？','再想想：这是明日方舟官方《罗德岛学院》PV里的角色，不是二创，图里是 Q 版形象，红色头发、头顶光环——这是谁？出自哪里？'],
+  keys:['能天使','Exusiai','罗德岛学院']},
+ {id:'W-001',tier:'王者',points:3,half:1,chances:2,img:'images/W-001.jpg',
+  prompts:['这张马赛克图里的人是谁？这是什么梗？','再想想：国内外都很火，经常用于白嫖某个福利，点进去就会放一首歌——这人是谁，这是什么梗？'],
+  keys:['Rick','Astley','理查德','Rickroll','瑞克摇摆','Never Gonna Give You Up']}
+];
+let cur=null, round=0, used=JSON.parse(localStorage.getItem('hyjj_used')||'[]');
+let scores=JSON.parse(localStorage.getItem('hyjj_scores')||'{}');
+let log=JSON.parse(localStorage.getItem('hyjj_log')||'[]');
+function save(){localStorage.setItem('hyjj_scores',JSON.stringify(scores));localStorage.setItem('hyjj_log',JSON.stringify(log));localStorage.setItem('hyjj_used',JSON.stringify(used));render();}
+function playerName(){const s=document.getElementById('player').value;return s==='custom'?(document.getElementById('customName').value.trim()||'自定义选手'):s;}
+function draw(){
+  if(used.length>=BANK.length) used=[];
+  const pool=BANK.filter(q=>!used.includes(q.id));
+  cur=pool[Math.floor(Math.random()*pool.length)]; used.push(cur.id); round=1;
+  document.getElementById('qcard').style.display='block';
+  document.getElementById('qmeta').innerHTML=`<span class="pill">${cur.id}</span><span class="pill">${cur.tier}</span><span class="pill">满分 ${cur.points} 分</span><span class="pill">共 ${cur.chances} 次机会</span><span class="pill">选手：${playerName()}</span>`;
+  document.getElementById('qimg').src=cur.img;
+  document.getElementById('prompt').textContent='第 1 轮提示词：'+cur.prompts[0];
+  document.getElementById('hint').textContent='第 1 / '+cur.chances+' 轮，还有 '+(cur.chances-1)+' 次机会。';
+  document.getElementById('reply').value='';document.getElementById('result').textContent='';document.getElementById('keywordHint').textContent='';
+  document.getElementById('nextBtn').style.display='none';
+  document.getElementById('qcard').scrollIntoView({behavior:'smooth'});
+}
+function copyPrompt(){navigator.clipboard.writeText(document.getElementById('prompt').textContent.replace(/^第 \d+ 轮提示词：/,''));alert('提示词已复制，去发给 AI 吧');}
+function judge(kind){
+  if(!cur) return;
+  const reply=document.getElementById('reply').value;
+  const hits=cur.keys.filter(k=>reply.includes(k));
+  document.getElementById('keywordHint').textContent='关键词参考：回复里命中了 '+ (hits.length?hits.join('、'):'无') +'，最终以你的判定为准。';
+  const name=playerName();
+  if(kind==='full'){
+    addScore(name,cur.points,`${cur.id} 全对 +${cur.points} 分`); end(`${name} 本题全对，+${cur.points} 分，本题结束。`);
+  }else if(kind==='half'){
+    addScore(name,cur.half,`${cur.id} 对一半 +${cur.half} 分`); end(`${name} 本题对一半，+${cur.half} 分，本题结束。`);
+  }else{
+    if(round<cur.chances){
+      round++;
+      document.getElementById('prompt').textContent='第 '+round+' 轮提示词：'+cur.prompts[round-1];
+      document.getElementById('hint').textContent='第 1 轮判错，还有机会。第 '+round+' / '+cur.chances+' 轮，这是最后一轮提示词。';
+      document.getElementById('result').textContent='第 1 轮错了，已给出第 2 轮提示词，复制给 AI 再测一次。';
+      document.getElementById('reply').value='';
+    }else{
+      addScore(name,0,`${cur.id} 全错 +0 分`); end(`${name} 本题两轮都错，+0 分，本题结束。`);
+    }
+  }
+}
+function addScore(name,pts,txt){scores[name]=scores[name]||{n:0,pts:0};scores[name].n++;scores[name].pts+=pts;log.unshift(txt);save();}
+function end(msg){document.getElementById('result').textContent=msg;document.getElementById('nextBtn').style.display='inline-block';}
+function render(){
+  document.getElementById('scoreBody').innerHTML=Object.entries(scores).map(([k,v])=>`<tr><td>${k}</td><td>${v.n}</td><td>${v.pts} 分</td></tr>`).join('')||'<tr><td colspan="3">还没有测试记录</td></tr>';
+  document.getElementById('log').innerHTML=log.slice(0,20).join('<br>');
+}
+function resetAll(){if(!confirm('确定清空本机所有测试记录吗？'))return;scores={};log=[];used=[];save();}
+function copySummary(){const s=Object.entries(scores).map(([k,v])=>`${k}：${v.n} 题，${v.pts} 分`).join('\n')||'暂无记录';navigator.clipboard.writeText('火眼金睛 · 抽题测试总结\n'+s+'\n\n记录：\n'+log.join('\n'));alert('总结已复制');}
+document.getElementById('reply').addEventListener('input',()=>{});
+render();
+</script>
+</body>
+</html>
