@@ -57,7 +57,7 @@ a{color:#ff6b9d}
 <button class="bad" onclick="judge('wrong')">❌ 判错</button>
 </div>
 <p class="small" id="autoHint" style="font-weight:700"></p>
-<p class="small">判定标准：R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。B-001 只要说出正确角色名即全对（答案只以哈希形式存放，仓库和网页源码里都没有明文）。全错 = 0 分。粘贴回复后会实时给出自动判定建议，点「🤖 自动判定」按建议计分；觉得判得不对，直接点右边三个按钮手动判。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
+<p class="small">判定标准：R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。B-001 只要说出佩丽卡（Perlica）即全对。全错 = 0 分。粘贴回复后会实时给出自动判定建议，点「🤖 自动判定」按建议计分；觉得判得不对，直接点右边三个按钮手动判。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
 <p class="small" id="keywordHint"></p>
 <div class="result" id="result"></div>
 <button class="primary" id="nextBtn" style="display:none" onclick="draw()">下一题 →</button>
@@ -76,7 +76,7 @@ a{color:#ff6b9d}
 const BANK=[
  {id:'B-001',tier:'青铜',points:1,half:0,chances:1,img:'images/B-001.jpg',
   prompts:['这是什么角色？'],
-  groups:[{name:'人物',keys:[{h:'ffa32187cfda06d7e14d1492e3f83c4261afbe65f2e23e764fe799ff29e44908',len:3},{h:'af3e441c8aea28f77a01f362fbc3c5dc0bacb4c629f00d5ca399273ecd319cce',len:3},{h:'6cf5bfde7a3c8c31f236069c617082720908435de19f133ac60d6dc16065c76e',len:7}]}],
+  groups:[{name:'人物',keys:['佩丽卡','佩麗卡','Perlica']}],
   traps:[],given:{}},
  {id:'R-001',tier:'荣耀',points:2,half:1,chances:2,img:'images/R-001.jpg',
   prompts:['这是谁？出自哪里？','再想想：这是明日方舟官方《罗德岛学院》PV里的角色，不是二创，图里是 Q 版形象，红色头发、头顶光环——这是谁？出自哪里？'],
