@@ -85,6 +85,32 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   .hero{padding:28px 26px}
 }
 @media(prefers-reduced-motion:reduce){.panel.active{animation:none}.brand-sub::after{animation:none}}
+
+/* 绝望炼狱 */
+.tabs button.hell-tab{color:#ff7a6b;border-color:rgba(255,70,50,.45);background:rgba(40,4,4,.85)}
+.tabs button.hell-tab.active{background:rgba(200,30,20,.22);color:#ffd2c8;border-color:#ff4a32;box-shadow:0 0 12px rgba(255,60,30,.35)}
+#panel-hell h2{color:#ff6a50;text-shadow:0 0 10px rgba(255,60,30,.45)}
+.hell-intro{background:linear-gradient(135deg,rgba(60,0,0,.75),rgba(20,0,0,.85));border:1px solid rgba(255,70,50,.5);border-radius:2px;padding:14px 16px;color:#ffb3a6;line-height:1.75;font-size:14px;margin:0 0 14px}
+#panel-hell .stat{background:rgba(30,2,2,.85);border-color:rgba(255,70,50,.4)}
+#panel-hell .stat strong{color:#ff6a50}
+#panel-hell .qtabs button{background:rgba(30,2,2,.85);border-color:rgba(255,70,50,.4);color:#ff8a76}
+#panel-hell .qtabs button.active{background:rgba(200,30,20,.22);border-color:#ff4a32;color:#ffe0d8;box-shadow:0 0 10px rgba(255,60,30,.3)}
+#panel-hell .qtabs button.active span{color:#ffb020}
+.card.hellcard{background:linear-gradient(160deg,rgba(45,3,3,.92),rgba(12,0,0,.95));border:1px solid rgba(255,70,50,.55);border-left:3px solid #ff3a1f;box-shadow:0 0 18px rgba(255,50,20,.18),inset 0 0 30px rgba(120,0,0,.25)}
+.card.hellcard .num{color:#ff6a50;letter-spacing:1px}
+.card.hellcard h3{color:#ffd8cc}
+.card.hellcard img{border-color:rgba(255,70,50,.5)}
+.hell-rounds{list-style:none;padding:0;margin:8px 0 6px;display:grid;gap:6px}
+.hell-rounds li{background:rgba(255,60,30,.07);border:1px solid rgba(255,70,50,.28);border-radius:2px;padding:8px 10px;font-size:13px;color:#ffc9bd;line-height:1.6}
+.hell-rounds li b{color:#ffb020}
+.card.hellcard .answer{background:rgba(255,60,30,.07);border-color:rgba(255,70,50,.35)}
+.card.hellcard .answer b{color:#ff8a5c}
+.card.hellcard details.answer summary{color:#ff8a76}
+.hell-res{display:grid;gap:6px;margin-top:12px}
+.hell-res div{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:7px 10px;border:1px solid rgba(255,70,50,.22);background:rgba(20,0,0,.6);border-radius:2px;color:#f2d5cf}
+.hell-res .ok{color:#7dffb0;font-weight:700;white-space:nowrap}
+.hell-res .bad{color:#ff6a50;font-weight:700;white-space:nowrap}
+.hell-res .na{color:#9a8a86;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -104,6 +130,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
 
   <nav class="tabs" role="tablist">
     <button class="active" data-panel="bank">📚 题库</button>
+    <button class="hell-tab" data-panel="hell">🔥 绝望炼狱</button>
     <button data-panel="players">🤖 AI 选手</button>
     <button data-panel="rules">📐 计分规则</button>
     <button data-panel="hot">🔥 AI 热度榜</button>
@@ -113,17 +140,16 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
 
   <section class="panel active" id="panel-bank">
     <div class="stats">
-      <div class="stat"><strong>4</strong><span>题库题目</span></div>
-      <div class="stat"><strong>11 分</strong><span>题库满分</span></div>
+      <div class="stat"><strong>3</strong><span>题库题目</span></div>
+      <div class="stat"><strong>6 分</strong><span>题库满分</span></div>
       <div class="stat"><strong>1·2·3</strong><span>青铜·荣耀·王者</span></div>
       <div class="stat"><strong>1–2 次</strong><span>作答机会</span></div>
     </div>
-    <p class="qhint">点下面的题号，看看每道题长什么样：</p>
+    <p class="qhint">点下面的题号，看看每道题长什么样（绝望炼狱题在上方「🔥 绝望炼狱」单独题库）：</p>
     <div class="qtabs">
       <button class="active" data-q="B-001"><b>B-001</b><span>青铜 · 1 分</span></button>
       <button data-q="R-001"><b>R-001</b><span>荣耀 · 2 分</span></button>
       <button data-q="W-001"><b>W-001</b><span>王者 · 3 分</span></button>
-      <button data-q="H-001"><b>H-001</b><span>绝望炼狱 · 最高 5 分</span></button>
     </div>
     <div class="qview">
       <div class="card qcard active" id="q-B-001">
@@ -144,12 +170,44 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
         <img src="images/W-001.jpg" alt="W-001 马赛克西装男" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>Rick Astley（理查德·艾斯利），英国歌手。<br><b>出处 / 梗：</b>1987 年《Never Gonna Give You Up》MV，即 Rickroll / 瑞克摇摆。五官已被马赛克完全遮住，认的是梗：用“白嫖福利”做诱饵，点进去就放这首歌；深色西装、白衬衫、斜条纹领带与 MV 造型一致。</details>
       </div>
-      <div class="card qcard" id="q-H-001">
+    </div>
+  </section>
+
+  <section class="panel" id="panel-hell">
+    <h2>🔥 绝望炼狱 · 题库</h2>
+    <div class="hell-intro">三道普通题已被多名选手全部攻破，绝望炼狱就此开放。每题三次机会，越早答对分越高：第 1 轮答对 5 分（3 分 + 一次答对额外加 2 分），第 2 轮 2 分，第 3 轮 1 分，三轮全错 0 分。</div>
+    <div class="stats">
+      <div class="stat"><strong>1</strong><span>炼狱题目</span></div>
+      <div class="stat"><strong>5 分</strong><span>单题最高</span></div>
+      <div class="stat"><strong>5·2·1</strong><span>第 1·2·3 轮</span></div>
+      <div class="stat"><strong>3 次</strong><span>作答机会</span></div>
+    </div>
+    <p class="qhint">点下面的题号查看炼狱题：</p>
+    <div class="qtabs">
+      <button class="active" data-q="H-001"><b>H-001</b><span>绝望炼狱 · 最高 5 分</span></button>
+    </div>
+    <div class="qview">
+      <div class="card qcard hellcard active" id="q-H-001">
         <div class="num">H-001 · 绝望炼狱 · 三次机会 · 最高 5 分</div>
         <h3>这是什么角色？</h3>
-        <p class="small" style="margin:4px 0 6px">第 1 轮提示词：「这是谁？」答对 5 分（3 分 + 一次答对额外加 2 分）<br>第 2 轮提示词：「再看看，这是一款手游里的角色，画的是 Q 版。」答对 2 分<br>第 3 轮提示词：「她是《明日方舟》里整合运动的领袖。」答对 1 分</p>
+        <ul class="hell-rounds">
+          <li><b>第 1 轮 · 5 分</b>　提示词：「这是谁？」</li>
+          <li><b>第 2 轮 · 2 分</b>　提示词：「再看看，这是一款手游里的角色，画的是 Q 版。」</li>
+          <li><b>第 3 轮 · 1 分</b>　提示词：「她是《明日方舟》里整合运动的领袖。」</li>
+        </ul>
         <img src="images/H-001.jpg" alt="H-001 题目图" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>塔露拉，《明日方舟》角色。<br><b>判定：</b>说出角色名即算对。</details>
+        <div class="hell-res">
+          <div><span>Gemini 4 Carbon</span><span class="ok">第 1 轮答对 · 5 分</span></div>
+          <div><span>豆包 Free Plan</span><span class="ok">第 1 轮答对 · 5 分</span></div>
+          <div><span>Gemini 4 Argon(高)</span><span class="ok">第 1 轮答对 · 5 分</span></div>
+          <div><span>Muse</span><span class="ok">第 1 轮答对 · 5 分</span></div>
+          <div><span>DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="ok">第 3 轮答对 · 1 分</span></div>
+          <div><span>Claude Opus 5.5</span><span class="bad">三轮全错 · 0 分 · 炼狱一血</span></div>
+          <div><span>ChatGPT-6-luna(深度思考)</span><span class="bad">三轮全错 · 0 分 · 炼狱双连</span></div>
+          <div><span>GLM-5.3</span><span class="bad">第 2 轮放弃 · 0 分 · 炼狱三连</span></div>
+          <div><span>Claude Haiku 5.5(极高)</span><span class="na">因 KYC 验证暂未挑战</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -231,8 +289,9 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
 <script>
 document.querySelectorAll('.qtabs button').forEach(function(btn){
   btn.addEventListener('click', function(){
-    document.querySelectorAll('.qtabs button').forEach(function(b){b.classList.remove('active')});
-    document.querySelectorAll('.qview .qcard').forEach(function(c){c.classList.remove('active')});
+    var p=btn.closest('.panel');
+    p.querySelectorAll('.qtabs button').forEach(function(b){b.classList.remove('active')});
+    p.querySelectorAll('.qview .qcard').forEach(function(c){c.classList.remove('active')});
     btn.classList.add('active');
     document.getElementById('q-' + btn.dataset.q).classList.add('active');
   });
