@@ -114,7 +114,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   <section class="panel active" id="panel-bank">
     <div class="stats">
       <div class="stat"><strong>4</strong><span>题库题目</span></div>
-      <div class="stat"><strong>6 分</strong><span>题库满分</span></div>
+      <div class="stat"><strong>11 分</strong><span>题库满分</span></div>
       <div class="stat"><strong>1·2·3</strong><span>青铜·荣耀·王者</span></div>
       <div class="stat"><strong>1–2 次</strong><span>作答机会</span></div>
     </div>
@@ -123,7 +123,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
       <button class="active" data-q="B-001"><b>B-001</b><span>青铜 · 1 分</span></button>
       <button data-q="R-001"><b>R-001</b><span>荣耀 · 2 分</span></button>
       <button data-q="W-001"><b>W-001</b><span>王者 · 3 分</span></button>
-      <button data-q="H-001"><b>H-001</b><span>绝望炼狱 · 分值待定</span></button>
+      <button data-q="H-001"><b>H-001</b><span>绝望炼狱 · 最高 5 分</span></button>
     </div>
     <div class="qview">
       <div class="card qcard active" id="q-B-001">
@@ -145,8 +145,9 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
         <details class="answer"><summary>查看答案</summary><b>答案：</b>Rick Astley（理查德·艾斯利），英国歌手。<br><b>出处 / 梗：</b>1987 年《Never Gonna Give You Up》MV，即 Rickroll / 瑞克摇摆。五官已被马赛克完全遮住，认的是梗：用“白嫖福利”做诱饵，点进去就放这首歌；深色西装、白衬衫、斜条纹领带与 MV 造型一致。</details>
       </div>
       <div class="card qcard" id="q-H-001">
-        <div class="num">H-001 · 绝望炼狱 · 分值待定（暂不计入积分）</div>
+        <div class="num">H-001 · 绝望炼狱 · 三次机会 · 最高 5 分</div>
         <h3>这是什么角色？</h3>
+        <p class="small" style="margin:4px 0 6px">第 1 轮提示词：「这是谁？」答对 5 分（3 分 + 一次答对额外加 2 分）<br>第 2 轮提示词：「再看看，这是一款手游里的角色，画的是 Q 版。」答对 2 分<br>第 3 轮提示词：「她是《明日方舟》里整合运动的领袖。」答对 1 分</p>
         <img src="images/H-001.jpg" alt="H-001 题目图" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>塔露拉，《明日方舟》角色。<br><b>判定：</b>说出角色名即算对。</details>
       </div>
@@ -156,17 +157,17 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   <section class="panel" id="panel-players">
     <h2>AI 选手 · 本轮积分榜</h2>
     <div class="board">
-      <div class="row"><div class="row-top"><span class="row-rank">🥇 第 1 名</span><span class="row-name">Claude Opus 5.5</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 秒答</b></span><span class="score">W-001：<b>3 分 · 秒答</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🥇 第 1 名</span><span class="row-name">豆包 Free Plan</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 最终答对</b></span><span class="score">W-001：<b>3 分</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🥇 第 1 名</span><span class="row-name">ChatGPT-6-luna(深度思考)</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 未拿额外加分</b></span><span class="score">W-001：<b>3 分</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🥇 第 1 名</span><span class="row-name">Muse</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 慢答后全对</b></span><span class="score">W-001：<b>3 分 · 慢答后全对</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🥇 第 1 名</span><span class="row-name">Gemini 4 Carbon</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分</b></span><span class="score">W-001：<b>3 分</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🥈 第 2 名</span><span class="row-name">Gemini 4 Argon(高)</span><span class="row-total">5 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>3 分 · 秒答</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🥉 第 3 名</span><span class="row-name">GLM-5.3</span><span class="row-total">4 分</span></div><div class="row-scores"><span class="score">B-001：<b>0 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>3 分</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">第 4 名</span><span class="row-name">Claude Haiku 5.5(极高)</span><span class="row-total">1 分</span></div><div class="row-scores"><span class="score">B-001：<b>0 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>0 分</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">第 4 名</span><span class="row-name">DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="row-total">1 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>0 分</b></span><span class="score">W-001：<b>0 分</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🥇 第 1 名</span><span class="row-name">Gemini 4 Carbon</span><span class="row-total">11 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🥈 第 2 名</span><span class="row-name">Claude Opus 5.5</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 秒答</b></span><span class="score">W-001：<b>3 分 · 秒答</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🥈 第 2 名</span><span class="row-name">豆包 Free Plan</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 最终答对</b></span><span class="score">W-001：<b>3 分</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🥈 第 2 名</span><span class="row-name">ChatGPT-6-luna(深度思考)</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 未拿额外加分</b></span><span class="score">W-001：<b>3 分</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🥈 第 2 名</span><span class="row-name">Muse</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 慢答后全对</b></span><span class="score">W-001：<b>3 分 · 慢答后全对</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">🥉 第 3 名</span><span class="row-name">Gemini 4 Argon(高)</span><span class="row-total">5 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>3 分 · 秒答</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">第 4 名</span><span class="row-name">GLM-5.3</span><span class="row-total">4 分</span></div><div class="row-scores"><span class="score">B-001：<b>0 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>3 分</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">第 5 名</span><span class="row-name">Claude Haiku 5.5(极高)</span><span class="row-total">1 分</span></div><div class="row-scores"><span class="score">B-001：<b>0 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>0 分</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">第 5 名</span><span class="row-name">DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="row-total">1 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>0 分</b></span><span class="score">W-001：<b>0 分</b></span></div></div>
     </div>
-    <p class="small">本轮满分 6 分（B-001 1 分 + R-001 2 分 + W-001 3 分）。B-001 青铜题已全部测完、答案公开：除 Claude Haiku 5.5(极高) 和 GLM-5.3 外，其他选手都答对了。豆包 Free Plan 荣耀题起初只对一半（把官方《罗德岛学院》PV 说成二创），但最终答对，故按满分计。Muse 荣耀、王者题均为慢答后全对。Grok 4.7、Grok 4.5 为预备役选手，不在积分榜里，见“预备役AI选手”。排名按分数段算：6 分的都是第 1 名，5 分第 2 名，4 分第 3 名，1 分第 4 名，不按人数顺延。</p>
+    <p class="small">本轮满分 11 分（B-001 1 分 + R-001 2 分 + W-001 3 分 + H-001 绝望炼狱最高 5 分）。H-001 目前只有 Gemini 4 Carbon 挑战过，第 1 轮直接答对拿 5 分；其他选手尚未挑战，H-001 暂按 0 分计。B-001 青铜题已全部测完、答案公开：除 Claude Haiku 5.5(极高) 和 GLM-5.3 外，其他选手都答对了。豆包 Free Plan 荣耀题起初只对一半（把官方《罗德岛学院》PV 说成二创），但最终答对，故按满分计。Muse 荣耀、王者题均为慢答后全对。Grok 4.7、Grok 4.5 为预备役选手，不在积分榜里，见“预备役AI选手”。排名按分数段算：11 分第 1 名，6 分的都是第 2 名，5 分第 3 名，4 分第 4 名，1 分第 5 名，不按人数顺延。</p>
   </section>
 
   <section class="panel" id="panel-rules">
@@ -181,6 +182,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
     <div class="cards">
       <div class="card"><div class="num" style="color:#c25566">👑 荣耀 · 2 分</div><h3>官方最新视频截图 · 两次机会</h3><p>从官方最新的视频里挑一张截图来找，或者从小众二创里找图，只有两次机会。本轮 R-001 即属此级。</p></div>
       <div class="card"><div class="num" style="color:#4fb8c4">👑 王者 · 3 分</div><h3>小众 / 最新 / 极模糊 · 两次机会</h3><p>从很小众官方发布的最新六小时以内的图片，或视频截图，或极其模糊的图片、马赛克图来找，只有两次机会。本轮 W-001 即属此级。</p></div>
+      <div class="card"><div class="num" style="color:#ff8a8a">🔥 绝望炼狱 · 最高 5 分</div><h3>三次机会 · 越早答对分越高</h3><p>第 1 轮提示词固定为「这是谁？」，答对得 5 分（3 分 + 一次答对额外加 2 分）；第 2 轮给一条提示，答对 2 分；第 3 轮再给一条更直接的提示，答对 1 分；三轮都错 0 分。本轮 H-001 即属此级。</p></div>
       <div class="card"><div class="num">📐 分值总览</div><h3>青铜到白银 1 分</h3><p>钻石到荣耀 2 分，王者 3 分。答对即给分，荣耀题答对一半算 1 分。荣耀、王者题各有两次机会，取两次中最好的一次计分。</p></div>
     </div>
   </section>
@@ -189,11 +191,11 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
     <h2>AI 热度榜 · 本轮</h2>
     <p class="small">按本轮成绩与场上讨论度排序，非外部投票票数；预备役选手不参与本轮热度排名。</p>
     <div class="board">
+      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥🔥🔥</span><span class="row-name">Gemini 4 Carbon</span><span class="row-total">11 分</span></div><p class="small" style="margin:8px 0 0">新选手，四题全对，马赛克 Rick Astley 一眼认出，绝望炼狱 H-001 第 1 轮就叫出塔露拉全名</p></div>
       <div class="row"><div class="row-top"><span class="row-rank">🔥🔥🔥</span><span class="row-name">Claude Opus 5.5</span><span class="row-total">6 分</span></div><p class="small" style="margin:8px 0 0">三题全对，荣耀、王者题秒答，本轮最强表现</p></div>
       <div class="row"><div class="row-top"><span class="row-rank">🔥🔥🔥</span><span class="row-name">豆包 Free Plan</span><span class="row-total">6 分</span></div><p class="small" style="margin:8px 0 0">三题全对，荣耀题起初的二创误判也成了话题</p></div>
       <div class="row"><div class="row-top"><span class="row-rank">🔥🔥</span><span class="row-name">ChatGPT-6-luna(深度思考)</span><span class="row-total">6 分</span></div><p class="small" style="margin:8px 0 0">三题全对，稳但没拿到额外加分</p></div>
       <div class="row"><div class="row-top"><span class="row-rank">🔥🔥</span><span class="row-name">Muse</span><span class="row-total">6 分</span></div><p class="small" style="margin:8px 0 0">三题全对，荣耀、王者题靠提示慢答锁定</p></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥</span><span class="row-name">Gemini 4 Carbon</span><span class="row-total">6 分</span></div><p class="small" style="margin:8px 0 0">新选手，三题全对，马赛克 Rick Astley 一眼认出</p></div>
       <div class="row"><div class="row-top"><span class="row-rank">🔥🔥</span><span class="row-name">Gemini 4 Argon(高)</span><span class="row-total">5 分</span></div><p class="small" style="margin:8px 0 0">青铜、王者题都拿下，荣耀题只对一半</p></div>
       <div class="row"><div class="row-top"><span class="row-rank">🔥🔥</span><span class="row-name">GLM-5.3</span><span class="row-total">4 分</span></div><p class="small" style="margin:8px 0 0">新选手，王者题拿满，荣耀题对一半，青铜题没认出佩丽卡</p></div>
       <div class="row"><div class="row-top"><span class="row-rank">🔥</span><span class="row-name">Claude Haiku 5.5(极高)</span><span class="row-total">1 分</span></div><p class="small" style="margin:8px 0 0">只拿到荣耀题一半的 1 分，青铜题也没认出</p></div>
