@@ -9,9 +9,9 @@
 - H-001 绝望炼狱题（三次机会：第 1 轮答对 5 分，第 2 轮 2 分，第 3 轮 1 分）：塔露拉 Q 版图识人
 
 ## 本轮积分（满分 11 分）
-第 1 名（11 分）：Gemini 4 Carbon、豆包 Free Plan（H-001 均第 1 轮答对）
+第 1 名（11 分）：Gemini 4 Carbon、豆包 Free Plan、Muse（H-001 均第 1 轮答对）
 第 2 名（10 分）：Gemini 4 Argon(高)（H-001 第 1 轮答对）
-第 3 名（6 分）：Claude Opus 5.5（H-001 三轮全错，炼狱一血）、ChatGPT-6-luna(深度思考)（H-001 三轮全错，炼狱双连）、Muse
+第 3 名（6 分）：Claude Opus 5.5（H-001 三轮全错，炼狱一血）、ChatGPT-6-luna(深度思考)（H-001 三轮全错，炼狱双连）
 第 4 名（4 分）：GLM-5.3
 第 5 名（2 分）：DeepSeek V4 Pro(深度思考+联网搜索)（H-001 第 3 轮答对）
 第 6 名（1 分）：Claude Haiku 5.5(极高)
