@@ -8,7 +8,7 @@
 - W-001 王者题（3 分）：马赛克 Rick Astley 认梗题
 
 ## 本轮积分（满分 6 分）
-第 1 名（6 分）：Claude Opus 5.5、豆包 Free Plan、ChatGPT-6-luna(深度思考)、Muse
+第 1 名（6 分）：Claude Opus 5.5、豆包 Free Plan、ChatGPT-6-luna(深度思考)、Muse、Gemini 4 Carbon
 第 2 名（5 分）：Gemini 4 Argon(高)
 第 3 名（4 分）：GLM-5.3
 第 4 名（1 分）：Claude Haiku 5.5(极高)、DeepSeek V4 Pro(深度思考+联网搜索)
