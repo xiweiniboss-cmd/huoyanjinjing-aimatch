@@ -132,6 +132,8 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
 .copy-btn{display:inline-flex;align-items:center;gap:5px;margin:4px 0 2px;border:1px solid var(--cyan);background:rgba(79,184,196,.08);color:var(--cyan);font-family:inherit;font-size:12px;font-weight:700;padding:4px 10px;border-radius:2px;cursor:pointer;white-space:nowrap;transition:all .2s}
 .copy-btn:hover{background:rgba(79,184,196,.18)}
 .copy-btn.done{border-color:var(--green);color:var(--green)}
+.prompt-line{background:rgba(79,184,196,.06);border:1px solid var(--line);border-radius:2px;padding:8px 10px;margin:6px 0 4px;font-size:13px;color:var(--ink);line-height:1.6}
+.prompt-line .copy-btn{margin:0 0 0 8px;padding:2px 8px}
 .hell-rounds li .copy-btn{margin:0 0 0 8px;padding:2px 8px;border-color:rgba(255,120,90,.6);color:#ff9a80;background:rgba(255,60,30,.08)}
 .hell-rounds li .copy-btn.done{border-color:#7dffb0;color:#7dffb0}
 </style>
@@ -178,21 +180,21 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
       <div class="card qcard active" id="q-B-001">
         <div class="num">B-001 · 青铜 · 1 分 · 一次机会</div>
         <h3>这是什么角色？</h3>
-        <button type="button" class="copy-btn" data-copy="这是什么角色？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制提示词</button>
+        <div class="prompt-line">提示词：「这是什么角色？」<button type="button" class="copy-btn" data-copy="这是什么角色？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></div>
         <img src="images/B-001.jpg" alt="B-001 题目图" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>佩丽卡 Perlica，《明日方舟：终末地》角色。<br><b>判定：</b>说出角色名即算全对，只有一次机会。</details>
       </div>
       <div class="card qcard" id="q-R-001">
         <div class="num">R-001 · 荣耀 · 2 分 · 两次机会</div>
         <h3>这张图是谁？出自哪里？</h3>
-        <button type="button" class="copy-btn" data-copy="这是谁？出自哪里？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制提示词</button>
+        <div class="prompt-line">提示词：「这是谁？出自哪里？」<button type="button" class="copy-btn" data-copy="这是谁？出自哪里？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></div>
         <img src="images/R-001.jpg" alt="R-001 能天使 Q 版图" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>能天使 Exusiai（蕾缪乐），《明日方舟》6★ 狙击干员，企鹅物流，拉特兰萨科塔。<br><b>出处：</b>官方《罗德岛学院》PV，不是二创。关键特征：红发、倾斜的发光光环、领带上的红色苹果、胸前 IDENTITY CARD 工牌、青绿色墙面与身后的大淡黄星星。</details>
       </div>
       <div class="card qcard" id="q-W-001">
         <div class="num">W-001 · 王者 · 3 分 · 两次机会</div>
         <h3>这张马赛克图是谁？</h3>
-        <button type="button" class="copy-btn" data-copy="这张马赛克图里的人是谁？这是什么梗？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制提示词</button>
+        <div class="prompt-line">提示词：「这张马赛克图里的人是谁？这是什么梗？」<button type="button" class="copy-btn" data-copy="这张马赛克图里的人是谁？这是什么梗？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></div>
         <img src="images/W-001.jpg" alt="W-001 马赛克西装男" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>Rick Astley（理查德·艾斯利），英国歌手。<br><b>出处 / 梗：</b>1987 年《Never Gonna Give You Up》MV，即 Rickroll / 瑞克摇摆。五官已被马赛克完全遮住，认的是梗：用“白嫖福利”做诱饵，点进去就放这首歌；深色西装、白衬衫、斜条纹领带与 MV 造型一致。</details>
       </div>
@@ -333,11 +335,11 @@ document.querySelectorAll('.tabs button').forEach(function(btn){
 });
 
 document.querySelectorAll('.copy-btn').forEach(function(btn){
-  var html=btn.innerHTML;
+  var html=btn.innerHTML,timer=null;
   btn.addEventListener('click', function(){
     var t=btn.dataset.copy;
-    function ok(){btn.classList.add('done');btn.innerHTML='已复制';setTimeout(function(){btn.classList.remove('done');btn.innerHTML=html},1500);}
-    function fallback(){var a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');ok();}catch(e){prompt('复制下面的提示词：',t);}document.body.removeChild(a);}
+    function ok(){clearTimeout(timer);btn.classList.add('done');btn.innerHTML='已复制';timer=setTimeout(function(){btn.classList.remove('done');btn.innerHTML=html},1500);}
+    function fallback(){var a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();var done=false;try{done=document.execCommand('copy');}catch(e){}document.body.removeChild(a);if(done){ok();}else{prompt('复制下面的提示词：',t);}}
     if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(ok,fallback);}else{fallback();}
   });
 });
