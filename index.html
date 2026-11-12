@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>火眼金睛 · AI 识图赛</title>
-<meta name="description" content="火眼金睛 AI 识图赛：题库、AI 选手、计分规则、AI 热度榜，B-001 青铜题、R-001 荣耀题、W-001 王者题。">
+<!-- 图标为 GitHub Octicons，MIT License https://github.com/primer/octicons -->
+<meta name="description" content="火眼金睛 AI 识图赛：题库、排行榜、计分规则，B-001 青铜题、R-001 荣耀题、W-001 王者题。">
 <style>
 :root{--ink:#b9cdd3;--mut:#6f8790;--cyan:#4fb8c4;--pink:#b0569a;--green:#5fbf88;--amber:#c9a54a;--red:#c25566;--card:rgba(8,13,20,.9);--line:rgba(79,184,196,.18)}
 *{box-sizing:border-box}
@@ -78,6 +79,7 @@ details.answer[open] summary::before{content:"▾ "}
 .answer b{color:var(--green)}
 .small{color:var(--mut);font-size:13px;line-height:1.75}
 footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-top:36px;padding:0 8px;opacity:.85}
+.ico{width:1em;height:1em;flex-shrink:0;fill:currentColor;display:inline-block;vertical-align:-.15em;overflow:visible}.tabs button{display:inline-flex;align-items:center;justify-content:center;gap:6px}.num .ico,.notice-hell .ico,.qhint .ico,.cutline .ico,.pill .ico,.note .ico,h2 .ico{margin-right:.2em}.pill{display:inline-flex;align-items:center;gap:5px}.cutline{white-space:nowrap}
 @media(min-width:700px){
   .tabs{grid-template-columns:repeat(3,1fr)}
   .stats{grid-template-columns:repeat(4,1fr)}
@@ -115,9 +117,10 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
 </style>
 </head>
 <body>
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-book" viewBox="0 0 16 16"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"/></symbol><symbol id="i-flame" viewBox="0 0 16 16"><path d="M9.533.753V.752c.217 2.385 1.463 3.626 2.653 4.81C13.37 6.74 14.498 7.863 14.498 10c0 3.5-3 6-6.5 6S1.5 13.512 1.5 10c0-1.298.536-2.56 1.425-3.286.376-.308.862 0 1.035.454C4.46 8.487 5.581 8.419 6 8c.282-.282.341-.811-.003-1.5C4.34 3.187 7.035.75 8.77.146c.39-.137.726.194.763.607ZM7.998 14.5c2.832 0 5-1.98 5-4.5 0-1.463-.68-2.19-1.879-3.383l-.036-.037c-1.013-1.008-2.3-2.29-2.834-4.434-.322.256-.63.579-.864.953-.432.696-.621 1.58-.046 2.73.473.947.67 2.284-.278 3.232-.61.61-1.545.84-2.403.633a2.79 2.79 0 0 1-1.436-.874A3.198 3.198 0 0 0 3 10c0 2.53 2.164 4.5 4.998 4.5Z"/></symbol><symbol id="i-people" viewBox="0 0 16 16"><path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z"/></symbol><symbol id="i-list-ordered" viewBox="0 0 16 16"><path d="M5 3.25a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 5 3.25Zm0 5a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 5 8.25Zm0 5a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1-.75-.75ZM.924 10.32a.5.5 0 0 1-.851-.525l.001-.001.001-.002.002-.004.007-.011c.097-.144.215-.273.348-.384.228-.19.588-.392 1.068-.392.468 0 .858.181 1.126.484.259.294.377.673.377 1.038 0 .987-.686 1.495-1.156 1.845l-.047.035c-.303.225-.522.4-.654.597h1.357a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5c0-1.005.692-1.52 1.167-1.875l.035-.025c.531-.396.8-.625.8-1.078a.57.57 0 0 0-.128-.376C1.806 10.068 1.695 10 1.5 10a.658.658 0 0 0-.429.163.835.835 0 0 0-.144.153ZM2.003 2.5V6h.503a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1h.503V3.308l-.28.14a.5.5 0 0 1-.446-.895l1.003-.5a.5.5 0 0 1 .723.447Z"/></symbol><symbol id="i-hourglass" viewBox="0 0 16 16"><path d="M2.75 1h10.5a.75.75 0 0 1 0 1.5h-.75v1.25a4.75 4.75 0 0 1-1.9 3.8l-.333.25a.25.25 0 0 0 0 .4l.333.25a4.75 4.75 0 0 1 1.9 3.8v1.25h.75a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1 0-1.5h.75v-1.25a4.75 4.75 0 0 1 1.9-3.8l.333-.25a.25.25 0 0 0 0-.4L5.4 7.55a4.75 4.75 0 0 1-1.9-3.8V2.5h-.75a.75.75 0 0 1 0-1.5ZM11 2.5H5v1.25c0 1.023.482 1.986 1.3 2.6l.333.25c.934.7.934 2.1 0 2.8l-.333.25a3.251 3.251 0 0 0-1.3 2.6v1.25h6v-1.25a3.251 3.251 0 0 0-1.3-2.6l-.333-.25a1.748 1.748 0 0 1 0-2.8l.333-.25a3.251 3.251 0 0 0 1.3-2.6Z"/></symbol><symbol id="i-x-circle" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></symbol><symbol id="i-circle-slash" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM3.965 13.096a6.5 6.5 0 0 0 9.131-9.131ZM1.5 8a6.474 6.474 0 0 0 1.404 4.035l9.131-9.131A6.499 6.499 0 0 0 1.5 8Z"/></symbol><symbol id="i-diamond" viewBox="0 0 16 16"><path d="M.527 9.237a1.75 1.75 0 0 1 0-2.474L6.777.512a1.75 1.75 0 0 1 2.475 0l6.251 6.25a1.75 1.75 0 0 1 0 2.475l-6.25 6.251a1.75 1.75 0 0 1-2.475 0L.527 9.238Zm1.06-1.414a.25.25 0 0 0 0 .354l6.251 6.25a.25.25 0 0 0 .354 0l6.25-6.25a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.354 0l-6.25 6.25Z"/></symbol><symbol id="i-sparkle" viewBox="0 0 16 16"><path d="M7.198.57c.275-.752 1.34-.752 1.615 0l.849 2.317a5.819 5.819 0 0 0 3.462 3.463l2.317.848c.753.275.753 1.34 0 1.615l-2.317.849a5.815 5.815 0 0 0-3.462 3.462l-.849 2.317c-.275.753-1.34.753-1.615 0l-.848-2.317a5.819 5.819 0 0 0-3.463-3.462L.57 8.813c-.752-.275-.752-1.34 0-1.615l2.317-.848A5.823 5.823 0 0 0 6.35 2.887L7.198.57Zm.562 2.833A7.323 7.323 0 0 1 3.403 7.76l-.673.246.673.246a7.324 7.324 0 0 1 4.357 4.356l.246.673.246-.673a7.322 7.322 0 0 1 4.356-4.356l.673-.246-.673-.246a7.324 7.324 0 0 1-4.356-4.357l-.246-.673-.246.673Z"/></symbol><symbol id="i-star-fill" viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></symbol></svg>
 <canvas id="rain" aria-hidden="true"></canvas>
 <div class="wrap">
-  <div class="notice-hell" style="margin:0 0 14px;padding:10px 14px;border:1px solid rgba(255,80,80,.55);background:rgba(255,60,60,.10);color:#ff8a8a;border-radius:2px;font-weight:700;text-align:center;line-height:1.6">🔥 公告：由于已经有很多选手把三道题全部攻破，即将开放「绝望炼狱」关卡！</div>
+  <div class="notice-hell" style="margin:0 0 14px;padding:10px 14px;border:1px solid rgba(255,80,80,.55);background:rgba(255,60,60,.10);color:#ff8a8a;border-radius:2px;font-weight:700;text-align:center;line-height:1.6"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 公告：由于已经有很多选手把三道题全部攻破，即将开放「绝望炼狱」关卡！</div>
   <header class="brand">
     <div class="brand-title"><span>火眼金睛</span> · AI 识图赛</div>
     <div class="brand-sub">HUOYANJINJING · AIMATCH</div>
@@ -130,13 +133,12 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   </section>
 
   <nav class="tabs" role="tablist">
-    <button class="active" data-panel="bank">📚 题库</button>
-    <button class="hell-tab" data-panel="hell">🔥 绝望炼狱</button>
-    <button data-panel="players">🤖 AI 选手</button>
-    <button data-panel="rules">📐 计分规则</button>
-    <button data-panel="hot">🔥 AI 热度榜</button>
-    <button data-panel="reserve">🪑 预备役AI选手</button>
-    <button data-panel="eliminated">❌ 被淘汰AI选手</button>
+    <button class="active" data-panel="bank"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg> 题库</button>
+    <button class="hell-tab" data-panel="hell"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 绝望炼狱</button>
+    <button data-panel="players"><svg class="ico" aria-hidden="true"><use href="#i-people"/></svg> 排行榜</button>
+    <button data-panel="rules"><svg class="ico" aria-hidden="true"><use href="#i-list-ordered"/></svg> 计分规则</button>
+    <button data-panel="reserve"><svg class="ico" aria-hidden="true"><use href="#i-hourglass"/></svg> 预备役AI选手</button>
+    <button data-panel="eliminated"><svg class="ico" aria-hidden="true"><use href="#i-x-circle"/></svg> 被淘汰AI选手</button>
   </nav>
 
   <section class="panel active" id="panel-bank">
@@ -146,7 +148,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
       <div class="stat"><strong>1·2·3</strong><span>青铜·荣耀·王者</span></div>
       <div class="stat"><strong>1–2 次</strong><span>作答机会</span></div>
     </div>
-    <p class="qhint">点下面的题号，看看每道题长什么样（绝望炼狱题在上方「🔥 绝望炼狱」单独题库）：</p>
+    <p class="qhint">点下面的题号，看看每道题长什么样（绝望炼狱题在上方「<svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 绝望炼狱」单独题库）：</p>
     <div class="qtabs">
       <button class="active" data-q="B-001"><b>B-001</b><span>青铜 · 1 分</span></button>
       <button data-q="R-001"><b>R-001</b><span>荣耀 · 2 分</span></button>
@@ -175,7 +177,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   </section>
 
   <section class="panel" id="panel-hell">
-    <h2>🔥 绝望炼狱 · 题库</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 绝望炼狱 · 题库</h2>
     <div class="hell-intro">三道普通题已被多名选手全部攻破，绝望炼狱就此开放。每题三次机会，越早答对分越高：第 1 轮答对 5 分（3 分 + 一次答对额外加 2 分），第 2 轮 2 分，第 3 轮 1 分，三轮全错 0 分。</div>
     <div class="stats">
       <div class="stat"><strong>2</strong><span>炼狱题目</span></div>
@@ -229,18 +231,18 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   </section>
 
   <section class="panel" id="panel-players">
-    <h2>AI 选手 · 本轮积分榜</h2>
+    <h2>排行榜 · 本轮积分</h2>
     <div class="board">
-      <div class="row"><div class="row-top"><span class="row-rank">🥇 第 1 名</span><span class="row-name">Gemini 4 Carbon</span><span class="row-total">11 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🥇 第 1 名</span><span class="row-name">豆包 Free Plan</span><span class="row-total">11 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 最终答对</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🥇 第 1 名</span><span class="row-name">Muse</span><span class="row-total">11 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 慢答后全对</b></span><span class="score">W-001：<b>3 分 · 慢答后全对</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🥈 第 2 名</span><span class="row-name">Gemini 4 Argon(高)</span><span class="row-total">10 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>3 分 · 秒答</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🥉 第 3 名</span><span class="row-name">Claude Opus 5.5</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 秒答</b></span><span class="score">W-001：<b>3 分 · 秒答</b></span><span class="score">H-001：<b>0 分 · 三轮全错</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🥉 第 3 名</span><span class="row-name">ChatGPT-6-luna(深度思考)</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 未拿额外加分</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>0 分 · 三轮全错</b></span></div></div>
-      <div class="cutline">🔥 淘汰线 · 低于 5 分止步绝望炼狱 🔥</div>
-      <div class="row doomed"><div class="row-top"><span class="row-rank">第 4 名</span><span class="row-name">GLM-5.3</span><span class="row-total">4 分</span></div><div class="row-scores"><span class="pill out">☠ 淘汰 · 止步绝望炼狱</span><span class="score">B-001：<b>0 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>0 分 · 第 2 轮放弃</b></span></div></div>
-      <div class="row doomed"><div class="row-top"><span class="row-rank">第 5 名</span><span class="row-name">DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="row-total">2 分</span></div><div class="row-scores"><span class="pill out">☠ 淘汰 · 止步绝望炼狱</span><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>0 分</b></span><span class="score">W-001：<b>0 分</b></span><span class="score">H-001：<b>1 分 · 第 3 轮答对</b></span></div></div>
-      <div class="row doomed"><div class="row-top"><span class="row-rank">第 6 名</span><span class="row-name">Claude Haiku 5.5(极高)</span><span class="row-total">1 分</span></div><div class="row-scores"><span class="pill out">☠ 淘汰 · 止步绝望炼狱</span><span class="score">B-001：<b>0 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>0 分</b></span><span class="score">H-001：<b>因 KYC 验证暂未挑战</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">第 1 名</span><span class="row-name">Gemini 4 Carbon</span><span class="row-total">11 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">第 1 名</span><span class="row-name">豆包 Free Plan</span><span class="row-total">11 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 最终答对</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">第 1 名</span><span class="row-name">Muse</span><span class="row-total">11 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 慢答后全对</b></span><span class="score">W-001：<b>3 分 · 慢答后全对</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">第 2 名</span><span class="row-name">Gemini 4 Argon(高)</span><span class="row-total">10 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>3 分 · 秒答</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">第 3 名</span><span class="row-name">Claude Opus 5.5</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 秒答</b></span><span class="score">W-001：<b>3 分 · 秒答</b></span><span class="score">H-001：<b>0 分 · 三轮全错</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">第 3 名</span><span class="row-name">ChatGPT-6-luna(深度思考)</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 未拿额外加分</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>0 分 · 三轮全错</b></span></div></div>
+      <div class="cutline"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 淘汰线 · 低于 5 分止步绝望炼狱 <svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg></div>
+      <div class="row doomed"><div class="row-top"><span class="row-rank">第 4 名</span><span class="row-name">GLM-5.3</span><span class="row-total">4 分</span></div><div class="row-scores"><span class="pill out"><svg class="ico" aria-hidden="true"><use href="#i-circle-slash"/></svg> 淘汰 · 止步绝望炼狱</span><span class="score">B-001：<b>0 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>0 分 · 第 2 轮放弃</b></span></div></div>
+      <div class="row doomed"><div class="row-top"><span class="row-rank">第 5 名</span><span class="row-name">DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="row-total">2 分</span></div><div class="row-scores"><span class="pill out"><svg class="ico" aria-hidden="true"><use href="#i-circle-slash"/></svg> 淘汰 · 止步绝望炼狱</span><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>0 分</b></span><span class="score">W-001：<b>0 分</b></span><span class="score">H-001：<b>1 分 · 第 3 轮答对</b></span></div></div>
+      <div class="row doomed"><div class="row-top"><span class="row-rank">第 6 名</span><span class="row-name">Claude Haiku 5.5(极高)</span><span class="row-total">1 分</span></div><div class="row-scores"><span class="pill out"><svg class="ico" aria-hidden="true"><use href="#i-circle-slash"/></svg> 淘汰 · 止步绝望炼狱</span><span class="score">B-001：<b>0 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>0 分</b></span><span class="score">H-001：<b>因 KYC 验证暂未挑战</b></span></div></div>
     </div>
     <p class="small">本轮满分 11 分（B-001 1 分 + R-001 2 分 + W-001 3 分 + H-001 绝望炼狱最高 5 分）。H-001 目前 Gemini 4 Carbon、豆包 Free Plan、Gemini 4 Argon(高)、Muse 都是第 1 轮直接答对拿 5 分；DeepSeek V4 Pro(深度思考+联网搜索) 第 3 轮答对拿 1 分；Claude Opus 5.5 三轮全错得 0 分，成为绝望炼狱第一个被拿下一血的选手；ChatGPT-6-luna(深度思考) 同样三轮全错得 0 分，炼狱双连；GLM-5.3 第 2 轮直接放弃得 0 分，炼狱三连；Claude Haiku 5.5(极高) 因试用 Pro 时触发 KYC 验证，暂未挑战；其他选手尚未挑战，H-001 暂按 0 分计。B-001 青铜题已全部测完、答案公开：除 Claude Haiku 5.5(极高) 和 GLM-5.3 外，其他选手都答对了。豆包 Free Plan 荣耀题起初只对一半（把官方《罗德岛学院》PV 说成二创），但最终答对，故按满分计。Muse 荣耀、王者题均为慢答后全对。Grok 4.7、Grok 4.5 为预备役选手，不在积分榜里，见“预备役AI选手”。排名按分数段算：11 分第 1 名，10 分第 2 名，6 分的都是第 3 名，4 分第 4 名，2 分第 5 名，1 分第 6 名，不按人数顺延。</p>
   </section>
@@ -248,33 +250,17 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   <section class="panel" id="panel-rules">
     <h2>赛制 · 花果山 → 灵台方寸山</h2>
     <div class="cards">
-      <div class="card"><div class="num" style="color:#c99a5b">🥉 青铜 · 1 分</div><h3>官方图片直出</h3><p>直接从官方图片里出题，只有一次机会。</p></div>
-      <div class="card"><div class="num" style="color:#9fb1bc">🥈 白银 · 1 分</div><h3>二创随机找图</h3><p>从二创里随机找图，只有一次机会。</p></div>
-      <div class="card"><div class="num" style="color:#9a82c9">💎 钻石 · 2 分</div><h3>最新官方图 / 梗图</h3><p>从最新官方图片出题，拼速度和效率；或从二创图、国内外梗图出题，只有两次机会。</p></div>
+      <div class="card"><div class="num" style="color:#c99a5b">青铜 · 1 分</div><h3>官方图片直出</h3><p>直接从官方图片里出题，只有一次机会。</p></div>
+      <div class="card"><div class="num" style="color:#9fb1bc">白银 · 1 分</div><h3>二创随机找图</h3><p>从二创里随机找图，只有一次机会。</p></div>
+      <div class="card"><div class="num" style="color:#9a82c9"><svg class="ico" aria-hidden="true"><use href="#i-diamond"/></svg> 钻石 · 2 分</div><h3>最新官方图 / 梗图</h3><p>从最新官方图片出题，拼速度和效率；或从二创图、国内外梗图出题，只有两次机会。</p></div>
     </div>
-    <div class="note" style="margin-top:14px">🌸 <b>花果山分界线：</b>以上为花果山关卡。只要有一个 AI 一轮通过花果山关卡的考验，就直接进入以下难度关卡。</div>
+    <div class="note" style="margin-top:14px"><svg class="ico" aria-hidden="true"><use href="#i-sparkle"/></svg> <b>花果山分界线：</b>以上为花果山关卡。只要有一个 AI 一轮通过花果山关卡的考验，就直接进入以下难度关卡。</div>
     <h2>灵台方寸山 · 进阶关卡</h2>
     <div class="cards">
-      <div class="card"><div class="num" style="color:#c25566">👑 荣耀 · 2 分</div><h3>官方最新视频截图 · 两次机会</h3><p>从官方最新的视频里挑一张截图来找，或者从小众二创里找图，只有两次机会。本轮 R-001 即属此级。</p></div>
-      <div class="card"><div class="num" style="color:#4fb8c4">👑 王者 · 3 分</div><h3>小众 / 最新 / 极模糊 · 两次机会</h3><p>从很小众官方发布的最新六小时以内的图片，或视频截图，或极其模糊的图片、马赛克图来找，只有两次机会。本轮 W-001 即属此级。</p></div>
-      <div class="card"><div class="num" style="color:#ff8a8a">🔥 绝望炼狱 · 最高 5 分</div><h3>三次机会 · 越早答对分越高</h3><p>第 1 轮提示词固定为「这是谁？」，答对得 5 分（3 分 + 一次答对额外加 2 分）；第 2 轮给一条提示，答对 2 分；第 3 轮再追问一次，答对 1 分；三轮都错 0 分。本轮 H-001 即属此级。</p></div>
-      <div class="card"><div class="num">📐 分值总览</div><h3>青铜到白银 1 分</h3><p>钻石到荣耀 2 分，王者 3 分。答对即给分，荣耀题答对一半算 1 分。荣耀、王者题各有两次机会，取两次中最好的一次计分。</p></div>
-    </div>
-  </section>
-
-  <section class="panel" id="panel-hot">
-    <h2>AI 热度榜 · 本轮</h2>
-    <p class="small">按本轮成绩与场上讨论度排序，非外部投票票数；预备役选手不参与本轮热度排名。</p>
-    <div class="board">
-      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥🔥🔥</span><span class="row-name">Gemini 4 Carbon</span><span class="row-total">11 分</span></div><p class="small" style="margin:8px 0 0">新选手，四题全对，马赛克 Rick Astley 一眼认出，绝望炼狱 H-001 第 1 轮就叫出塔露拉全名</p></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥🔥🔥</span><span class="row-name">豆包 Free Plan</span><span class="row-total">11 分</span></div><p class="small" style="margin:8px 0 0">四题全对，荣耀题起初的二创误判成了话题，绝望炼狱 H-001 第 1 轮认出塔露拉</p></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥🔥🔥</span><span class="row-name">Muse</span><span class="row-total">11 分</span></div><p class="small" style="margin:8px 0 0">四题全对，荣耀、王者题靠提示慢答锁定，绝望炼狱 H-001 却第 1 轮直接认出塔露拉</p></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥🔥</span><span class="row-name">Gemini 4 Argon(高)</span><span class="row-total">10 分</span></div><p class="small" style="margin:8px 0 0">青铜、王者题都拿下，荣耀题只对一半，绝望炼狱 H-001 第 1 轮认出塔露拉</p></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥🔥</span><span class="row-name">Claude Opus 5.5</span><span class="row-total">6 分</span></div><p class="small" style="margin:8px 0 0">前三题全对，荣耀、王者题秒答，却在绝望炼狱 H-001 三轮全错，被拿下炼狱一血</p></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥</span><span class="row-name">ChatGPT-6-luna(深度思考)</span><span class="row-total">6 分</span></div><p class="small" style="margin:8px 0 0">前三题全对，稳但没拿到额外加分，绝望炼狱 H-001 三轮全错，紧随 Opus 成为炼狱双连</p></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🔥🔥</span><span class="row-name">GLM-5.3</span><span class="row-total">4 分</span></div><p class="small" style="margin:8px 0 0">新选手，王者题拿满，荣耀题对一半，青铜题没认出佩丽卡，绝望炼狱 H-001 第 2 轮直接放弃，炼狱三连</p></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🔥</span><span class="row-name">DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="row-total">2 分</span></div><p class="small" style="margin:8px 0 0">荣耀、王者题全错，青铜题拿 1 分，绝望炼狱第 3 轮才认出塔露拉再拿 1 分</p></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🔥</span><span class="row-name">Claude Haiku 5.5(极高)</span><span class="row-total">1 分</span></div><p class="small" style="margin:8px 0 0">只拿到荣耀题一半的 1 分，青铜题也没认出，绝望炼狱因 KYC 验证暂未挑战</p></div>
+      <div class="card"><div class="num" style="color:#c25566"><svg class="ico" aria-hidden="true"><use href="#i-star-fill"/></svg> 荣耀 · 2 分</div><h3>官方最新视频截图 · 两次机会</h3><p>从官方最新的视频里挑一张截图来找，或者从小众二创里找图，只有两次机会。本轮 R-001 即属此级。</p></div>
+      <div class="card"><div class="num" style="color:#4fb8c4"><svg class="ico" aria-hidden="true"><use href="#i-star-fill"/></svg> 王者 · 3 分</div><h3>小众 / 最新 / 极模糊 · 两次机会</h3><p>从很小众官方发布的最新六小时以内的图片，或视频截图，或极其模糊的图片、马赛克图来找，只有两次机会。本轮 W-001 即属此级。</p></div>
+      <div class="card"><div class="num" style="color:#ff8a8a"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 绝望炼狱 · 最高 5 分</div><h3>三次机会 · 越早答对分越高</h3><p>第 1 轮提示词固定为「这是谁？」，答对得 5 分（3 分 + 一次答对额外加 2 分）；第 2 轮给一条提示，答对 2 分；第 3 轮再追问一次，答对 1 分；三轮都错 0 分。本轮 H-001 即属此级。</p></div>
+      <div class="card"><div class="num"><svg class="ico" aria-hidden="true"><use href="#i-list-ordered"/></svg> 分值总览</div><h3>青铜到白银 1 分</h3><p>钻石到荣耀 2 分，王者 3 分。答对即给分，荣耀题答对一半算 1 分。荣耀、王者题各有两次机会，取两次中最好的一次计分。</p></div>
     </div>
   </section>
 
@@ -283,15 +269,15 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
     <h2>预备役AI选手</h2>
     <p class="small">预备役选手不在积分榜里显示，等条件具备后再上场补测，成绩到时再记。</p>
     <div class="board">
-      <div class="row"><div class="row-top"><span class="row-rank">🪑 预留</span><span class="row-name">Grok 4.7</span><span class="row-total">—</span></div><div class="row-scores"><span class="pill wait">位置预留 · 未开 Premium，尚未测试</span></div><p class="small" style="margin:10px 0 0">4.7 付费版还没测，等开了 Premium 再上场。免费版 Grok 4.5 也在预备役。</p></div>
-      <div class="row"><div class="row-top"><span class="row-rank">🪑 预留</span><span class="row-name">Grok 4.5</span><span class="row-total">—</span></div><div class="row-scores"><span class="pill wait">从淘汰改为预备役 · 暂不计分</span></div><p class="small" style="margin:10px 0 0">免费版即 Grok 4.5，之前取消了参赛资格，现改为预备役，之后再补测。</p></div>
+      <div class="row"><div class="row-top"><span class="row-rank"><svg class="ico" aria-hidden="true"><use href="#i-hourglass"/></svg> 预留</span><span class="row-name">Grok 4.7</span><span class="row-total">—</span></div><div class="row-scores"><span class="pill wait">位置预留 · 未开 Premium，尚未测试</span></div><p class="small" style="margin:10px 0 0">4.7 付费版还没测，等开了 Premium 再上场。免费版 Grok 4.5 也在预备役。</p></div>
+      <div class="row"><div class="row-top"><span class="row-rank"><svg class="ico" aria-hidden="true"><use href="#i-hourglass"/></svg> 预留</span><span class="row-name">Grok 4.5</span><span class="row-total">—</span></div><div class="row-scores"><span class="pill wait">从淘汰改为预备役 · 暂不计分</span></div><p class="small" style="margin:10px 0 0">免费版即 Grok 4.5，之前取消了参赛资格，现改为预备役，之后再补测。</p></div>
     </div>
   </section>
 
 
   <section class="panel" id="panel-eliminated">
     <h2>被淘汰AI选手</h2>
-    <p class="small">以下选手已出局，不再出现在积分榜和 AI 选手榜里。</p>
+    <p class="small">以下选手已出局，不再出现在排行榜里。</p>
     <div class="board">
       <p class="small">目前没有被淘汰的选手。</p>
     </div>
