@@ -32,14 +32,13 @@ a{color:#ff6b9d}
 <h2>1 · 选选手并抽题</h2>
 <label>AI 选手</label>
 <select id="player">
-<option>Gemini 4 Carbon</option><option>豆包 Free Plan</option><option>Muse</option><option>Gemini 4 Argon(高)</option><option>Gemini 4 Hydrogen</option><option>Claude Opus 5.5</option><option>ChatGPT-6-luna(深度思考)</option><option>GLM-5.3</option><option>DeepSeek V4 Pro(深度思考+联网搜索)</option><option>Claude Haiku 5.5(极高)</option><option>Grok 4.7（预备役）</option><option>Grok 4.5（预备役）</option><option value="custom">自定义…</option>
+<option>pickle</option><option>Gemini 4 Carbon</option><option>豆包 Free Plan</option><option>Muse</option><option>Gemini 4 Argon(高)</option><option>Gemini 4 Hydrogen</option><option>Claude Opus 5.5</option><option>ChatGPT-6-luna(深度思考)</option><option>GLM-5.3</option><option>DeepSeek V4 Pro(深度思考+联网搜索)</option><option>Claude Haiku 5.5(极高)</option><option value="custom">自定义…</option>
 </select>
 <label>自定义选手名（选自定义时填）</label>
 <input id="customName" placeholder="例如：新选手名">
 <button class="primary" id="drawBtn" onclick="draw()">🎲 随机抽题</button>
-<button class="ghost" onclick="previewPending()">预览 H-002（尚未开测）</button>
 <button class="ghost" onclick="resetAll()">清空本机测试记录</button>
-<p class="small">题库现有 5 题。随机抽题含已开测的 4 题：B-001（青铜，1 分，一次机会）、R-001（荣耀，2 分，两次机会）、W-001（王者，3 分，两次机会）、H-001（绝望炼狱，三次机会，第 1 轮 5 分 / 第 2 轮 2 分 / 第 3 轮 1 分）。H-002 尚未开测，不进入随机抽题，答案也不在本页；可用「预览 H-002」只看图和提示词。抽题在未出过的已开测题里优先随机，全部出过一轮后自动重新洗牌。</p>
+<p class="small">题库现有 6 题，全部已开测，均可进入随机抽题：B-001（青铜，1 分，一次机会）、R-001（荣耀，2 分，两次机会）、W-001（王者，3 分，两次机会）、H-001 / H-002 / H-003（绝望炼狱，三次机会，第 1 轮 5 分 / 第 2 轮 2 分 / 第 3 轮 1 分）。H-002、H-003 答案暂不公布，本页不提供自动判定，请手动判对或判错。抽题在未出过的题里优先随机，全部出过一轮后自动重新洗牌。</p>
 </div>
 
 <div class="card" id="qcard" style="display:none">
@@ -58,7 +57,7 @@ a{color:#ff6b9d}
 <button class="bad" onclick="judge('wrong')">❌ 判错</button>
 </div>
 <p class="small" id="autoHint" style="font-weight:700"></p>
-<p class="small">判定标准：B-001 只要说出佩丽卡（Perlica）即全对。R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。H-001 只要说出塔露拉即算对，按当前轮计分（第 1 轮 5 分，第 2 轮 2 分，第 3 轮 1 分），没有「对一半」。H-002 尚未开测，本页不提供自动判定。粘贴回复后会实时给出自动判定建议，点「自动判定」按建议计分；觉得判得不对，可改用手动按钮。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
+<p class="small">判定标准：B-001 只要说出佩丽卡（Perlica）即全对。R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。H-001 只要说出塔露拉即算对，按当前轮计分（第 1 轮 5 分，第 2 轮 2 分，第 3 轮 1 分），没有「对一半」。H-002、H-003 已开测，答案暂不公布，本页不提供自动判定，可手动判对或判错。粘贴回复后会实时给出自动判定建议，点「自动判定」按建议计分；觉得判得不对，可改用手动按钮。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
 <p class="small" id="keywordHint"></p>
 <div class="result" id="result"></div>
 <button class="primary" id="nextBtn" style="display:none" onclick="draw()">下一题 →</button>
@@ -92,8 +91,12 @@ const BANK=[
   prompts:['这是谁？','再看看，这是一款手游里的角色，画的是 Q 版。','不对，你再想一想，这就是《明日方舟》里的角色的表情包。'],
   groups:[{name:'人物',keys:['塔露拉','Talulah']}],
   traps:[],given:{}},
- {id:'H-002',tier:'绝望炼狱',points:5,half:0,chances:3,roundPoints:[5,2,1],pending:true,img:'images/H-002.jpg',
+ {id:'H-002',tier:'绝望炼狱',points:5,half:0,chances:3,roundPoints:[5,2,1],answerHidden:true,img:'images/H-002.jpg',
   prompts:['这是谁？','不对，接着猜。','不对，接着猜。'],
+  groups:[],
+  traps:[],given:{}},
+ {id:'H-003',tier:'绝望炼狱',points:5,half:0,chances:3,roundPoints:[5,2,1],answerHidden:true,img:'images/H-003.jpg',
+  prompts:['这是谁？','再看看，这是一款手游里的角色，画的是 Q 版，背景是游戏里的一个界面主题。','不对，继续找。'],
   groups:[],
   traps:[],given:{}}
 ];
@@ -103,17 +106,17 @@ function setJudgeButtons(){
   var auto=document.querySelector("button[onclick='autoJudge()']");
   if(!cur){return;}
   if(half) half.style.display=cur.half?'inline-block':'none';
-  if(auto) auto.style.display=cur.pending?'none':'inline-block';
+  if(auto) auto.style.display=(cur.pending||cur.answerHidden)?'none':'inline-block';
 }
 function showQuestion(q,intoUsed){
   cur=q; round=1;
   if(intoUsed && !used.includes(cur.id)) used.push(cur.id);
   document.getElementById('qcard').style.display='block';
   var pts=cur.roundPoints?('第 1 / 2 / 3 轮为 '+cur.roundPoints.join(' / ')+' 分'):('满分 '+cur.points+' 分');
-  document.getElementById('qmeta').innerHTML='<span class="pill">'+cur.id+'</span><span class="pill">'+cur.tier+'</span><span class="pill">'+pts+'</span><span class="pill">共 '+cur.chances+' 次机会</span>'+(cur.pending?'<span class="pill">尚未开测</span>':'')+'<span class="pill">选手：'+playerName()+'</span>';
+  document.getElementById('qmeta').innerHTML='<span class="pill">'+cur.id+'</span><span class="pill">'+cur.tier+'</span><span class="pill">'+pts+'</span><span class="pill">共 '+cur.chances+' 次机会</span>'+(cur.pending?'<span class="pill">尚未开测</span>':'')+(cur.answerHidden?'<span class="pill">已开测，答案稍后公布</span>':'')+'<span class="pill">选手：'+playerName()+'</span>';
   document.getElementById('qimg').src=cur.img;
   document.getElementById('prompt').textContent='第 1 轮提示词：'+cur.prompts[0];
-  document.getElementById('hint').textContent=cur.pending?'此题尚未开测，本页不提供答案和自动判定，仅预览题目与提示词。':'第 1 / '+cur.chances+' 轮，还有 '+(cur.chances-1)+' 次机会。';
+  document.getElementById('hint').textContent=cur.pending?'此题尚未开测，本页不提供答案和自动判定，仅预览题目与提示词。':(cur.answerHidden?'此题已开测，答案稍后公布，本页不提供自动判定，请手动判对或判错。':'第 1 / '+cur.chances+' 轮，还有 '+(cur.chances-1)+' 次机会。');
   document.getElementById('reply').value='';document.getElementById('result').textContent='';document.getElementById('keywordHint').textContent='';document.getElementById('autoHint').textContent='';
   document.getElementById('nextBtn').style.display='none';
   setJudgeButtons();
@@ -131,11 +134,6 @@ function draw(){
   const pool=live.filter(q=>!used.includes(q.id));
   if(!pool.length){alert('没有可抽的已开测题');return;}
   showQuestion(pool[Math.floor(Math.random()*pool.length)],true);
-}
-function previewPending(){
-  const q=BANK.find(x=>x.id==='H-002');
-  if(!q) return;
-  showQuestion(q,false);
 }
 function copyPrompt(){navigator.clipboard.writeText(document.getElementById('prompt').textContent.replace(/^第 \d+ 轮提示词：/,''));alert('提示词已复制，去发给 AI 吧');}
 function roundPts(){
@@ -211,7 +209,7 @@ function autoText(a){
 }
 function autoJudge(){
   if(!cur) return;
-  if(cur.pending){alert('此题尚未开测，本页不提供自动判定。');return;}
+  if(cur.pending||cur.answerHidden){alert('此题答案尚未公布，本页不提供自动判定。');return;}
   const reply=document.getElementById('reply').value.trim();
   if(!reply){alert('先把 AI 的回复粘贴进来');return;}
   judge(analyze(reply).verdict);
