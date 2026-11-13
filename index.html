@@ -129,6 +129,10 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
 .hell-res .ok{color:#7dffb0;font-weight:700;white-space:nowrap}
 .hell-res .bad{color:#ff6a50;font-weight:700;white-space:nowrap}
 .hell-res .na{color:#9a8a86;white-space:nowrap}
+.hell-res.bank-res div{border-color:rgba(79,184,196,.22);background:rgba(79,184,196,.08);color:var(--ink)}
+.hell-res.bank-res .ok{color:var(--green)}
+.hell-res.bank-res .partial{color:var(--amber);font-weight:700;white-space:nowrap}
+.hell-res.bank-res .bad{color:var(--red)}
 .copy-btn{display:inline-flex;align-items:center;gap:5px;margin:4px 0 2px;border:1px solid var(--cyan);background:rgba(79,184,196,.08);color:var(--cyan);font-family:inherit;font-size:12px;font-weight:700;padding:4px 10px;border-radius:2px;cursor:pointer;white-space:nowrap;transition:all .2s}
 .copy-btn:hover{background:rgba(79,184,196,.18)}
 .copy-btn.done{border-color:var(--green);color:var(--green)}
@@ -183,6 +187,18 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
         <div class="prompt-line">提示词：「这是什么角色？」<button type="button" class="copy-btn" data-copy="这是什么角色？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></div>
         <img src="images/B-001.jpg" alt="B-001 题目图" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>佩丽卡 Perlica，《明日方舟：终末地》角色。<br><b>判定：</b>说出角色名即算全对，只有一次机会。</details>
+        <div class="hell-res bank-res">
+          <div><span>Gemini 4 Carbon</span><span class="ok">通过 · 1 分</span></div>
+          <div><span>豆包 Free Plan</span><span class="ok">通过 · 1 分</span></div>
+          <div><span>Muse</span><span class="ok">通过 · 1 分</span></div>
+          <div><span>Gemini 4 Argon(高)</span><span class="ok">通过 · 1 分</span></div>
+          <div><span>Gemini 4 Hydrogen</span><span class="ok">通过 · 1 分</span></div>
+          <div><span>Claude Opus 5.5</span><span class="ok">通过 · 1 分</span></div>
+          <div><span>ChatGPT-6-luna(深度思考)</span><span class="ok">通过 · 1 分</span></div>
+          <div><span>DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="ok">通过 · 1 分</span></div>
+          <div><span>GLM-5.3</span><span class="bad">未通过 · 0 分</span></div>
+          <div><span>Claude Haiku 5.5(极高)</span><span class="bad">未通过 · 0 分</span></div>
+        </div>
       </div>
       <div class="card qcard" id="q-R-001">
         <div class="num">R-001 · 荣耀 · 2 分 · 两次机会</div>
@@ -190,6 +206,18 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
         <div class="prompt-line">提示词：「这是谁？出自哪里？」<button type="button" class="copy-btn" data-copy="这是谁？出自哪里？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></div>
         <img src="images/R-001.jpg" alt="R-001 能天使 Q 版图" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>能天使 Exusiai（蕾缪乐），《明日方舟》6★ 狙击干员，企鹅物流，拉特兰萨科塔。<br><b>出处：</b>官方《罗德岛学院》PV，不是二创。关键特征：红发、倾斜的发光光环、领带上的红色苹果、胸前 IDENTITY CARD 工牌、青绿色墙面与身后的大淡黄星星。</details>
+        <div class="hell-res bank-res">
+          <div><span>Gemini 4 Carbon</span><span class="ok">通过 · 2 分</span></div>
+          <div><span>豆包 Free Plan</span><span class="ok">最终答对 · 2 分</span></div>
+          <div><span>Muse</span><span class="ok">慢答后全对 · 2 分</span></div>
+          <div><span>Claude Opus 5.5</span><span class="ok">秒答 · 2 分</span></div>
+          <div><span>ChatGPT-6-luna(深度思考)</span><span class="ok">通过 · 2 分</span></div>
+          <div><span>Gemini 4 Argon(高)</span><span class="partial">答对一半 · 1 分</span></div>
+          <div><span>Gemini 4 Hydrogen</span><span class="partial">答对一半 · 1 分</span></div>
+          <div><span>GLM-5.3</span><span class="partial">答对一半 · 1 分</span></div>
+          <div><span>Claude Haiku 5.5(极高)</span><span class="partial">答对一半 · 1 分</span></div>
+          <div><span>DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="bad">未通过 · 0 分</span></div>
+        </div>
       </div>
       <div class="card qcard" id="q-W-001">
         <div class="num">W-001 · 王者 · 3 分 · 两次机会</div>
@@ -197,6 +225,18 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
         <div class="prompt-line">提示词：「这张马赛克图里的人是谁？这是什么梗？」<button type="button" class="copy-btn" data-copy="这张马赛克图里的人是谁？这是什么梗？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></div>
         <img src="images/W-001.jpg" alt="W-001 马赛克西装男" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>Rick Astley（理查德·艾斯利），英国歌手。<br><b>出处 / 梗：</b>1987 年《Never Gonna Give You Up》MV，即 Rickroll / 瑞克摇摆。五官已被马赛克完全遮住，认的是梗：用“白嫖福利”做诱饵，点进去就放这首歌；深色西装、白衬衫、斜条纹领带与 MV 造型一致。</details>
+        <div class="hell-res bank-res">
+          <div><span>Gemini 4 Carbon</span><span class="ok">通过 · 3 分</span></div>
+          <div><span>豆包 Free Plan</span><span class="ok">通过 · 3 分</span></div>
+          <div><span>Muse</span><span class="ok">慢答后全对 · 3 分</span></div>
+          <div><span>Gemini 4 Argon(高)</span><span class="ok">秒答 · 3 分</span></div>
+          <div><span>Gemini 4 Hydrogen</span><span class="ok">通过 · 3 分</span></div>
+          <div><span>Claude Opus 5.5</span><span class="ok">秒答 · 3 分</span></div>
+          <div><span>ChatGPT-6-luna(深度思考)</span><span class="ok">通过 · 3 分</span></div>
+          <div><span>GLM-5.3</span><span class="ok">通过 · 3 分</span></div>
+          <div><span>DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="bad">未通过 · 0 分</span></div>
+          <div><span>Claude Haiku 5.5(极高)</span><span class="bad">未通过 · 0 分</span></div>
+        </div>
       </div>
     </div>
   </section>
