@@ -37,8 +37,9 @@ a{color:#ff6b9d}
 <label>自定义选手名（选自定义时填）</label>
 <input id="customName" placeholder="例如：新选手名">
 <button class="primary" id="drawBtn" onclick="draw()">🎲 随机抽题</button>
+<button class="ghost" onclick="previewEntry()">测 L-001（入门测试）</button>
 <button class="ghost" onclick="resetAll()">清空本机测试记录</button>
-<p class="small">题库现有 6 题，全部已开测，均可进入随机抽题：B-001（青铜，1 分，一次机会）、R-001（荣耀，2 分，两次机会）、W-001（王者，3 分，两次机会）、H-001 / H-002 / H-003（绝望炼狱，三次机会，第 1 轮 5 分 / 第 2 轮 2 分 / 第 3 轮 1 分）。H-003 已完成测试，认出可露希尔并认出卫戍协议终端主题算全对，只认出可露希尔算对一半，支持自动判定；答对一半按 2 分算（老板特批）。H-002 答案暂不公布，本页不提供自动判定，请手动判对或判错。抽题在未出过的题里优先随机，全部出过一轮后自动重新洗牌。</p>
+<p class="small">题库现有 7 题，其中正式比赛 6 题进入随机抽题：B-001（青铜，1 分，一次机会）、R-001（荣耀，2 分，两次机会）、W-001（王者，3 分，两次机会）、H-001 / H-002 / H-003（绝望炼狱，三次机会，第 1 轮 5 分 / 第 2 轮 2 分 / 第 3 轮 1 分）。L-001 为入门测试，不计分，不进入随机抽题，可用「测 L-001」单独测试，判定为通过或未通过、不加分。H-003 已完成测试，认出可露希尔并认出卫戍协议终端主题算全对，只认出可露希尔算对一半，支持自动判定；答对一半按 2 分算。H-002 答案暂不公布，本页不提供自动判定，请手动判对或判错。抽题在未出过的正式题里优先随机，全部出过一轮后自动重新洗牌。</p>
 </div>
 
 <div class="card" id="qcard" style="display:none">
@@ -57,7 +58,7 @@ a{color:#ff6b9d}
 <button class="bad" onclick="judge('wrong')">❌ 判错</button>
 </div>
 <p class="small" id="autoHint" style="font-weight:700"></p>
-<p class="small">判定标准：B-001 只要说出佩丽卡（Perlica）即全对。R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。H-001 只要说出塔露拉即算全对，按当前轮计分（第 1 轮 5 分，第 2 轮 2 分，第 3 轮 1 分）。H-003 全对 = 认出可露希尔 + 卫戍协议终端主题，按当前轮计分；对一半 = 只认出可露希尔，计 2 分（老板特批）。绝望炼狱题也可手动判「对一半 · 2 分」。H-002 已开测，答案暂不公布，本页不提供自动判定，可手动判对、对一半或判错。粘贴回复后会实时给出自动判定建议，点「自动判定」按建议计分；觉得判得不对，可改用手动按钮。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
+<p class="small">判定标准：B-001 只要说出佩丽卡（Perlica）即全对。R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。L-001 只要说出昔涟即算通过，不计分，只有一次机会，判定为通过或未通过。H-001 只要说出塔露拉即算全对，按当前轮计分（第 1 轮 5 分，第 2 轮 2 分，第 3 轮 1 分）。H-003 全对 = 认出可露希尔 + 卫戍协议终端主题，按当前轮计分；对一半 = 只认出可露希尔，计 2 分。绝望炼狱题也可手动判「对一半 · 2 分」。H-002 已开测，答案暂不公布，本页不提供自动判定，可手动判对、对一半或判错。粘贴回复后会实时给出自动判定建议，点「自动判定」按建议计分；觉得判得不对，可改用手动按钮。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
 <p class="small" id="keywordHint"></p>
 <div class="result" id="result"></div>
 <button class="primary" id="nextBtn" style="display:none" onclick="draw()">下一题 →</button>
@@ -98,28 +99,36 @@ const BANK=[
  {id:'H-003',tier:'绝望炼狱',points:5,half:2,chances:3,roundPoints:[5,2,1],img:'images/H-003.jpg',
   prompts:['这是谁？','再看看，这是一款手游里的角色，画的是 Q 版，背景是游戏里的一个界面主题。','不对，继续找。'],
   groups:[{name:'人物',keys:['可露希尔','Closure']},{name:'出处',keys:['卫戍协议','全能开发者','全能的']}],
+  traps:[],given:{}},
+ {id:'L-001',tier:'入门测试',points:0,half:0,chances:1,entry:true,img:'images/L-001.jpg',
+  prompts:['这是谁？'],
+  groups:[{name:'人物',keys:['昔涟']}],
   traps:[],given:{}}
 ];
-function playable(){return BANK.filter(q=>!q.pending);}
+function playable(){return BANK.filter(q=>!q.pending && !q.entry);}
 function setJudgeButtons(){
   var half=document.querySelector("button[onclick=\"judge('half')\"]");
   var auto=document.querySelector("button[onclick='autoJudge()']");
+  var full=document.querySelector("button[onclick=\"judge('full')\"]");
+  var wrong=document.querySelector("button[onclick=\"judge('wrong')\"]");
   if(!cur){return;}
   if(half){
     half.style.display=cur.half?'inline-block':'none';
     half.textContent=cur.roundPoints?('◐ 对一半 · '+cur.half+' 分'):'◐ 判对一半';
   }
+  if(full) full.textContent=cur.entry?'✅ 通过':'✅ 判对 · 满分';
+  if(wrong) wrong.textContent=cur.entry?'❌ 未通过':'❌ 判错';
   if(auto) auto.style.display=(cur.pending||cur.answerHidden)?'none':'inline-block';
 }
 function showQuestion(q,intoUsed){
   cur=q; round=1;
   if(intoUsed && !used.includes(cur.id)) used.push(cur.id);
   document.getElementById('qcard').style.display='block';
-  var pts=cur.roundPoints?('第 1 / 2 / 3 轮为 '+cur.roundPoints.join(' / ')+' 分'):('满分 '+cur.points+' 分');
+  var pts=cur.entry?'不计分':(cur.roundPoints?('第 1 / 2 / 3 轮为 '+cur.roundPoints.join(' / ')+' 分'):('满分 '+cur.points+' 分'));
   document.getElementById('qmeta').innerHTML='<span class="pill">'+cur.id+'</span><span class="pill">'+cur.tier+'</span><span class="pill">'+pts+'</span><span class="pill">共 '+cur.chances+' 次机会</span>'+(cur.pending?'<span class="pill">尚未开测</span>':'')+(cur.answerHidden?'<span class="pill">已开测，答案稍后公布</span>':'')+'<span class="pill">选手：'+playerName()+'</span>';
   document.getElementById('qimg').src=cur.img;
-  document.getElementById('prompt').textContent='第 1 轮提示词：'+cur.prompts[0];
-  document.getElementById('hint').textContent=cur.pending?'此题尚未开测，本页不提供答案和自动判定，仅预览题目与提示词。':(cur.answerHidden?'此题已开测，答案稍后公布，本页不提供自动判定，请手动判对或判错。':'第 1 / '+cur.chances+' 轮，还有 '+(cur.chances-1)+' 次机会。');
+  document.getElementById('prompt').textContent=(cur.entry?'提示词：':'第 1 轮提示词：')+cur.prompts[0];
+  document.getElementById('hint').textContent=cur.entry?'入门测试，只有一次机会，答对为通过，不计分。':(cur.pending?'此题尚未开测，本页不提供答案和自动判定，仅预览题目与提示词。':(cur.answerHidden?'此题已开测，答案稍后公布，本页不提供自动判定，请手动判对或判错。':'第 1 / '+cur.chances+' 轮，还有 '+(cur.chances-1)+' 次机会。'));
   document.getElementById('reply').value='';document.getElementById('result').textContent='';document.getElementById('keywordHint').textContent='';document.getElementById('autoHint').textContent='';
   document.getElementById('nextBtn').style.display='none';
   setJudgeButtons();
@@ -138,7 +147,12 @@ function draw(){
   if(!pool.length){alert('没有可抽的已开测题');return;}
   showQuestion(pool[Math.floor(Math.random()*pool.length)],true);
 }
-function copyPrompt(){navigator.clipboard.writeText(document.getElementById('prompt').textContent.replace(/^第 \d+ 轮提示词：/,''));alert('提示词已复制，去发给 AI 吧');}
+function previewEntry(){
+  const q=BANK.find(x=>x.id==='L-001');
+  if(!q) return;
+  showQuestion(q,false);
+}
+function copyPrompt(){navigator.clipboard.writeText(document.getElementById('prompt').textContent.replace(/^第 \d+ 轮提示词：/,'').replace(/^提示词：/,''));alert('提示词已复制，去发给 AI 吧');}
 function roundPts(){
   if(cur.roundPoints&&cur.roundPoints[round-1]!=null) return cur.roundPoints[round-1];
   return cur.points;
@@ -150,6 +164,11 @@ function judge(kind){
   document.getElementById('keywordHint').textContent=reply.trim()?autoText(analyze(reply)):'';
   const name=playerName();
   if(kind==='full'){
+    if(cur.entry){
+      addScore(name,0,cur.id+' 通过（不计分）');
+      end(name+' 入门测试通过，不计分，本题结束。');
+      return;
+    }
     const pts=roundPts();
     addScore(name,pts,cur.id+(cur.roundPoints?(' 第 '+round+' 轮答对 +'+pts+' 分'):(' 全对 +'+pts+' 分')));
     end(name+' 本题答对，+'+pts+' 分，本题结束。');
@@ -157,6 +176,11 @@ function judge(kind){
     if(!cur.half){alert('本题没有「对一半」的计分。');return;}
     addScore(name,cur.half,cur.id+' 对一半 +'+cur.half+' 分'); end(name+' 本题对一半，+'+cur.half+' 分，本题结束。');
   }else{
+    if(cur.entry){
+      addScore(name,0,cur.id+' 未通过（不计分）');
+      end(name+' 入门测试未通过，不计分，本题结束。');
+      return;
+    }
     if(round<cur.chances){
       var prev=round;
       round++;
