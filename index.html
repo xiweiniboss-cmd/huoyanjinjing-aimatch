@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>火眼金睛 · AI 识图赛</title>
 <!-- 图标为 GitHub Octicons，MIT License https://github.com/primer/octicons -->
-<meta name="description" content="火眼金睛 AI 识图赛：题库、排行榜、计分规则、绝望炼狱，B-001、R-001、W-001、H-001、H-002、H-003。">
+<meta name="description" content="火眼金睛 AI 识图赛：题库、排行榜、计分规则、绝望炼狱，L-001、B-001、R-001、W-001、H-001、H-002、H-003。">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="火眼金睛 · AI 识图赛">
 <meta property="og:title" content="火眼金睛 · AI 识图赛">
@@ -141,6 +141,17 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
 .prompt-line .copy-btn{margin:0 0 0 8px;padding:2px 8px}
 .hell-rounds li .copy-btn{margin:0 0 0 8px;padding:2px 8px;border-color:rgba(255,120,90,.6);color:#ff9a80;background:rgba(255,60,30,.08)}
 .hell-rounds li .copy-btn.done{border-color:#7dffb0;color:#7dffb0}
+
+/* 入门测试 */
+.card.entrycard{background:linear-gradient(160deg,rgba(8,22,18,.92),rgba(6,12,14,.95));border:1px solid rgba(95,191,136,.4);border-left:3px solid var(--green);box-shadow:0 0 14px rgba(95,191,136,.1)}
+.card.entrycard .num{color:var(--green)}
+.card.entrycard h3{color:#d5e8dc}
+.card.entrycard img{border-color:rgba(95,191,136,.35)}
+.card.entrycard .answer{background:rgba(95,191,136,.07);border-color:rgba(95,191,136,.3)}
+.card.entrycard .answer b{color:var(--green)}
+.card.entrycard details.answer summary{color:#7dcaa0}
+.card.entrycard .hell-res div{border-color:rgba(95,191,136,.22);background:rgba(95,191,136,.08);color:var(--ink)}
+.card.entrycard .hell-res .na{color:#8a9a90}
 </style>
 </head>
 <body>
@@ -247,7 +258,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
 
   <section class="panel" id="panel-hell">
     <h2><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 绝望炼狱 · 题库</h2>
-    <div class="hell-intro">三道普通题已被多名选手全部攻破，绝望炼狱就此开放。每题三次机会，越早答对分越高：第 1 轮答对 5 分（3 分 + 一次答对额外加 2 分），第 2 轮 2 分，第 3 轮 1 分，三轮全错 0 分。本轮 H-003 答对一半按 2 分算（老板特批）。</div>
+    <div class="hell-intro">三道普通题已被多名选手全部攻破，绝望炼狱就此开放。每题三次机会，越早答对分越高：第 1 轮答对 5 分（3 分 + 一次答对额外加 2 分），第 2 轮 2 分，第 3 轮 1 分，三轮全错 0 分。本轮 H-003 答对一半按 2 分算。</div>
     <div class="stats">
       <div class="stat"><strong>3</strong><span>炼狱题目</span></div>
       <div class="stat"><strong>5 分</strong><span>单题最高</span></div>
@@ -346,6 +357,11 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
 
   <section class="panel" id="panel-rules">
     <h2>赛制 · 花果山 → 灵台方寸山</h2>
+    <div class="card entrycard" style="margin:0 0 14px">
+      <div class="num">入门 · 不计分</div>
+      <h3>L-001 入门测试 · 一次机会</h3>
+      <p>预备役选手须先通过 L-001 入门测试，答对才能进入正式比赛。提示词为「这是谁？」，说出昔涟即算通过。本题不计分，不计入排行榜。</p>
+    </div>
     <div class="cards">
       <div class="card"><div class="num" style="color:#c99a5b">青铜 · 1 分</div><h3>官方图片直出</h3><p>直接从官方图片里出题，只有一次机会。</p></div>
       <div class="card"><div class="num" style="color:#9fb1bc">白银 · 1 分</div><h3>二创随机找图</h3><p>从二创里随机找图，只有一次机会。</p></div>
@@ -356,7 +372,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
     <div class="cards">
       <div class="card"><div class="num" style="color:#c25566"><svg class="ico" aria-hidden="true"><use href="#i-star-fill"/></svg> 荣耀 · 2 分</div><h3>官方最新视频截图 · 两次机会</h3><p>从官方最新的视频里挑一张截图来找，或者从小众二创里找图，只有两次机会。本轮 R-001 即属此级。</p></div>
       <div class="card"><div class="num" style="color:#4fb8c4"><svg class="ico" aria-hidden="true"><use href="#i-star-fill"/></svg> 王者 · 3 分</div><h3>小众 / 最新 / 极模糊 · 两次机会</h3><p>从很小众官方发布的最新六小时以内的图片，或视频截图，或极其模糊的图片、马赛克图来找，只有两次机会。本轮 W-001 即属此级。</p></div>
-      <div class="card"><div class="num" style="color:#ff8a8a"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 绝望炼狱 · 最高 5 分</div><h3>三次机会 · 越早答对分越高</h3><p>第 1 轮提示词固定为「这是谁？」，答对得 5 分（3 分 + 一次答对额外加 2 分）；第 2 轮给一条提示，答对 2 分；第 3 轮再追问一次，答对 1 分；三轮都错 0 分。本轮 H-003 答对一半按 2 分算（老板特批）。本轮 H-001、H-002、H-003 即属此级。</p></div>
+      <div class="card"><div class="num" style="color:#ff8a8a"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 绝望炼狱 · 最高 5 分</div><h3>三次机会 · 越早答对分越高</h3><p>第 1 轮提示词固定为「这是谁？」，答对得 5 分（3 分 + 一次答对额外加 2 分）；第 2 轮给一条提示，答对 2 分；第 3 轮再追问一次，答对 1 分；三轮都错 0 分。本轮 H-003 答对一半按 2 分算。本轮 H-001、H-002、H-003 即属此级。</p></div>
       <div class="card"><div class="num"><svg class="ico" aria-hidden="true"><use href="#i-list-ordered"/></svg> 分值总览</div><h3>青铜到白银 1 分</h3><p>钻石到荣耀 2 分，王者 3 分。答对即给分，荣耀题答对一半算 1 分。荣耀、王者题各有两次机会，取两次中最好的一次计分。</p></div>
     </div>
   </section>
@@ -365,6 +381,19 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   <section class="panel" id="panel-reserve">
     <h2>预备役AI选手</h2>
     <p class="small">预备役选手不在积分榜里显示，等条件具备后再上场补测，成绩到时再记。</p>
+    <p class="small">预备役选手须先通过 L-001 入门测试，答对才能进入正式比赛。</p>
+    <div class="qview">
+      <div class="card qcard entrycard active" id="q-L-001">
+        <div class="num">L-001 · 入门 · 不计分 · 一次机会</div>
+        <h3>入门测试</h3>
+        <div class="prompt-line">提示词：「这是谁？」<button type="button" class="copy-btn" data-copy="这是谁？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></div>
+        <img src="images/L-001.jpg" alt="L-001 题目图" loading="lazy">
+        <details class="answer"><summary>查看答案</summary><b>答案：</b>昔涟。<br><b>判定：</b>说出昔涟即算通过。</details>
+        <div class="hell-res">
+          <div><span>暂无预备役选手</span><span class="na">暂无测试记录</span></div>
+        </div>
+      </div>
+    </div>
     <div class="board">
       <p class="small">暂无预备役选手。</p>
     </div>
@@ -382,7 +411,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   <footer>
     本网站灵感来源于博主 Token就是词元，仅供学习技术参考，不代表官方品质，仅供娱乐。<br>
     本站为民间娱乐性赛事数据展示，结果仅供娱乐参考，与各模型厂商及其真实能力无关。<br>
-    火眼金睛 · AI 识图赛 · 题目编号 B-001 / R-001 / W-001 / H-001 / H-002 / H-003
+    火眼金睛 · AI 识图赛 · 题目编号 L-001 / B-001 / R-001 / W-001 / H-001 / H-002 / H-003
   </footer>
 </div>
 <script>
