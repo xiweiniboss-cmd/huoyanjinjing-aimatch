@@ -5,18 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>火眼金睛 · AI 识图赛</title>
 <!-- 图标为 GitHub Octicons，MIT License https://github.com/primer/octicons -->
-<meta name="description" content="火眼金睛 AI 识图赛：题库、排行榜、计分规则、绝望炼狱，L-001、B-001、R-001、W-001、H-001、H-002、H-003。">
+<meta name="description" content="火眼金睛 AI 识图赛：题库、排行榜、计分规则、绝望炼狱、无间地狱，L-001、B-001、R-001、W-001、H-001、H-002、H-003、VH-001。">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="火眼金睛 · AI 识图赛">
 <meta property="og:title" content="火眼金睛 · AI 识图赛">
-<meta property="og:description" content="以识图功能为主的多模型同题对比赛：题库、排行榜、计分规则、绝望炼狱。">
+<meta property="og:description" content="以识图功能为主的多模型同题对比赛：题库、排行榜、计分规则、绝望炼狱、无间地狱。">
 <meta property="og:url" content="https://huoyanjinjing-aimatch.pages.dev/">
 <meta property="og:image" content="https://huoyanjinjing-aimatch.pages.dev/images/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="火眼金睛 · AI 识图赛">
-<meta name="twitter:description" content="以识图功能为主的多模型同题对比赛：题库、排行榜、计分规则、绝望炼狱。">
+<meta name="twitter:description" content="以识图功能为主的多模型同题对比赛：题库、排行榜、计分规则、绝望炼狱、无间地狱。">
 <meta name="twitter:image" content="https://huoyanjinjing-aimatch.pages.dev/images/og.png">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="images/favicon-32.png" type="image/png" sizes="32x32">
@@ -152,13 +152,45 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
 .card.entrycard details.answer summary{color:#7dcaa0}
 .card.entrycard .hell-res div{border-color:rgba(95,191,136,.22);background:rgba(95,191,136,.08);color:var(--ink)}
 .card.entrycard .hell-res .na{color:#8a9a90}
+
+/* 炼狱题库火焰背景 */
+#panel-hell{position:relative;isolation:isolate;padding:18px 14px 22px;margin:16px -4px 0;border:1px solid rgba(255,70,50,.28);border-radius:4px;overflow:hidden;background:#0a0200}
+#hell-fire{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.72}
+#panel-hell::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(120% 70% at 50% 115%,rgba(255,70,16,.38),transparent 58%),radial-gradient(70% 45% at 18% 108%,rgba(255,140,30,.22),transparent 52%),radial-gradient(70% 45% at 82% 108%,rgba(180,20,0,.28),transparent 52%),linear-gradient(#120300,#070100 60%,#0a0200)}
+#panel-hell::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(8,1,0,.62),rgba(8,1,0,.32) 28%,rgba(10,2,0,.5))}
+#panel-hell > *:not(#hell-fire){position:relative;z-index:2}
+@media(prefers-reduced-motion:reduce){#hell-fire{display:none}}
+
+/* 无间地狱 */
+.tabs button.abyss-tab{color:#c8b6ff;border-color:rgba(110,60,200,.5);background:rgba(8,0,18,.92)}
+.tabs button.abyss-tab.active{background:rgba(48,12,90,.42);color:#efe8ff;border-color:#8b5cf6;box-shadow:0 0 14px rgba(90,30,180,.4)}
+#panel-abyss h2{color:#c4b0ff;text-shadow:0 0 10px rgba(90,30,180,.4)}
+.abyss-intro{background:linear-gradient(135deg,rgba(12,0,24,.88),rgba(4,0,10,.94));border:1px solid rgba(120,70,200,.45);border-radius:2px;padding:14px 16px;color:#d4c8f0;line-height:1.75;font-size:14px;margin:0 0 14px}
+#panel-abyss .stat{background:rgba(8,0,16,.9);border-color:rgba(120,70,200,.4)}
+#panel-abyss .stat strong{color:#c4b0ff}
+#panel-abyss .qtabs{grid-template-columns:repeat(auto-fit,minmax(140px,200px))}
+#panel-abyss .qtabs button{background:rgba(8,0,16,.9);border-color:rgba(120,70,200,.4);color:#c8b6ff}
+#panel-abyss .qtabs button.active{background:rgba(48,12,90,.42);border-color:#8b5cf6;color:#efe8ff;box-shadow:0 0 10px rgba(90,30,180,.3)}
+#panel-abyss .qtabs button.active span{color:#d4b020}
+.card.abysscard{background:linear-gradient(160deg,rgba(10,0,20,.96),rgba(2,0,6,.98));border:1px solid rgba(120,70,200,.55);border-left:3px solid #7c3aed;box-shadow:0 0 18px rgba(70,20,140,.25),inset 0 0 30px rgba(20,0,40,.4)}
+.card.abysscard .num{color:#c4b0ff;letter-spacing:1px}
+.card.abysscard h3{color:#efe8ff}
+.card.abysscard img{border-color:rgba(120,70,200,.5)}
+.card.abysscard .answer{background:rgba(80,30,160,.1);border-color:rgba(120,70,200,.35)}
+.card.abysscard .answer b{color:#c4b0ff}
+.card.abysscard details.answer summary{color:#c8b6ff}
+.card.abysscard .hell-res div{border-color:rgba(120,70,200,.28);background:rgba(12,0,24,.7);color:#e8dff8}
+.card.abysscard .hell-res .na{color:#8a8098}
+.card.abysscard .prompt-line{background:rgba(80,30,160,.1);border-color:rgba(120,70,200,.3)}
+.card.abysscard .copy-btn{border-color:rgba(140,90,220,.6);color:#c8b6ff;background:rgba(80,30,160,.12)}
+.card.abysscard .copy-btn.done{border-color:#7dffb0;color:#7dffb0}
 </style>
 </head>
 <body>
-<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-book" viewBox="0 0 16 16"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"/></symbol><symbol id="i-flame" viewBox="0 0 16 16"><path d="M9.533.753V.752c.217 2.385 1.463 3.626 2.653 4.81C13.37 6.74 14.498 7.863 14.498 10c0 3.5-3 6-6.5 6S1.5 13.512 1.5 10c0-1.298.536-2.56 1.425-3.286.376-.308.862 0 1.035.454C4.46 8.487 5.581 8.419 6 8c.282-.282.341-.811-.003-1.5C4.34 3.187 7.035.75 8.77.146c.39-.137.726.194.763.607ZM7.998 14.5c2.832 0 5-1.98 5-4.5 0-1.463-.68-2.19-1.879-3.383l-.036-.037c-1.013-1.008-2.3-2.29-2.834-4.434-.322.256-.63.579-.864.953-.432.696-.621 1.58-.046 2.73.473.947.67 2.284-.278 3.232-.61.61-1.545.84-2.403.633a2.79 2.79 0 0 1-1.436-.874A3.198 3.198 0 0 0 3 10c0 2.53 2.164 4.5 4.998 4.5Z"/></symbol><symbol id="i-people" viewBox="0 0 16 16"><path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z"/></symbol><symbol id="i-list-ordered" viewBox="0 0 16 16"><path d="M5 3.25a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 5 3.25Zm0 5a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 5 8.25Zm0 5a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1-.75-.75ZM.924 10.32a.5.5 0 0 1-.851-.525l.001-.001.001-.002.002-.004.007-.011c.097-.144.215-.273.348-.384.228-.19.588-.392 1.068-.392.468 0 .858.181 1.126.484.259.294.377.673.377 1.038 0 .987-.686 1.495-1.156 1.845l-.047.035c-.303.225-.522.4-.654.597h1.357a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5c0-1.005.692-1.52 1.167-1.875l.035-.025c.531-.396.8-.625.8-1.078a.57.57 0 0 0-.128-.376C1.806 10.068 1.695 10 1.5 10a.658.658 0 0 0-.429.163.835.835 0 0 0-.144.153ZM2.003 2.5V6h.503a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1h.503V3.308l-.28.14a.5.5 0 0 1-.446-.895l1.003-.5a.5.5 0 0 1 .723.447Z"/></symbol><symbol id="i-hourglass" viewBox="0 0 16 16"><path d="M2.75 1h10.5a.75.75 0 0 1 0 1.5h-.75v1.25a4.75 4.75 0 0 1-1.9 3.8l-.333.25a.25.25 0 0 0 0 .4l.333.25a4.75 4.75 0 0 1 1.9 3.8v1.25h.75a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1 0-1.5h.75v-1.25a4.75 4.75 0 0 1 1.9-3.8l.333-.25a.25.25 0 0 0 0-.4L5.4 7.55a4.75 4.75 0 0 1-1.9-3.8V2.5h-.75a.75.75 0 0 1 0-1.5ZM11 2.5H5v1.25c0 1.023.482 1.986 1.3 2.6l.333.25c.934.7.934 2.1 0 2.8l-.333.25a3.251 3.251 0 0 0-1.3 2.6v1.25h6v-1.25a3.251 3.251 0 0 0-1.3-2.6l-.333-.25a1.748 1.748 0 0 1 0-2.8l.333-.25a3.251 3.251 0 0 0 1.3-2.6Z"/></symbol><symbol id="i-x-circle" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></symbol><symbol id="i-circle-slash" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM3.965 13.096a6.5 6.5 0 0 0 9.131-9.131ZM1.5 8a6.474 6.474 0 0 0 1.404 4.035l9.131-9.131A6.499 6.499 0 0 0 1.5 8Z"/></symbol><symbol id="i-diamond" viewBox="0 0 16 16"><path d="M.527 9.237a1.75 1.75 0 0 1 0-2.474L6.777.512a1.75 1.75 0 0 1 2.475 0l6.251 6.25a1.75 1.75 0 0 1 0 2.475l-6.25 6.251a1.75 1.75 0 0 1-2.475 0L.527 9.238Zm1.06-1.414a.25.25 0 0 0 0 .354l6.251 6.25a.25.25 0 0 0 .354 0l6.25-6.25a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.354 0l-6.25 6.25Z"/></symbol><symbol id="i-sparkle" viewBox="0 0 16 16"><path d="M7.198.57c.275-.752 1.34-.752 1.615 0l.849 2.317a5.819 5.819 0 0 0 3.462 3.463l2.317.848c.753.275.753 1.34 0 1.615l-2.317.849a5.815 5.815 0 0 0-3.462 3.462l-.849 2.317c-.275.753-1.34.753-1.615 0l-.848-2.317a5.819 5.819 0 0 0-3.463-3.462L.57 8.813c-.752-.275-.752-1.34 0-1.615l2.317-.848A5.823 5.823 0 0 0 6.35 2.887L7.198.57Zm.562 2.833A7.323 7.323 0 0 1 3.403 7.76l-.673.246.673.246a7.324 7.324 0 0 1 4.357 4.356l.246.673.246-.673a7.322 7.322 0 0 1 4.356-4.356l.673-.246-.673-.246a7.324 7.324 0 0 1-4.356-4.357l-.246-.673-.246.673Z"/></symbol><symbol id="i-star-fill" viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></symbol><symbol id="i-copy" viewBox="0 0 16 16"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/></symbol></svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-book" viewBox="0 0 16 16"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"/></symbol><symbol id="i-flame" viewBox="0 0 16 16"><path d="M9.533.753V.752c.217 2.385 1.463 3.626 2.653 4.81C13.37 6.74 14.498 7.863 14.498 10c0 3.5-3 6-6.5 6S1.5 13.512 1.5 10c0-1.298.536-2.56 1.425-3.286.376-.308.862 0 1.035.454C4.46 8.487 5.581 8.419 6 8c.282-.282.341-.811-.003-1.5C4.34 3.187 7.035.75 8.77.146c.39-.137.726.194.763.607ZM7.998 14.5c2.832 0 5-1.98 5-4.5 0-1.463-.68-2.19-1.879-3.383l-.036-.037c-1.013-1.008-2.3-2.29-2.834-4.434-.322.256-.63.579-.864.953-.432.696-.621 1.58-.046 2.73.473.947.67 2.284-.278 3.232-.61.61-1.545.84-2.403.633a2.79 2.79 0 0 1-1.436-.874A3.198 3.198 0 0 0 3 10c0 2.53 2.164 4.5 4.998 4.5Z"/></symbol><symbol id="i-people" viewBox="0 0 16 16"><path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z"/></symbol><symbol id="i-list-ordered" viewBox="0 0 16 16"><path d="M5 3.25a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 5 3.25Zm0 5a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 5 8.25Zm0 5a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1-.75-.75ZM.924 10.32a.5.5 0 0 1-.851-.525l.001-.001.001-.002.002-.004.007-.011c.097-.144.215-.273.348-.384.228-.19.588-.392 1.068-.392.468 0 .858.181 1.126.484.259.294.377.673.377 1.038 0 .987-.686 1.495-1.156 1.845l-.047.035c-.303.225-.522.4-.654.597h1.357a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5c0-1.005.692-1.52 1.167-1.875l.035-.025c.531-.396.8-.625.8-1.078a.57.57 0 0 0-.128-.376C1.806 10.068 1.695 10 1.5 10a.658.658 0 0 0-.429.163.835.835 0 0 0-.144.153ZM2.003 2.5V6h.503a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1h.503V3.308l-.28.14a.5.5 0 0 1-.446-.895l1.003-.5a.5.5 0 0 1 .723.447Z"/></symbol><symbol id="i-hourglass" viewBox="0 0 16 16"><path d="M2.75 1h10.5a.75.75 0 0 1 0 1.5h-.75v1.25a4.75 4.75 0 0 1-1.9 3.8l-.333.25a.25.25 0 0 0 0 .4l.333.25a4.75 4.75 0 0 1 1.9 3.8v1.25h.75a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1 0-1.5h.75v-1.25a4.75 4.75 0 0 1 1.9-3.8l.333-.25a.25.25 0 0 0 0-.4L5.4 7.55a4.75 4.75 0 0 1-1.9-3.8V2.5h-.75a.75.75 0 0 1 0-1.5ZM11 2.5H5v1.25c0 1.023.482 1.986 1.3 2.6l.333.25c.934.7.934 2.1 0 2.8l-.333.25a3.251 3.251 0 0 0-1.3 2.6v1.25h6v-1.25a3.251 3.251 0 0 0-1.3-2.6l-.333-.25a1.748 1.748 0 0 1 0-2.8l.333-.25a3.251 3.251 0 0 0 1.3-2.6Z"/></symbol><symbol id="i-x-circle" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></symbol><symbol id="i-circle-slash" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM3.965 13.096a6.5 6.5 0 0 0 9.131-9.131ZM1.5 8a6.474 6.474 0 0 0 1.404 4.035l9.131-9.131A6.499 6.499 0 0 0 1.5 8Z"/></symbol><symbol id="i-diamond" viewBox="0 0 16 16"><path d="M.527 9.237a1.75 1.75 0 0 1 0-2.474L6.777.512a1.75 1.75 0 0 1 2.475 0l6.251 6.25a1.75 1.75 0 0 1 0 2.475l-6.25 6.251a1.75 1.75 0 0 1-2.475 0L.527 9.238Zm1.06-1.414a.25.25 0 0 0 0 .354l6.251 6.25a.25.25 0 0 0 .354 0l6.25-6.25a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.354 0l-6.25 6.25Z"/></symbol><symbol id="i-sparkle" viewBox="0 0 16 16"><path d="M7.198.57c.275-.752 1.34-.752 1.615 0l.849 2.317a5.819 5.819 0 0 0 3.462 3.463l2.317.848c.753.275.753 1.34 0 1.615l-2.317.849a5.815 5.815 0 0 0-3.462 3.462l-.849 2.317c-.275.753-1.34.753-1.615 0l-.848-2.317a5.819 5.819 0 0 0-3.463-3.462L.57 8.813c-.752-.275-.752-1.34 0-1.615l2.317-.848A5.823 5.823 0 0 0 6.35 2.887L7.198.57Zm.562 2.833A7.323 7.323 0 0 1 3.403 7.76l-.673.246.673.246a7.324 7.324 0 0 1 4.357 4.356l.246.673.246-.673a7.322 7.322 0 0 1 4.356-4.356l.673-.246-.673-.246a7.324 7.324 0 0 1-4.356-4.357l-.246-.673-.246.673Z"/></symbol><symbol id="i-star-fill" viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></symbol><symbol id="i-copy" viewBox="0 0 16 16"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/></symbol><symbol id="i-abyss" viewBox="0 0 16 16"><path d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1Zm0 1.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM8 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/></symbol></svg>
 <canvas id="rain" aria-hidden="true"></canvas>
 <div class="wrap">
-  <div class="notice-hell" style="margin:0 0 14px;padding:10px 14px;border:1px solid rgba(255,80,80,.55);background:rgba(255,60,60,.10);color:#ff8a8a;border-radius:2px;font-weight:700;text-align:center;line-height:1.6"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 公告：绝望炼狱已开放。H-001、H-003 已完成测试，H-002 已开测。</div>
+  <div class="notice-hell" style="margin:0 0 14px;padding:10px 14px;border:1px solid rgba(255,80,80,.55);background:rgba(255,60,60,.10);color:#ff8a8a;border-radius:2px;font-weight:700;text-align:center;line-height:1.6"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 公告：绝望炼狱已开放。H-001、H-003 已完成测试，H-002 已开测。无间地狱已开放，VH-001 暂无测试记录。</div>
   <header class="brand">
     <div class="brand-title"><span>火眼金睛</span> · AI 识图赛</div>
     <div class="brand-sub">HUOYANJINJING · AIMATCH</div>
@@ -167,12 +199,13 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   <section class="hero">
     <span class="tag">以识图功能为主 · 多模型同题对比</span>
     <h1>看图识人，<em>一眼定胜负</em></h1>
-    <p>同一张图发给不同的 AI，看谁能认出图里是谁、图出自哪里。官方图、二创图、梗图、马赛克图，越往后越难，越模糊越见真功夫。花果山关卡之上，是灵台方寸山。</p>
+    <p>同一张图发给不同的 AI，看谁能认出图里是谁、图出自哪里。官方图、二创图、梗图、马赛克图，越往后越难，越模糊越见真功夫。花果山关卡之上，是灵台方寸山。炼狱之上，还有无间地狱。</p>
   </section>
 
   <nav class="tabs" role="tablist">
     <button class="active" data-panel="bank"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg> 题库</button>
     <button class="hell-tab" data-panel="hell"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 绝望炼狱</button>
+    <button class="abyss-tab" data-panel="abyss"><svg class="ico" aria-hidden="true"><use href="#i-abyss"/></svg> 无间地狱</button>
     <button data-panel="players"><svg class="ico" aria-hidden="true"><use href="#i-people"/></svg> 排行榜</button>
     <button data-panel="rules"><svg class="ico" aria-hidden="true"><use href="#i-list-ordered"/></svg> 计分规则</button>
     <button data-panel="reserve"><svg class="ico" aria-hidden="true"><use href="#i-hourglass"/></svg> 预备役AI选手</button>
@@ -186,7 +219,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
       <div class="stat"><strong>1·2·3</strong><span>青铜·荣耀·王者</span></div>
       <div class="stat"><strong>1–2 次</strong><span>作答机会</span></div>
     </div>
-    <p class="qhint">点下面的题号，看看每道题长什么样（绝望炼狱题在上方「<svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 绝望炼狱」单独题库）：</p>
+    <p class="qhint">点下面的题号，看看每道题长什么样（绝望炼狱、无间地狱题在上方单独题库）：</p>
     <div class="qtabs">
       <button class="active" data-q="B-001"><b>B-001</b><span>青铜 · 1 分</span></button>
       <button data-q="R-001"><b>R-001</b><span>荣耀 · 2 分</span></button>
@@ -257,6 +290,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   </section>
 
   <section class="panel" id="panel-hell">
+    <canvas id="hell-fire" aria-hidden="true"></canvas>
     <h2><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 绝望炼狱 · 题库</h2>
     <div class="hell-intro">三道普通题已被多名选手全部攻破，绝望炼狱就此开放。每题三次机会，越早答对分越高：第 1 轮答对 5 分（3 分 + 一次答对额外加 2 分），第 2 轮 2 分，第 3 轮 1 分，三轮全错 0 分。本轮 H-003 答对一半按 2 分算。</div>
     <div class="stats">
@@ -336,6 +370,34 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
     </div>
   </section>
 
+
+  <section class="panel" id="panel-abyss">
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-abyss"/></svg> 无间地狱 · 题库</h2>
+    <div class="abyss-intro">比绝望炼狱更深一层。只有一次机会，提示词为「这是谁？出自于哪里？」。人物和出处都答对才得 5 分，否则 0 分，不设对一半。</div>
+    <div class="stats">
+      <div class="stat"><strong>1</strong><span>无间题目</span></div>
+      <div class="stat"><strong>5 分</strong><span>答对得分</span></div>
+      <div class="stat"><strong>人物+出处</strong><span>全对才计分</span></div>
+      <div class="stat"><strong>1 次</strong><span>作答机会</span></div>
+    </div>
+    <p class="qhint">点下面的题号查看无间地狱题：</p>
+    <div class="qtabs">
+      <button class="active" data-q="VH-001"><b>VH-001</b><span>无间地狱 · 5 分</span></button>
+    </div>
+    <div class="qview">
+      <div class="card qcard abysscard active" id="q-VH-001">
+        <div class="num">VH-001 · 无间地狱 · 一次机会 · 5 分</div>
+        <h3>这是谁？出自于哪里？</h3>
+        <div class="prompt-line">提示词：「这是谁？出自于哪里？」<button type="button" class="copy-btn" data-copy="这是谁？出自于哪里？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></div>
+        <img src="images/VH-001.jpg" alt="VH-001 题目图" loading="lazy">
+        <details class="answer"><summary>查看答案</summary><b>答案：</b>hanser（知名配音演员兼 UP 主），画面出自她 2026 年举办的「花生与葱花」个人演唱会。<br><b>判定：</b>人物和出处都答对才得 5 分。</details>
+        <div class="hell-res">
+          <div><span>暂无测试记录</span><span class="na">暂无测试记录</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="panel" id="panel-players">
     <h2>排行榜 · 本轮积分</h2>
     <div class="board">
@@ -373,6 +435,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
       <div class="card"><div class="num" style="color:#c25566"><svg class="ico" aria-hidden="true"><use href="#i-star-fill"/></svg> 荣耀 · 2 分</div><h3>官方最新视频截图 · 两次机会</h3><p>从官方最新的视频里挑一张截图来找，或者从小众二创里找图，只有两次机会。本轮 R-001 即属此级。</p></div>
       <div class="card"><div class="num" style="color:#4fb8c4"><svg class="ico" aria-hidden="true"><use href="#i-star-fill"/></svg> 王者 · 3 分</div><h3>小众 / 最新 / 极模糊 · 两次机会</h3><p>从很小众官方发布的最新六小时以内的图片，或视频截图，或极其模糊的图片、马赛克图来找，只有两次机会。本轮 W-001 即属此级。</p></div>
       <div class="card"><div class="num" style="color:#ff8a8a"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 绝望炼狱 · 最高 5 分</div><h3>三次机会 · 越早答对分越高</h3><p>第 1 轮提示词固定为「这是谁？」，答对得 5 分（3 分 + 一次答对额外加 2 分）；第 2 轮给一条提示，答对 2 分；第 3 轮再追问一次，答对 1 分；三轮都错 0 分。本轮 H-003 答对一半按 2 分算。本轮 H-001、H-002、H-003 即属此级。</p></div>
+      <div class="card abysscard"><div class="num"><svg class="ico" aria-hidden="true"><use href="#i-abyss"/></svg> 无间地狱 · 一次机会 · 答对 5 分</div><h3>一次机会 · 人物和出处都要答对</h3><p>只有一次机会，提示词为「这是谁？出自于哪里？」。人物和出处都答对才得 5 分，否则 0 分，不设对一半。本轮 VH-001 即属此级。</p></div>
       <div class="card"><div class="num"><svg class="ico" aria-hidden="true"><use href="#i-list-ordered"/></svg> 分值总览</div><h3>青铜到白银 1 分</h3><p>钻石到荣耀 2 分，王者 3 分。答对即给分，荣耀题答对一半算 1 分。荣耀、王者题各有两次机会，取两次中最好的一次计分。</p></div>
     </div>
   </section>
@@ -411,7 +474,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
   <footer>
     本网站灵感来源于博主 Token就是词元，仅供学习技术参考，不代表官方品质，仅供娱乐。<br>
     本站为民间娱乐性赛事数据展示，结果仅供娱乐参考，与各模型厂商及其真实能力无关。<br>
-    火眼金睛 · AI 识图赛 · 题目编号 L-001 / B-001 / R-001 / W-001 / H-001 / H-002 / H-003
+    火眼金睛 · AI 识图赛 · 题目编号 L-001 / B-001 / R-001 / W-001 / H-001 / H-002 / H-003 / VH-001
   </footer>
 </div>
 <script>
@@ -469,6 +532,56 @@ document.querySelectorAll('.copy-btn').forEach(function(btn){
   }
   size();addEventListener('resize',size);
   var last=0;(function loop(t){requestAnimationFrame(loop);if(t-last<gap)return;last=t;if(!document.hidden)draw()})(0);
+})();
+
+(function(){
+  var panel=document.getElementById('panel-hell');
+  var c=document.getElementById('hell-fire');
+  if(!panel||!c) return;
+  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){c.style.display='none';return;}
+  var ctx=c.getContext('2d'), dpr, w=0, h=0, parts=[], raf=0;
+  function spawn(anyY){
+    return {x:Math.random()*w,y:anyY?Math.random()*h:h+Math.random()*30,vy:-(0.55+Math.random()*1.7),vx:(Math.random()-0.5)*0.55,life:0.45+Math.random()*0.55,age:anyY?Math.random():0,r:7+Math.random()*16,hue:10+Math.random()*28};
+  }
+  function resize(){
+    var r=panel.getBoundingClientRect();
+    w=Math.max(1,Math.floor(r.width));
+    h=Math.max(1,Math.floor(r.height));
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.min(80,Math.max(36,Math.floor(w*h/9000)));
+    parts=[];for(var i=0;i<n;i++) parts.push(spawn(true));
+  }
+  function tick(){
+    raf=requestAnimationFrame(tick);
+    if(!panel.classList.contains('active')||document.hidden||!w) return;
+    ctx.globalCompositeOperation='source-over';
+    ctx.fillStyle='rgba(8,1,0,0.3)';
+    ctx.fillRect(0,0,w,h);
+    ctx.globalCompositeOperation='lighter';
+    for(var i=0;i<parts.length;i++){
+      var p=parts[i];
+      p.age+=0.012;
+      p.x+=p.vx+Math.sin(p.age*11+i)*0.32;
+      p.y+=p.vy;
+      var t=p.age/p.life;
+      if(t>=1||p.y<-p.r){parts[i]=spawn(false);continue;}
+      var a=t<0.18?t/0.18:(1-t);
+      var g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r);
+      g.addColorStop(0,'rgba(255,230,160,'+(0.5*a)+')');
+      g.addColorStop(0.35,'rgba(255,'+Math.floor(110+p.hue)+',36,'+(0.32*a)+')');
+      g.addColorStop(1,'rgba(160,16,0,0)');
+      ctx.fillStyle=g;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+    }
+  }
+  if(window.ResizeObserver){new ResizeObserver(function(){if(panel.classList.contains('active')) resize();}).observe(panel);}
+  else{addEventListener('resize',function(){if(panel.classList.contains('active')) resize();});}
+  new MutationObserver(function(){if(panel.classList.contains('active')) resize();}).observe(panel,{attributes:true,attributeFilter:['class']});
+  if(panel.classList.contains('active')) resize();
+  tick();
 })();
 </script>
 </body>
