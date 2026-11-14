@@ -14,7 +14,7 @@ h2{margin:0 0 12px;font-size:18px}label{display:block;font-size:13px;color:#555;
 select,textarea,input{width:100%;padding:10px;border:1px solid #ddd;border-radius:10px;font-size:15px}
 textarea{min-height:90px;resize:vertical}
 button{border:0;border-radius:999px;padding:11px 18px;font-size:15px;font-weight:700;cursor:pointer;margin:6px 6px 0 0}
-.primary{background:#ff6b9d;color:#fff}.good{background:#22c55e;color:#fff}.mid{background:#f59e0b;color:#fff}.bad{background:#e5e7eb;color:#333}.ghost{background:#eef2ff;color:#333}
+.primary{background:#ff6b9d;color:#fff}.good{background:#22c55e;color:#fff}.mid{background:#f59e0b;color:#fff}.bad{background:#e5e7eb;color:#333}.refuse{background:#6b7280;color:#fff}.ghost{background:#eef2ff;color:#333}
 button:disabled{opacity:.45;cursor:not-allowed}
 img{max-width:100%;border-radius:12px;display:block;margin:10px auto}
 .prompt{background:#fff7ed;border:1px dashed #f59e0b;border-radius:12px;padding:14px;font-size:17px;font-weight:700;line-height:1.6}
@@ -38,8 +38,9 @@ a{color:#ff6b9d}
 <input id="customName" placeholder="例如：新选手名">
 <button class="primary" id="drawBtn" onclick="draw()">🎲 随机抽题</button>
 <button class="ghost" onclick="previewEntry()">测 L-001（入门测试）</button>
+<button class="ghost" onclick="previewAbyss()">测 VH-001（无间地狱）</button>
 <button class="ghost" onclick="resetAll()">清空本机测试记录</button>
-<p class="small">题库现有 7 题，其中正式比赛 6 题进入随机抽题：B-001（青铜，1 分，一次机会）、R-001（荣耀，2 分，两次机会）、W-001（王者，3 分，两次机会）、H-001 / H-002 / H-003（绝望炼狱，三次机会，第 1 轮 5 分 / 第 2 轮 2 分 / 第 3 轮 1 分）。L-001 为入门测试，不计分，不进入随机抽题，可用「测 L-001」单独测试，判定为通过或未通过、不加分。H-003 已完成测试，认出可露希尔并认出卫戍协议终端主题算全对，只认出可露希尔算对一半，支持自动判定；答对一半按 2 分算。H-002 答案暂不公布，本页不提供自动判定，请手动判对或判错。抽题在未出过的正式题里优先随机，全部出过一轮后自动重新洗牌。</p>
+<p class="small">题库现有 8 题，其中正式比赛 7 题进入随机抽题：B-001（青铜，1 分，一次机会）、R-001（荣耀，2 分，两次机会）、W-001（王者，3 分，两次机会）、H-001 / H-002 / H-003（绝望炼狱，三次机会，第 1 轮 5 分 / 第 2 轮 2 分 / 第 3 轮 1 分）、VH-001（无间地狱，一次机会，答对 5 分，人物和出处都答对才得分，不设对一半）。L-001 为入门测试，不计分，不进入随机抽题，可用「测 L-001」单独测试，判定为通过或未通过、不加分。VH-001 进入随机抽题并计入总分，本轮满分 26 分，也可用「测 VH-001」单独测试。H-003 已完成测试，认出可露希尔并认出卫戍协议终端主题算全对，只认出可露希尔算对一半，支持自动判定；答对一半按 2 分算。H-002 答案暂不公布，本页不提供自动判定，请手动判对或判错。抽题在未出过的正式题里优先随机，全部出过一轮后自动重新洗牌。</p>
 </div>
 
 <div class="card" id="qcard" style="display:none">
@@ -56,9 +57,10 @@ a{color:#ff6b9d}
 <button class="good" onclick="judge('full')">✅ 判对 · 满分</button>
 <button class="mid" onclick="judge('half')">◐ 判对一半</button>
 <button class="bad" onclick="judge('wrong')">❌ 判错</button>
+<button class="refuse" onclick="judge('refuse')" style="display:none">⊘ 拒答</button>
 </div>
 <p class="small" id="autoHint" style="font-weight:700"></p>
-<p class="small">判定标准：B-001 只要说出佩丽卡（Perlica）即全对。R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。L-001 只要说出昔涟即算通过，不计分，只有一次机会，判定为通过或未通过。H-001 只要说出塔露拉即算全对，按当前轮计分（第 1 轮 5 分，第 2 轮 2 分，第 3 轮 1 分）。H-003 全对 = 认出可露希尔 + 卫戍协议终端主题，按当前轮计分；对一半 = 只认出可露希尔，计 2 分。绝望炼狱题也可手动判「对一半 · 2 分」。H-002 已开测，答案暂不公布，本页不提供自动判定，可手动判对、对一半或判错。粘贴回复后会实时给出自动判定建议，点「自动判定」按建议计分；觉得判得不对，可改用手动按钮。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
+<p class="small">判定标准：B-001 只要说出佩丽卡（Perlica）即全对。R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。L-001 只要说出昔涟即算通过，不计分，只有一次机会，判定为通过或未通过。H-001 只要说出塔露拉即算全对，按当前轮计分（第 1 轮 5 分，第 2 轮 2 分，第 3 轮 1 分）。H-003 全对 = 认出可露希尔 + 卫戍协议终端主题，按当前轮计分；对一半 = 只认出可露希尔，计 2 分。绝望炼狱题也可手动判「对一半 · 2 分」。VH-001 全对 = 认出 hanser + 「花生与葱花」演唱会，计 5 分；只认出其中一项不得分，不设对一半，只有一次机会。AI 拒绝作答记为「拒答」，计 0 分，用「拒答」按钮判定。H-002 已开测，答案暂不公布，本页不提供自动判定，可手动判对、对一半或判错。粘贴回复后会实时给出自动判定建议，点「自动判定」按建议计分；觉得判得不对，可改用手动按钮。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
 <p class="small" id="keywordHint"></p>
 <div class="result" id="result"></div>
 <button class="primary" id="nextBtn" style="display:none" onclick="draw()">下一题 →</button>
@@ -100,6 +102,10 @@ const BANK=[
   prompts:['这是谁？','再看看，这是一款手游里的角色，画的是 Q 版，背景是游戏里的一个界面主题。','不对，继续找。'],
   groups:[{name:'人物',keys:['可露希尔','Closure']},{name:'出处',keys:['卫戍协议','全能开发者','全能的']}],
   traps:[],given:{}},
+ {id:'VH-001',tier:'无间地狱',points:5,half:0,chances:1,roundPoints:[5],refuse:true,img:'images/VH-001.jpg',
+  prompts:['这是谁？出自于哪里？'],
+  groups:[{name:'人物',keys:['hanser','Hanser']},{name:'出处',keys:['花生与葱花']}],
+  traps:[],given:{}},
  {id:'L-001',tier:'入门测试',points:0,half:0,chances:1,entry:true,img:'images/L-001.jpg',
   prompts:['这是谁？'],
   groups:[{name:'人物',keys:['昔涟']}],
@@ -111,6 +117,7 @@ function setJudgeButtons(){
   var auto=document.querySelector("button[onclick='autoJudge()']");
   var full=document.querySelector("button[onclick=\"judge('full')\"]");
   var wrong=document.querySelector("button[onclick=\"judge('wrong')\"]");
+  var refuse=document.querySelector("button[onclick=\"judge('refuse')\"]");
   if(!cur){return;}
   if(half){
     half.style.display=cur.half?'inline-block':'none';
@@ -118,13 +125,14 @@ function setJudgeButtons(){
   }
   if(full) full.textContent=cur.entry?'✅ 通过':'✅ 判对 · 满分';
   if(wrong) wrong.textContent=cur.entry?'❌ 未通过':'❌ 判错';
+  if(refuse) refuse.style.display=cur.refuse?'inline-block':'none';
   if(auto) auto.style.display=(cur.pending||cur.answerHidden)?'none':'inline-block';
 }
 function showQuestion(q,intoUsed){
   cur=q; round=1;
   if(intoUsed && !used.includes(cur.id)) used.push(cur.id);
   document.getElementById('qcard').style.display='block';
-  var pts=cur.entry?'不计分':(cur.roundPoints?('第 1 / 2 / 3 轮为 '+cur.roundPoints.join(' / ')+' 分'):('满分 '+cur.points+' 分'));
+  var pts=cur.entry?'不计分':((cur.roundPoints&&cur.roundPoints.length>1)?('第 1 / 2 / 3 轮为 '+cur.roundPoints.join(' / ')+' 分'):('满分 '+cur.points+' 分'));
   document.getElementById('qmeta').innerHTML='<span class="pill">'+cur.id+'</span><span class="pill">'+cur.tier+'</span><span class="pill">'+pts+'</span><span class="pill">共 '+cur.chances+' 次机会</span>'+(cur.pending?'<span class="pill">尚未开测</span>':'')+(cur.answerHidden?'<span class="pill">已开测，答案稍后公布</span>':'')+'<span class="pill">选手：'+playerName()+'</span>';
   document.getElementById('qimg').src=cur.img;
   document.getElementById('prompt').textContent=(cur.entry?'提示词：':'第 1 轮提示词：')+cur.prompts[0];
@@ -152,6 +160,11 @@ function previewEntry(){
   if(!q) return;
   showQuestion(q,false);
 }
+function previewAbyss(){
+  const q=BANK.find(x=>x.id==='VH-001');
+  if(!q) return;
+  showQuestion(q,false);
+}
 function copyPrompt(){navigator.clipboard.writeText(document.getElementById('prompt').textContent.replace(/^第 \d+ 轮提示词：/,'').replace(/^提示词：/,''));alert('提示词已复制，去发给 AI 吧');}
 function roundPts(){
   if(cur.roundPoints&&cur.roundPoints[round-1]!=null) return cur.roundPoints[round-1];
@@ -175,6 +188,10 @@ function judge(kind){
   }else if(kind==='half'){
     if(!cur.half){alert('本题没有「对一半」的计分。');return;}
     addScore(name,cur.half,cur.id+' 对一半 +'+cur.half+' 分'); end(name+' 本题对一半，+'+cur.half+' 分，本题结束。');
+  }else if(kind==='refuse'){
+    if(!cur.refuse){alert('本题没有「拒答」的判定。');return;}
+    addScore(name,0,cur.id+' 拒答 +0 分');
+    end(name+' 本题拒答，+0 分，本题结束。');
   }else{
     if(cur.entry){
       addScore(name,0,cur.id+' 未通过（不计分）');
