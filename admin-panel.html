@@ -14,7 +14,7 @@ h2{margin:0 0 12px;font-size:18px}label{display:block;font-size:13px;color:#555;
 select,textarea,input{width:100%;padding:10px;border:1px solid #ddd;border-radius:10px;font-size:15px}
 textarea{min-height:90px;resize:vertical}
 button{border:0;border-radius:999px;padding:11px 18px;font-size:15px;font-weight:700;cursor:pointer;margin:6px 6px 0 0}
-.primary{background:#ff6b9d;color:#fff}.good{background:#22c55e;color:#fff}.mid{background:#f59e0b;color:#fff}.bad{background:#e5e7eb;color:#333}.ghost{background:#eef2ff;color:#333}
+.primary{background:#ff6b9d;color:#fff}.good{background:#22c55e;color:#fff}.mid{background:#f59e0b;color:#fff}.bad{background:#e5e7eb;color:#333}.refuse{background:#6b7280;color:#fff}.ghost{background:#eef2ff;color:#333}
 button:disabled{opacity:.45;cursor:not-allowed}
 img{max-width:100%;border-radius:12px;display:block;margin:10px auto}
 .prompt{background:#fff7ed;border:1px dashed #f59e0b;border-radius:12px;padding:14px;font-size:17px;font-weight:700;line-height:1.6}
@@ -57,9 +57,10 @@ a{color:#ff6b9d}
 <button class="good" onclick="judge('full')">✅ 判对 · 满分</button>
 <button class="mid" onclick="judge('half')">◐ 判对一半</button>
 <button class="bad" onclick="judge('wrong')">❌ 判错</button>
+<button class="refuse" onclick="judge('refuse')" style="display:none">⊘ 拒答</button>
 </div>
 <p class="small" id="autoHint" style="font-weight:700"></p>
-<p class="small">判定标准：B-001 只要说出佩丽卡（Perlica）即全对。R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。L-001 只要说出昔涟即算通过，不计分，只有一次机会，判定为通过或未通过。H-001 只要说出塔露拉即算全对，按当前轮计分（第 1 轮 5 分，第 2 轮 2 分，第 3 轮 1 分）。H-003 全对 = 认出可露希尔 + 卫戍协议终端主题，按当前轮计分；对一半 = 只认出可露希尔，计 2 分。绝望炼狱题也可手动判「对一半 · 2 分」。VH-001 全对 = 认出 hanser + 「花生与葱花」演唱会，计 5 分；只认出其中一项不得分，不设对一半，只有一次机会。H-002 已开测，答案暂不公布，本页不提供自动判定，可手动判对、对一半或判错。粘贴回复后会实时给出自动判定建议，点「自动判定」按建议计分；觉得判得不对，可改用手动按钮。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
+<p class="small">判定标准：B-001 只要说出佩丽卡（Perlica）即全对。R-001 全对 = 认出能天使 + 出自官方《罗德岛学院》PV；对一半 = 只认出人或只认出出处，计 1 分。W-001 全对 = 认出 Rick Astley + Rickroll；对一半 = 只认出人或只认出梗其一，计 1 分。L-001 只要说出昔涟即算通过，不计分，只有一次机会，判定为通过或未通过。H-001 只要说出塔露拉即算全对，按当前轮计分（第 1 轮 5 分，第 2 轮 2 分，第 3 轮 1 分）。H-003 全对 = 认出可露希尔 + 卫戍协议终端主题，按当前轮计分；对一半 = 只认出可露希尔，计 2 分。绝望炼狱题也可手动判「对一半 · 2 分」。VH-001 全对 = 认出 hanser + 「花生与葱花」演唱会，计 5 分；只认出其中一项不得分，不设对一半，只有一次机会。AI 拒绝作答记为「拒答」，计 0 分，用「拒答」按钮判定。H-002 已开测，答案暂不公布，本页不提供自动判定，可手动判对、对一半或判错。粘贴回复后会实时给出自动判定建议，点「自动判定」按建议计分；觉得判得不对，可改用手动按钮。第 2 轮提示词里已经给出的信息（如 R-001 的出处）视为已知，只看剩下的部分。</p>
 <p class="small" id="keywordHint"></p>
 <div class="result" id="result"></div>
 <button class="primary" id="nextBtn" style="display:none" onclick="draw()">下一题 →</button>
@@ -101,7 +102,7 @@ const BANK=[
   prompts:['这是谁？','再看看，这是一款手游里的角色，画的是 Q 版，背景是游戏里的一个界面主题。','不对，继续找。'],
   groups:[{name:'人物',keys:['可露希尔','Closure']},{name:'出处',keys:['卫戍协议','全能开发者','全能的']}],
   traps:[],given:{}},
- {id:'VH-001',tier:'无间地狱',points:5,half:0,chances:1,roundPoints:[5],img:'images/VH-001.jpg',
+ {id:'VH-001',tier:'无间地狱',points:5,half:0,chances:1,roundPoints:[5],refuse:true,img:'images/VH-001.jpg',
   prompts:['这是谁？出自于哪里？'],
   groups:[{name:'人物',keys:['hanser','Hanser']},{name:'出处',keys:['花生与葱花']}],
   traps:[],given:{}},
@@ -116,6 +117,7 @@ function setJudgeButtons(){
   var auto=document.querySelector("button[onclick='autoJudge()']");
   var full=document.querySelector("button[onclick=\"judge('full')\"]");
   var wrong=document.querySelector("button[onclick=\"judge('wrong')\"]");
+  var refuse=document.querySelector("button[onclick=\"judge('refuse')\"]");
   if(!cur){return;}
   if(half){
     half.style.display=cur.half?'inline-block':'none';
@@ -123,6 +125,7 @@ function setJudgeButtons(){
   }
   if(full) full.textContent=cur.entry?'✅ 通过':'✅ 判对 · 满分';
   if(wrong) wrong.textContent=cur.entry?'❌ 未通过':'❌ 判错';
+  if(refuse) refuse.style.display=cur.refuse?'inline-block':'none';
   if(auto) auto.style.display=(cur.pending||cur.answerHidden)?'none':'inline-block';
 }
 function showQuestion(q,intoUsed){
@@ -185,6 +188,10 @@ function judge(kind){
   }else if(kind==='half'){
     if(!cur.half){alert('本题没有「对一半」的计分。');return;}
     addScore(name,cur.half,cur.id+' 对一半 +'+cur.half+' 分'); end(name+' 本题对一半，+'+cur.half+' 分，本题结束。');
+  }else if(kind==='refuse'){
+    if(!cur.refuse){alert('本题没有「拒答」的判定。');return;}
+    addScore(name,0,cur.id+' 拒答 +0 分');
+    end(name+' 本题拒答，+0 分，本题结束。');
   }else{
     if(cur.entry){
       addScore(name,0,cur.id+' 未通过（不计分）');
