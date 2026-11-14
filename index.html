@@ -22,177 +22,220 @@
 <link rel="icon" href="images/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <style>
-:root{--ink:#b9cdd3;--mut:#6f8790;--cyan:#4fb8c4;--pink:#b0569a;--green:#5fbf88;--amber:#c9a54a;--red:#c25566;--card:rgba(8,13,20,.9);--line:rgba(79,184,196,.18)}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;background:#03060c}
-body{margin:0;font-family:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,"PingFang SC","Microsoft YaHei",monospace;color:var(--ink);background:#05080d;line-height:1.6;min-height:100vh}
-#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.22}
-body::after{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 1px,transparent 1px 3px)}
-.wrap{position:relative;z-index:2;max-width:900px;margin:0 auto;padding:0 16px 48px}
-.brand{padding:22px 2px 16px}
-.brand-title{font-size:22px;font-weight:800;white-space:nowrap;letter-spacing:1px;}
-.brand-title span{color:var(--pink);}
-.brand-sub{margin-top:4px;font-size:12px;letter-spacing:4px;color:var(--cyan);white-space:nowrap;opacity:.8}
-.brand-sub::after{content:"_";animation:blink 1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-.hero{position:relative;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:24px 22px;box-shadow:none;backdrop-filter:blur(3px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px))}
-.hero .tag{display:inline-block;background:transparent;border:1px solid var(--pink);color:var(--pink);padding:6px 12px;border-radius:2px;font-size:13px;font-weight:700;white-space:nowrap;}
-.hero h1{font-size:clamp(26px,7vw,40px);line-height:1.3;margin:16px 0 10px;text-wrap:balance;color:#dbe6ea;text-shadow:1px 0 rgba(176,86,154,.55),-1px 0 rgba(79,184,196,.55)}
-.hero h1 em{font-style:normal;color:var(--green);}
-.hero p{color:var(--mut);line-height:1.85;margin:0;font-size:15px}
-.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0 0}
-.tabs button{border:1px solid var(--line);background:rgba(4,10,18,.85);color:var(--cyan);font-family:inherit;font-size:15px;font-weight:700;padding:12px 8px;border-radius:2px;cursor:pointer;white-space:nowrap;transition:all .2s}
-.tabs button:hover{border-color:var(--cyan)}
-.tabs button.active{background:rgba(79,184,196,.14);color:#d6eef1;border-color:var(--cyan)}
-.panel{display:none}
-.panel.active{display:block;animation:boot .35s ease-out}
-@keyframes boot{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:2px;padding:16px;text-align:center}
-.stat strong{font-size:24px;display:block;white-space:nowrap;color:var(--green);}
-.stat span{color:var(--mut);font-size:13px}
-h2{font-size:20px;margin:28px 0 14px;line-height:1.4;color:var(--cyan);}
-h2::before{content:"> ";color:var(--pink)}
-.cards{display:grid;grid-template-columns:1fr;gap:14px}
-.card{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:2px;padding:18px;backdrop-filter:blur(3px)}
-.card h3{margin:0 0 8px;font-size:17px;color:#d3dfe3}
-.card p{color:var(--mut);line-height:1.75;margin:0;font-size:14px}
-.card .num{font-size:13px;font-weight:800;white-space:nowrap;color:var(--amber);letter-spacing:1px}
-.board{display:grid;gap:12px}
-.row{background:var(--card);border:1px solid var(--line);border-radius:2px;padding:16px;transition:box-shadow .2s,border-color .2s}
-.row:hover{border-color:rgba(176,86,154,.6)}
-.row-top{display:flex;align-items:center;gap:10px}
-.row-rank{flex:0 0 auto;font-weight:800;font-size:14px;white-space:nowrap;color:var(--amber)}
-.row-name{flex:1;font-weight:800;font-size:16px;min-width:0;color:#d3dfe3}
-.row-total{flex:0 0 auto;background:transparent;border:1px solid var(--green);color:var(--green);font-weight:800;font-size:14px;padding:5px 11px;border-radius:2px;white-space:nowrap;}
-.row-scores{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.score{font-size:13px;background:rgba(0,240,255,.08);border:1px solid rgba(0,240,255,.2);color:var(--ink);padding:5px 10px;border-radius:2px;white-space:nowrap}
-.score b{white-space:nowrap;color:var(--cyan)}
-.pill{display:inline-block;padding:5px 10px;border-radius:2px;font-size:13px;font-weight:700;border:1px solid var(--green);color:var(--green);white-space:nowrap}
-.pill.wait{border-color:var(--amber);color:var(--amber)}
-.pill.out{border-color:var(--red);color:var(--red)}
-.cutline{display:flex;align-items:center;gap:10px;margin:6px 0;color:#ff4d4d;font-weight:800;font-size:13px;letter-spacing:.5px}.cutline::before,.cutline::after{content:"";flex:1;height:2px;background:#ff3030;box-shadow:0 0 8px rgba(255,48,48,.8)}.row.doomed{opacity:.72;border-color:rgba(255,60,60,.45)}.row.doomed .row-total{border-color:var(--red);color:var(--red)}
-.note{background:rgba(255,212,0,.06);border:1px dashed var(--amber);border-radius:2px;padding:14px 16px;color:#c9b47a;line-height:1.75;font-size:14px}
-.qhint{color:var(--mut);font-size:14px;margin:4px 0 10px}
-.qtabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 14px}
-.qtabs button{border:1px solid var(--line);background:rgba(4,10,18,.85);color:var(--cyan);font-family:inherit;padding:10px 6px;border-radius:2px;cursor:pointer;transition:all .2s;line-height:1.4}
-.qtabs button b{display:block;font-size:16px;letter-spacing:1px}
-.qtabs button span{display:block;font-size:12px;color:var(--mut);white-space:nowrap}
-.qtabs button.active{background:rgba(79,184,196,.14);color:#d6eef1;border-color:var(--cyan)}
-.qtabs button.active span{color:var(--amber)}
-.qview .qcard{display:none;max-width:560px}
-.qview .qcard.active{display:block}
-details.answer summary{cursor:pointer;color:var(--cyan);font-weight:700;list-style:none}
-details.answer summary::-webkit-details-marker{display:none}
-details.answer summary::before{content:"▸ "}
-details.answer[open] summary{margin-bottom:8px}
-details.answer[open] summary::before{content:"▾ "}
-.answer.pending{border-color:var(--line);background:rgba(255,255,255,.03);color:var(--mut)}
-.q{display:grid;grid-template-columns:1fr;gap:14px}
-.q img,.qview img{width:100%;border-radius:2px;border:1px solid var(--line);background:#000;display:block;margin-top:6px}
-.answer{background:rgba(57,255,136,.06);border:1px solid rgba(57,255,136,.25);border-radius:2px;padding:12px 14px;margin-top:12px;line-height:1.75;font-size:13px;color:var(--ink)}
-.answer b{color:var(--green)}
-.small{color:var(--mut);font-size:13px;line-height:1.75}
-footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-top:36px;padding:0 8px;opacity:.85}
-.ico{width:1em;height:1em;flex-shrink:0;fill:currentColor;display:inline-block;vertical-align:-.15em;overflow:visible}.tabs button{display:inline-flex;align-items:center;justify-content:center;gap:6px}.num .ico,.notice-hell .ico,.qhint .ico,.cutline .ico,.pill .ico,.note .ico,h2 .ico{margin-right:.2em}.pill{display:inline-flex;align-items:center;gap:5px}.cutline{white-space:nowrap}
-@media(min-width:700px){
-  .tabs{grid-template-columns:repeat(3,1fr)}
-  .stats{grid-template-columns:repeat(4,1fr)}
-  .cards{grid-template-columns:repeat(3,1fr)}
-  .q{grid-template-columns:1fr 1fr}
-  .hero{padding:28px 26px}
+:root{
+  --bg:#070a0f;--s1:#0c1118;--s2:#111821;--s3:#16202b;
+  --line:rgba(190,212,220,.09);--line2:rgba(190,212,220,.16);
+  --t1:#dfe8ec;--t2:#a3b3ba;--t3:#6d7e86;
+  --cyan:#5cc0cb;--pink:#c86fae;--green:#62c48d;--amber:#d2ad55;--red:#d9677a;
+  --hell:#ff7458;--hell-line:rgba(255,110,80,.28);--hell-s:rgba(26,6,4,.82);
+  --abyss:#ad97f2;--abyss-line:rgba(160,130,240,.26);--abyss-s:rgba(14,9,26,.86);
+  --mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
+  --sans:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1)
 }
-@media(prefers-reduced-motion:reduce){.panel.active{animation:none}.brand-sub::after{animation:none}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{margin:0;font-family:var(--sans);color:var(--t1);background:var(--bg);line-height:1.6;min-height:100vh;font-size:15px}
+#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.12}
+.wrap{position:relative;z-index:2;max-width:880px;margin:0 auto;padding:16px 16px 48px}
+.ico{width:1em;height:1em;flex-shrink:0;fill:currentColor;display:inline-block;vertical-align:-.15em;overflow:visible}
+.mono,.num,.stat strong,.qtabs b,.brand-sub,.score,.row-total,.row-rank{font-family:var(--mono);font-variant-numeric:tabular-nums}
 
-/* 绝望炼狱 */
-.tabs button.hell-tab{color:#ff7a6b;border-color:rgba(255,70,50,.45);background:rgba(40,4,4,.85)}
-.tabs button.hell-tab.active{background:rgba(200,30,20,.22);color:#ffd2c8;border-color:#ff4a32;box-shadow:0 0 12px rgba(255,60,30,.35)}
-#panel-hell h2{color:#ff6a50;text-shadow:0 0 10px rgba(255,60,30,.45)}
-.hell-intro{background:linear-gradient(135deg,rgba(60,0,0,.75),rgba(20,0,0,.85));border:1px solid rgba(255,70,50,.5);border-radius:2px;padding:14px 16px;color:#ffb3a6;line-height:1.75;font-size:14px;margin:0 0 14px}
-#panel-hell .stat{background:rgba(30,2,2,.85);border-color:rgba(255,70,50,.4)}
-#panel-hell .stat strong{color:#ff6a50}
-#panel-hell .qtabs button{background:rgba(30,2,2,.85);border-color:rgba(255,70,50,.4);color:#ff8a76}
-#panel-hell .qtabs button.active{background:rgba(200,30,20,.22);border-color:#ff4a32;color:#ffe0d8;box-shadow:0 0 10px rgba(255,60,30,.3)}
-#panel-hell .qtabs button.active span{color:#ffb020}
-.card.hellcard{background:linear-gradient(160deg,rgba(45,3,3,.92),rgba(12,0,0,.95));border:1px solid rgba(255,70,50,.55);border-left:3px solid #ff3a1f;box-shadow:0 0 18px rgba(255,50,20,.18),inset 0 0 30px rgba(120,0,0,.25)}
-.card.hellcard .num{color:#ff6a50;letter-spacing:1px}
-.card.hellcard h3{color:#ffd8cc}
-.card.hellcard img{border-color:rgba(255,70,50,.5)}
-.hell-rounds{list-style:none;padding:0;margin:8px 0 6px;display:grid;gap:6px}
-.hell-rounds li{background:rgba(255,60,30,.07);border:1px solid rgba(255,70,50,.28);border-radius:2px;padding:8px 10px;font-size:13px;color:#ffc9bd;line-height:1.6}
-.hell-rounds li b{color:#ffb020}
-.card.hellcard .answer{background:rgba(255,60,30,.07);border-color:rgba(255,70,50,.35)}
-.card.hellcard .answer b{color:#ff8a5c}
-.card.hellcard details.answer summary{color:#ff8a76}
-.hell-res{display:grid;gap:6px;margin-top:12px}
-.hell-res div{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:7px 10px;border:1px solid rgba(255,70,50,.22);background:rgba(20,0,0,.6);border-radius:2px;color:#f2d5cf}
-.hell-res .ok{color:#7dffb0;font-weight:700;white-space:nowrap}
-.hell-res .partial{color:var(--amber);font-weight:700;white-space:nowrap}
-.hell-res .bad{color:#ff6a50;font-weight:700;white-space:nowrap}
-.hell-res .na{color:#9a8a86;white-space:nowrap}
-.hell-res .refuse{color:#b0b4b8;font-weight:700;white-space:nowrap}
-.hell-res.bank-res div{border-color:rgba(79,184,196,.22);background:rgba(79,184,196,.08);color:var(--ink)}
-.hell-res.bank-res .ok{color:var(--green)}
-.hell-res.bank-res .partial{color:var(--amber);font-weight:700;white-space:nowrap}
-.hell-res.bank-res .bad{color:var(--red)}
-.copy-btn{display:inline-flex;align-items:center;gap:5px;margin:4px 0 2px;border:1px solid var(--cyan);background:rgba(79,184,196,.08);color:var(--cyan);font-family:inherit;font-size:12px;font-weight:700;padding:4px 10px;border-radius:2px;cursor:pointer;white-space:nowrap;transition:all .2s}
-.copy-btn:hover{background:rgba(79,184,196,.18)}
-.copy-btn.done{border-color:var(--green);color:var(--green)}
-.prompt-line{background:rgba(79,184,196,.06);border:1px solid var(--line);border-radius:2px;padding:8px 10px;margin:6px 0 4px;font-size:13px;color:var(--ink);line-height:1.6}
-.prompt-line .copy-btn{margin:0 0 0 8px;padding:2px 8px}
-.hell-rounds li .copy-btn{margin:0 0 0 8px;padding:2px 8px;border-color:rgba(255,120,90,.6);color:#ff9a80;background:rgba(255,60,30,.08)}
-.hell-rounds li .copy-btn.done{border-color:#7dffb0;color:#7dffb0}
+/* 公告 */
+.notice-hell{display:flex;gap:8px;align-items:flex-start;margin:0 0 4px;padding:10px 12px;border:1px solid var(--hell-line);background:rgba(255,100,70,.06);color:#f0b4a6;border-radius:10px;font-size:13px;line-height:1.6}
+.notice-hell .ico{color:var(--hell);margin-top:3px}
 
-/* 入门测试 */
-.card.entrycard{background:linear-gradient(160deg,rgba(8,22,18,.92),rgba(6,12,14,.95));border:1px solid rgba(95,191,136,.4);border-left:3px solid var(--green);box-shadow:0 0 14px rgba(95,191,136,.1)}
-.card.entrycard .num{color:var(--green)}
-.card.entrycard h3{color:#d5e8dc}
-.card.entrycard img{border-color:rgba(95,191,136,.35)}
-.card.entrycard .answer{background:rgba(95,191,136,.07);border-color:rgba(95,191,136,.3)}
-.card.entrycard .answer b{color:var(--green)}
-.card.entrycard details.answer summary{color:#7dcaa0}
-.card.entrycard .hell-res div{border-color:rgba(95,191,136,.22);background:rgba(95,191,136,.08);color:var(--ink)}
-.card.entrycard .hell-res .na{color:#8a9a90}
+/* 品牌 */
+.brand{padding:24px 0 16px}
+.brand-title{font-size:22px;font-weight:600;letter-spacing:.5px;color:var(--t1)}
+.brand-title span{color:var(--pink)}
+.brand-sub{margin-top:4px;font-size:11px;letter-spacing:2px;color:var(--t3)}
 
-/* 炼狱题库火焰背景 */
-#panel-hell{position:relative;isolation:isolate;padding:18px 14px 22px;margin:16px -4px 0;border:1px solid rgba(255,70,50,.28);border-radius:4px;overflow:hidden;background:#0a0200}
-#hell-fire{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.72}
-#panel-hell::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(120% 70% at 50% 115%,rgba(255,70,16,.38),transparent 58%),radial-gradient(70% 45% at 18% 108%,rgba(255,140,30,.22),transparent 52%),radial-gradient(70% 45% at 82% 108%,rgba(180,20,0,.28),transparent 52%),linear-gradient(#120300,#070100 60%,#0a0200)}
-#panel-hell::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(8,1,0,.62),rgba(8,1,0,.32) 28%,rgba(10,2,0,.5))}
+.hero{background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:20px}
+.hero .tag{display:inline-block;color:var(--pink);font-size:12px;padding:4px 10px;border:1px solid rgba(200,111,174,.35);border-radius:999px}
+.hero h1{font-size:clamp(26px,7vw,36px);line-height:1.25;font-weight:600;margin:12px 0 8px;letter-spacing:.5px;color:var(--t1)}
+.hero h1 em{font-style:normal;color:var(--green)}
+.hero p{color:var(--t2);line-height:1.8;margin:0;font-size:14px}
+
+/* 主导航：上排三个题库，下排四个信息页 */
+.tabs{display:grid;grid-template-columns:repeat(12,1fr);gap:8px;margin:16px 0 0}
+.tabs button{grid-column:span 3;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 4px;border:1px solid var(--line);background:var(--s1);color:var(--t2);font-family:inherit;font-size:14px;font-weight:500;border-radius:10px;cursor:pointer;white-space:nowrap;transition:background-color .15s var(--ease),border-color .15s var(--ease),color .15s var(--ease)}
+.tabs button:nth-child(-n+3){grid-column:span 4;height:44px;font-size:15px}
+.tabs button:hover{border-color:var(--line2);color:var(--t1)}
+.tabs button.active{background:var(--s3);border-color:rgba(92,192,203,.55);color:var(--t1)}
+.tabs button .ico{color:var(--cyan)}
+.tabs button.hell-tab .ico{color:var(--hell)}
+.tabs button.abyss-tab .ico{color:var(--abyss)}
+.tabs button.hell-tab.active{background:rgba(60,14,8,.9);border-color:rgba(255,116,88,.6)}
+.tabs button.abyss-tab.active{background:rgba(30,20,56,.9);border-color:rgba(173,151,242,.6)}
+.tabs button:focus-visible,.qtabs button:focus-visible,.copy-btn:focus-visible,summary:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+.panel{display:none;margin-top:8px}
+.panel.active{display:block;animation:boot .25s var(--ease)}
+@keyframes boot{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+h2{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:600;margin:24px 0 12px;line-height:1.4;color:var(--t1)}
+h2 .ico{color:var(--cyan)}
+
+/* 数据条：一行四格 */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);margin:16px 0;background:var(--s1);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stat{padding:12px 4px;text-align:center;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0}
+.stat strong{display:block;font-size:17px;font-weight:500;color:var(--t1);white-space:nowrap;line-height:1.4}
+.stat span{display:block;color:var(--t3);font-size:12px;margin-top:2px;white-space:nowrap}
+
+/* 题号切换 */
+.qhint{color:var(--t3);font-size:13px;margin:0 0 8px}
+.qtabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;margin:0 0 12px}
+.qtabs button{min-width:0;border:1px solid var(--line);background:var(--s1);color:var(--t2);font-family:inherit;padding:8px 4px;border-radius:10px;cursor:pointer;line-height:1.4;transition:background-color .15s var(--ease),border-color .15s var(--ease)}
+.qtabs button b{display:block;font-size:15px;font-weight:500;color:var(--t1)}
+.qtabs button span{display:block;font-size:12px;color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qtabs button.active{background:var(--s3);border-color:rgba(92,192,203,.55)}
+.qtabs button.active span{color:var(--amber)}
+
+/* 题卡 */
+.qview .qcard{display:none}
+.qview .qcard.active{display:block}
+.card{background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:20px}
+.card h3{margin:4px 0 12px;font-size:17px;font-weight:600;color:var(--t1)}
+.card p{color:var(--t2);line-height:1.75;margin:0;font-size:14px}
+.card .num{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--amber);letter-spacing:.5px}
+.q img,.qview img{width:100%;border-radius:10px;border:1px solid var(--line);background:#000;display:block;margin-top:12px}
+.qcard-body{display:grid;gap:16px}
+@media(min-width:760px){
+  .qcard-body{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+  .qcard-body img{margin-top:0}
+}
+
+.prompt-line{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--s2);border:1px solid var(--line);border-radius:10px;padding:8px 8px 8px 12px;margin:0;font-size:13px;color:var(--t2);line-height:1.6}
+.hell-rounds{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.hell-rounds li{display:grid;grid-template-columns:1fr auto;grid-template-areas:"b c" "t t";align-items:center;gap:4px 10px;background:var(--hell-s);border:1px solid var(--hell-line);border-radius:10px;padding:8px 8px 8px 12px;font-size:13px;color:#efc9bf;line-height:1.6}
+.hell-rounds li .pt{grid-area:t;color:#efc9bf}.hell-rounds li .copy-btn{grid-area:c}.hell-rounds li b{grid-area:b;font-family:var(--mono);font-weight:500;color:var(--amber);white-space:nowrap}
+.copy-btn{display:inline-flex;align-items:center;gap:4px;flex-shrink:0;height:28px;border:1px solid var(--line2);background:var(--s3);color:var(--t2);font-family:inherit;font-size:12px;padding:0 10px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:background-color .15s var(--ease),color .15s var(--ease)}
+.copy-btn:hover{color:var(--t1);background:#1c2834}
+.copy-btn.done{color:var(--green);border-color:rgba(98,196,141,.5)}
+.copy-btn:active{transform:scale(.97)}
+
+details.answer{background:var(--s2);border:1px solid var(--line);border-radius:10px;padding:0;margin-top:12px;font-size:13px;line-height:1.75;color:var(--t2)}
+details.answer summary{cursor:pointer;color:var(--t1);font-weight:500;list-style:none;padding:10px 12px;display:flex;align-items:center;gap:6px}
+details.answer summary::-webkit-details-marker{display:none}
+details.answer summary::before{content:"";width:6px;height:6px;border-right:1.5px solid var(--t3);border-bottom:1.5px solid var(--t3);transform:rotate(-45deg);transition:transform .15s var(--ease)}
+details.answer[open] summary::before{transform:rotate(45deg)}
+details.answer[open]{padding-bottom:12px}
+details.answer > :not(summary){}
+details.answer{padding-inline:0}
+details.answer[open]{padding:0 12px 12px}
+details.answer[open] summary{padding-inline:0}
+.answer b{color:var(--green);font-weight:500}
+
+/* 成绩表 */
+.hell-res{display:grid;margin-top:12px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.hell-res div{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;padding:8px 12px;border-top:1px solid var(--line);color:var(--t1);background:var(--s1)}
+.hell-res div:first-child{border-top:0}
+.hell-res div span:first-child{min-width:0}
+.hell-res div span:last-child{text-align:right;flex-shrink:0;white-space:nowrap}
+.hell-res .ok{color:var(--green)}
+.hell-res .partial{color:var(--amber)}
+.hell-res .bad{color:var(--red)}
+.hell-res .na{color:var(--t3)}
+.hell-res .refuse{color:#b4b8bd}
+
+/* 炼狱 */
+#panel-hell{position:relative;isolation:isolate;padding:4px 16px 20px;margin:8px 0 0;border:1px solid var(--hell-line);border-radius:16px;overflow:hidden;background:#0a0300}
+#hell-fire{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.6}
+#panel-hell::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(#120400,#070100 60%,#0c0300)}
+#panel-hell::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(8,1,0,.7),rgba(8,1,0,.4) 30%,rgba(10,2,0,.55))}
 #panel-hell > *:not(#hell-fire){position:relative;z-index:2}
-@media(prefers-reduced-motion:reduce){#hell-fire{display:none}}
+#panel-hell h2 .ico{color:var(--hell)}
+.hell-intro,.abyss-intro{border-radius:10px;padding:12px 14px;line-height:1.75;font-size:13px;margin:0 0 4px}
+.hell-intro{background:var(--hell-s);border:1px solid var(--hell-line);color:#efc2b6}
+#panel-hell .stats{background:var(--hell-s);border-color:var(--hell-line)}
+#panel-hell .stat{border-color:var(--hell-line)}
+#panel-hell .stat strong{color:#ffd0c2}
+#panel-hell .qtabs button{background:var(--hell-s);border-color:var(--hell-line)}
+#panel-hell .qtabs button.active{background:rgba(70,18,10,.92);border-color:rgba(255,116,88,.6)}
+.card.hellcard{background:rgba(18,4,2,.9);border-color:var(--hell-line)}
+.card.hellcard .num{color:var(--hell)}
+.card.hellcard .hell-res,.card.hellcard details.answer{border-color:var(--hell-line)}
+.card.hellcard .hell-res div{background:rgba(22,6,3,.9);border-color:var(--hell-line)}
+.card.hellcard details.answer{background:var(--hell-s)}
+.card.hellcard .copy-btn{background:rgba(60,16,10,.9);border-color:var(--hell-line);color:#f0b4a6}
 
 /* 无间地狱 */
-.tabs button.abyss-tab{color:#c8b6ff;border-color:rgba(110,60,200,.5);background:rgba(8,0,18,.92)}
-.tabs button.abyss-tab.active{background:rgba(48,12,90,.42);color:#efe8ff;border-color:#8b5cf6;box-shadow:0 0 14px rgba(90,30,180,.4)}
-#panel-abyss h2{color:#c4b0ff;text-shadow:0 0 10px rgba(90,30,180,.4)}
-.abyss-intro{background:linear-gradient(135deg,rgba(12,0,24,.88),rgba(4,0,10,.94));border:1px solid rgba(120,70,200,.45);border-radius:2px;padding:14px 16px;color:#d4c8f0;line-height:1.75;font-size:14px;margin:0 0 14px}
-#panel-abyss .stat{background:rgba(8,0,16,.9);border-color:rgba(120,70,200,.4)}
-#panel-abyss .stat strong{color:#c4b0ff}
-#panel-abyss .qtabs{grid-template-columns:repeat(auto-fit,minmax(140px,200px))}
-#panel-abyss .qtabs button{background:rgba(8,0,16,.9);border-color:rgba(120,70,200,.4);color:#c8b6ff}
-#panel-abyss .qtabs button.active{background:rgba(48,12,90,.42);border-color:#8b5cf6;color:#efe8ff;box-shadow:0 0 10px rgba(90,30,180,.3)}
-#panel-abyss .qtabs button.active span{color:#d4b020}
-.card.abysscard{background:linear-gradient(160deg,rgba(10,0,20,.96),rgba(2,0,6,.98));border:1px solid rgba(120,70,200,.55);border-left:3px solid #7c3aed;box-shadow:0 0 18px rgba(70,20,140,.25),inset 0 0 30px rgba(20,0,40,.4)}
-.card.abysscard .num{color:#c4b0ff;letter-spacing:1px}
-.card.abysscard h3{color:#efe8ff}
-.card.abysscard img{border-color:rgba(120,70,200,.5)}
-.card.abysscard .answer{background:rgba(80,30,160,.1);border-color:rgba(120,70,200,.35)}
-.card.abysscard .answer b{color:#c4b0ff}
-.card.abysscard details.answer summary{color:#c8b6ff}
-.card.abysscard .hell-res div{border-color:rgba(120,70,200,.28);background:rgba(12,0,24,.7);color:#e8dff8}
-.card.abysscard .hell-res .na{color:#8a8098}
-.card.abysscard .hell-res .refuse{color:#b8b3c0}
-.card.abysscard .prompt-line{background:rgba(80,30,160,.1);border-color:rgba(120,70,200,.3)}
-.card.abysscard .copy-btn{border-color:rgba(140,90,220,.6);color:#c8b6ff;background:rgba(80,30,160,.12)}
-.card.abysscard .copy-btn.done{border-color:#7dffb0;color:#7dffb0}
+#panel-abyss h2 .ico{color:var(--abyss)}
+.abyss-intro{background:var(--abyss-s);border:1px solid var(--abyss-line);color:#d6ccf2}
+#panel-abyss .stats{background:var(--abyss-s);border-color:var(--abyss-line)}
+#panel-abyss .stat{border-color:var(--abyss-line)}
+#panel-abyss .stat strong{color:#e2d9ff}
+#panel-abyss .qtabs{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+#panel-abyss .qtabs button{background:var(--abyss-s);border-color:var(--abyss-line)}
+#panel-abyss .qtabs button.active{background:rgba(34,24,62,.95);border-color:rgba(173,151,242,.6)}
+.card.abysscard{background:var(--abyss-s);border-color:var(--abyss-line)}
+.card.abysscard .num{color:var(--abyss)}
+.card.abysscard .hell-res,.card.abysscard details.answer,.card.abysscard .prompt-line{border-color:var(--abyss-line)}
+.card.abysscard .hell-res div{background:rgba(16,11,30,.95);border-color:var(--abyss-line)}
+.card.abysscard details.answer,.card.abysscard .prompt-line{background:rgba(22,15,40,.9)}
+.card.abysscard .copy-btn{background:rgba(40,28,72,.9);border-color:var(--abyss-line);color:#d6ccf2}
+
+/* 入门 */
+.card.entrycard{border-color:rgba(98,196,141,.28)}
+.card.entrycard .num{color:var(--green)}
+
+/* 排行榜：每行一个积分矩阵 */
+.board{display:grid;gap:8px}
+.row{min-width:0;background:var(--s1);border:1px solid var(--line);border-radius:12px;padding:12px}
+.row-top{display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:10px}
+.row-rank{font-size:15px;font-weight:500;color:var(--t3);text-align:center}
+.row.top1 .row-rank{color:var(--amber)}
+.row.top2 .row-rank{color:#c3ccd2}
+.row.top3 .row-rank{color:#c98f5e}
+.row-name{font-weight:500;font-size:15px;min-width:0;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row-total{font-size:17px;font-weight:500;color:var(--t1);white-space:nowrap}
+.row-total small{font-size:12px;color:var(--t3);margin-left:2px;font-family:var(--sans)}
+.mx{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin:10px 0 0 42px}
+.mx span{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;height:40px;border-radius:8px;background:var(--s2);font-family:var(--mono);font-variant-numeric:tabular-nums;line-height:1.2}
+.mx span i{font-style:normal;font-size:10px;color:var(--t3)}
+.mx span b{font-weight:500;font-size:14px;color:var(--t2)}
+.mx .full b{color:var(--green)}
+.mx .half b{color:var(--amber)}
+.mx .zero b{color:var(--red)}
+.mx .refuse b{color:#b4b8bd}
+.mx .none{background:transparent;border:1px dashed var(--line)}
+.mx .none b{color:var(--t3)}
+.mx .hellc{box-shadow:inset 0 -2px 0 rgba(255,116,88,.45)}
+.mx .abyssc{box-shadow:inset 0 -2px 0 rgba(173,151,242,.5)}
+.row-flag{margin:8px 0 0 42px;font-size:12px;color:var(--red)}
+.row.doomed{opacity:.75}
+.cutline{display:flex;align-items:center;gap:10px;margin:8px 0;color:var(--red);font-size:12px;white-space:nowrap}
+.cutline::before,.cutline::after{content:"";flex:1;height:1px;background:rgba(217,103,122,.5)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0 0 12px;font-size:12px;color:var(--t3)}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:0}
+@media(max-width:420px){.mx{margin-left:0}.row-flag{margin-left:0}}
+
+/* 规则 */
+.cards{display:grid;grid-template-columns:1fr;gap:8px}
+.cards .card{padding:16px}
+.cards .card h3{margin:4px 0 6px;font-size:16px}
+.note{display:flex;gap:8px;background:rgba(210,173,85,.06);border:1px dashed rgba(210,173,85,.45);border-radius:10px;padding:12px 14px;color:#d8c48e;line-height:1.75;font-size:13px}
+.note .ico{margin-top:4px;color:var(--amber)}
+.small{color:var(--t3);font-size:13px;line-height:1.75;margin:12px 0 0}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--red)}
+footer{color:var(--t3);font-size:12px;line-height:1.9;text-align:center;margin-top:40px;padding:16px 8px 0;border-top:1px solid var(--line)}
+
+@media(min-width:700px){
+  .wrap{padding-top:24px}
+  .hero{padding:28px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .mx{grid-template-columns:repeat(7,56px);justify-content:start}
+}
+@media(prefers-reduced-motion:reduce){.panel.active{animation:none}#hell-fire{display:none}}
 </style>
 </head>
 <body>
 <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-book" viewBox="0 0 16 16"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"/></symbol><symbol id="i-flame" viewBox="0 0 16 16"><path d="M9.533.753V.752c.217 2.385 1.463 3.626 2.653 4.81C13.37 6.74 14.498 7.863 14.498 10c0 3.5-3 6-6.5 6S1.5 13.512 1.5 10c0-1.298.536-2.56 1.425-3.286.376-.308.862 0 1.035.454C4.46 8.487 5.581 8.419 6 8c.282-.282.341-.811-.003-1.5C4.34 3.187 7.035.75 8.77.146c.39-.137.726.194.763.607ZM7.998 14.5c2.832 0 5-1.98 5-4.5 0-1.463-.68-2.19-1.879-3.383l-.036-.037c-1.013-1.008-2.3-2.29-2.834-4.434-.322.256-.63.579-.864.953-.432.696-.621 1.58-.046 2.73.473.947.67 2.284-.278 3.232-.61.61-1.545.84-2.403.633a2.79 2.79 0 0 1-1.436-.874A3.198 3.198 0 0 0 3 10c0 2.53 2.164 4.5 4.998 4.5Z"/></symbol><symbol id="i-people" viewBox="0 0 16 16"><path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z"/></symbol><symbol id="i-list-ordered" viewBox="0 0 16 16"><path d="M5 3.25a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 5 3.25Zm0 5a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 5 8.25Zm0 5a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1-.75-.75ZM.924 10.32a.5.5 0 0 1-.851-.525l.001-.001.001-.002.002-.004.007-.011c.097-.144.215-.273.348-.384.228-.19.588-.392 1.068-.392.468 0 .858.181 1.126.484.259.294.377.673.377 1.038 0 .987-.686 1.495-1.156 1.845l-.047.035c-.303.225-.522.4-.654.597h1.357a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5c0-1.005.692-1.52 1.167-1.875l.035-.025c.531-.396.8-.625.8-1.078a.57.57 0 0 0-.128-.376C1.806 10.068 1.695 10 1.5 10a.658.658 0 0 0-.429.163.835.835 0 0 0-.144.153ZM2.003 2.5V6h.503a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1h.503V3.308l-.28.14a.5.5 0 0 1-.446-.895l1.003-.5a.5.5 0 0 1 .723.447Z"/></symbol><symbol id="i-hourglass" viewBox="0 0 16 16"><path d="M2.75 1h10.5a.75.75 0 0 1 0 1.5h-.75v1.25a4.75 4.75 0 0 1-1.9 3.8l-.333.25a.25.25 0 0 0 0 .4l.333.25a4.75 4.75 0 0 1 1.9 3.8v1.25h.75a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1 0-1.5h.75v-1.25a4.75 4.75 0 0 1 1.9-3.8l.333-.25a.25.25 0 0 0 0-.4L5.4 7.55a4.75 4.75 0 0 1-1.9-3.8V2.5h-.75a.75.75 0 0 1 0-1.5ZM11 2.5H5v1.25c0 1.023.482 1.986 1.3 2.6l.333.25c.934.7.934 2.1 0 2.8l-.333.25a3.251 3.251 0 0 0-1.3 2.6v1.25h6v-1.25a3.251 3.251 0 0 0-1.3-2.6l-.333-.25a1.748 1.748 0 0 1 0-2.8l.333-.25a3.251 3.251 0 0 0 1.3-2.6Z"/></symbol><symbol id="i-x-circle" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></symbol><symbol id="i-circle-slash" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM3.965 13.096a6.5 6.5 0 0 0 9.131-9.131ZM1.5 8a6.474 6.474 0 0 0 1.404 4.035l9.131-9.131A6.499 6.499 0 0 0 1.5 8Z"/></symbol><symbol id="i-diamond" viewBox="0 0 16 16"><path d="M.527 9.237a1.75 1.75 0 0 1 0-2.474L6.777.512a1.75 1.75 0 0 1 2.475 0l6.251 6.25a1.75 1.75 0 0 1 0 2.475l-6.25 6.251a1.75 1.75 0 0 1-2.475 0L.527 9.238Zm1.06-1.414a.25.25 0 0 0 0 .354l6.251 6.25a.25.25 0 0 0 .354 0l6.25-6.25a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.354 0l-6.25 6.25Z"/></symbol><symbol id="i-sparkle" viewBox="0 0 16 16"><path d="M7.198.57c.275-.752 1.34-.752 1.615 0l.849 2.317a5.819 5.819 0 0 0 3.462 3.463l2.317.848c.753.275.753 1.34 0 1.615l-2.317.849a5.815 5.815 0 0 0-3.462 3.462l-.849 2.317c-.275.753-1.34.753-1.615 0l-.848-2.317a5.819 5.819 0 0 0-3.463-3.462L.57 8.813c-.752-.275-.752-1.34 0-1.615l2.317-.848A5.823 5.823 0 0 0 6.35 2.887L7.198.57Zm.562 2.833A7.323 7.323 0 0 1 3.403 7.76l-.673.246.673.246a7.324 7.324 0 0 1 4.357 4.356l.246.673.246-.673a7.322 7.322 0 0 1 4.356-4.356l.673-.246-.673-.246a7.324 7.324 0 0 1-4.356-4.357l-.246-.673-.246.673Z"/></symbol><symbol id="i-star-fill" viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></symbol><symbol id="i-copy" viewBox="0 0 16 16"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/></symbol><symbol id="i-abyss" viewBox="0 0 16 16"><path d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1Zm0 1.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM8 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/></symbol></svg>
 <canvas id="rain" aria-hidden="true"></canvas>
 <div class="wrap">
-  <div class="notice-hell" style="margin:0 0 14px;padding:10px 14px;border:1px solid rgba(255,80,80,.55);background:rgba(255,60,60,.10);color:#ff8a8a;border-radius:2px;font-weight:700;text-align:center;line-height:1.6"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 公告：绝望炼狱已开放。H-001、H-003 已完成测试，H-002 已开测。无间地狱已开放，VH-001 已开测并计入总分。</div>
+  <div class="notice-hell"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 公告：绝望炼狱已开放。H-001、H-003 已完成测试，H-002 已开测。无间地狱已开放，VH-001 已开测并计入总分。</div>
   <header class="brand">
     <div class="brand-title"><span>火眼金睛</span> · AI 识图赛</div>
     <div class="brand-sub">HUOYANJINJING · AIMATCH</div>
@@ -210,8 +253,8 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
     <button class="abyss-tab" data-panel="abyss"><svg class="ico" aria-hidden="true"><use href="#i-abyss"/></svg> 无间地狱</button>
     <button data-panel="players"><svg class="ico" aria-hidden="true"><use href="#i-people"/></svg> 排行榜</button>
     <button data-panel="rules"><svg class="ico" aria-hidden="true"><use href="#i-list-ordered"/></svg> 计分规则</button>
-    <button data-panel="reserve"><svg class="ico" aria-hidden="true"><use href="#i-hourglass"/></svg> 预备役AI选手</button>
-    <button data-panel="eliminated"><svg class="ico" aria-hidden="true"><use href="#i-x-circle"/></svg> 被淘汰AI选手</button>
+    <button data-panel="reserve"><svg class="ico" aria-hidden="true"><use href="#i-hourglass"/></svg> 预备役</button>
+    <button data-panel="eliminated"><svg class="ico" aria-hidden="true"><use href="#i-x-circle"/></svg> 被淘汰</button>
   </nav>
 
   <section class="panel active" id="panel-bank">
@@ -231,8 +274,8 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
       <div class="card qcard active" id="q-B-001">
         <div class="num">B-001 · 青铜 · 1 分 · 一次机会</div>
         <h3>这是什么角色？</h3>
+        <div class="qcard-body"><div class="qcard-media"><img src="images/B-001.jpg" alt="B-001 题目图" loading="lazy"></div><div class="qcard-info">
         <div class="prompt-line">提示词：「这是什么角色？」<button type="button" class="copy-btn" data-copy="这是什么角色？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></div>
-        <img src="images/B-001.jpg" alt="B-001 题目图" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>佩丽卡 Perlica，《明日方舟：终末地》角色。<br><b>判定：</b>说出角色名即算全对，只有一次机会。</details>
         <div class="hell-res bank-res">
           <div><span>pickle</span><span class="ok">通过 · 1 分</span></div>
@@ -247,12 +290,13 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
           <div><span>GLM-5.3</span><span class="bad">未通过 · 0 分</span></div>
           <div><span>Claude Haiku 5.5(极高)</span><span class="bad">未通过 · 0 分</span></div>
         </div>
+        </div></div>
       </div>
       <div class="card qcard" id="q-R-001">
         <div class="num">R-001 · 荣耀 · 2 分 · 两次机会</div>
         <h3>这张图是谁？出自哪里？</h3>
+        <div class="qcard-body"><div class="qcard-media"><img src="images/R-001.jpg" alt="R-001 能天使 Q 版图" loading="lazy"></div><div class="qcard-info">
         <div class="prompt-line">提示词：「这是谁？出自哪里？」<button type="button" class="copy-btn" data-copy="这是谁？出自哪里？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></div>
-        <img src="images/R-001.jpg" alt="R-001 能天使 Q 版图" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>能天使 Exusiai（蕾缪乐），《明日方舟》6★ 狙击干员，企鹅物流，拉特兰萨科塔。<br><b>出处：</b>官方《罗德岛学院》PV，不是二创。关键特征：红发、倾斜的发光光环、领带上的红色苹果、胸前 IDENTITY CARD 工牌、青绿色墙面与身后的大淡黄星星。</details>
         <div class="hell-res bank-res">
           <div><span>Gemini 4 Carbon</span><span class="ok">通过 · 2 分</span></div>
@@ -267,12 +311,13 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
           <div><span>DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="bad">未通过 · 0 分</span></div>
           <div><span>pickle</span><span class="bad">未通过 · 0 分</span></div>
         </div>
+        </div></div>
       </div>
       <div class="card qcard" id="q-W-001">
         <div class="num">W-001 · 王者 · 3 分 · 两次机会</div>
         <h3>这张马赛克图是谁？</h3>
+        <div class="qcard-body"><div class="qcard-media"><img src="images/W-001.jpg" alt="W-001 马赛克西装男" loading="lazy"></div><div class="qcard-info">
         <div class="prompt-line">提示词：「这张马赛克图里的人是谁？这是什么梗？」<button type="button" class="copy-btn" data-copy="这张马赛克图里的人是谁？这是什么梗？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></div>
-        <img src="images/W-001.jpg" alt="W-001 马赛克西装男" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>Rick Astley（理查德·艾斯利），英国歌手。<br><b>出处 / 梗：</b>1987 年《Never Gonna Give You Up》MV，即 Rickroll / 瑞克摇摆。五官已被马赛克完全遮住，认的是梗：用“白嫖福利”做诱饵，点进去就放这首歌；深色西装、白衬衫、斜条纹领带与 MV 造型一致。</details>
         <div class="hell-res bank-res">
           <div><span>pickle</span><span class="ok">通过 · 3 分</span></div>
@@ -287,6 +332,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
           <div><span>DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="bad">未通过 · 0 分</span></div>
           <div><span>Claude Haiku 5.5(极高)</span><span class="bad">未通过 · 0 分</span></div>
         </div>
+        </div></div>
       </div>
     </div>
   </section>
@@ -303,20 +349,20 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
     </div>
     <p class="qhint">点下面的题号查看炼狱题：</p>
     <div class="qtabs">
-      <button class="active" data-q="H-001"><b>H-001</b><span>绝望炼狱 · 最高 5 分</span></button>
-      <button data-q="H-002"><b>H-002</b><span>绝望炼狱 · 最高 5 分</span></button>
-      <button data-q="H-003"><b>H-003</b><span>绝望炼狱 · 最高 5 分</span></button>
+      <button class="active" data-q="H-001"><b>H-001</b><span>最高 5 分</span></button>
+      <button data-q="H-002"><b>H-002</b><span>最高 5 分</span></button>
+      <button data-q="H-003"><b>H-003</b><span>最高 5 分</span></button>
     </div>
     <div class="qview">
       <div class="card qcard hellcard active" id="q-H-001">
         <div class="num">H-001 · 绝望炼狱 · 三次机会 · 最高 5 分</div>
         <h3>这是什么角色？</h3>
+        <div class="qcard-body"><div class="qcard-media"><img src="images/H-001.jpg" alt="H-001 题目图" loading="lazy"></div><div class="qcard-info">
         <ul class="hell-rounds">
-          <li><b>第 1 轮 · 5 分</b>　提示词：「这是谁？」<button type="button" class="copy-btn" data-copy="这是谁？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
-          <li><b>第 2 轮 · 2 分</b>　提示词：「再看看，这是一款手游里的角色，画的是 Q 版。」<button type="button" class="copy-btn" data-copy="再看看，这是一款手游里的角色，画的是 Q 版。"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
-          <li><b>第 3 轮 · 1 分</b>　提示词：「不对，你再想一想，这就是《明日方舟》里的角色的表情包。」<button type="button" class="copy-btn" data-copy="不对，你再想一想，这就是《明日方舟》里的角色的表情包。"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
+          <li><b>第 1 轮 · 5 分</b><span class="pt">提示词：「这是谁？」</span><button type="button" class="copy-btn" data-copy="这是谁？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
+          <li><b>第 2 轮 · 2 分</b><span class="pt">提示词：「再看看，这是一款手游里的角色，画的是 Q 版。」</span><button type="button" class="copy-btn" data-copy="再看看，这是一款手游里的角色，画的是 Q 版。"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
+          <li><b>第 3 轮 · 1 分</b><span class="pt">提示词：「不对，你再想一想，这就是《明日方舟》里的角色的表情包。」</span><button type="button" class="copy-btn" data-copy="不对，你再想一想，这就是《明日方舟》里的角色的表情包。"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
         </ul>
-        <img src="images/H-001.jpg" alt="H-001 题目图" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>塔露拉，《明日方舟》角色。<br><b>判定：</b>说出角色名即算对。</details>
         <div class="hell-res">
           <div><span>pickle</span><span class="ok">第 1 轮答对 · 5 分</span></div>
@@ -331,32 +377,34 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
           <div><span>GLM-5.3</span><span class="bad">第 2 轮放弃 · 0 分 · 炼狱三连</span></div>
           <div><span>Claude Haiku 5.5(极高)</span><span class="na">因 KYC 验证暂未挑战</span></div>
         </div>
+        </div></div>
       </div>
       <div class="card qcard hellcard" id="q-H-002">
         <div class="num">H-002 · 绝望炼狱 · 三次机会 · 最高 5 分</div>
         <h3>这是什么角色？</h3>
+        <div class="qcard-body"><div class="qcard-media"><img src="images/H-002.jpg" alt="H-002 题目图" loading="lazy"></div><div class="qcard-info">
         <ul class="hell-rounds">
-          <li><b>第 1 轮 · 5 分</b>　提示词：「这是谁？」<button type="button" class="copy-btn" data-copy="这是谁？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
-          <li><b>第 2 轮 · 2 分</b>　提示词：「不对，接着猜。」<button type="button" class="copy-btn" data-copy="不对，接着猜。"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
-          <li><b>第 3 轮 · 1 分</b>　提示词：「不对，接着猜。」<button type="button" class="copy-btn" data-copy="不对，接着猜。"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
+          <li><b>第 1 轮 · 5 分</b><span class="pt">提示词：「这是谁？」</span><button type="button" class="copy-btn" data-copy="这是谁？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
+          <li><b>第 2 轮 · 2 分</b><span class="pt">提示词：「不对，接着猜。」</span><button type="button" class="copy-btn" data-copy="不对，接着猜。"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
+          <li><b>第 3 轮 · 1 分</b><span class="pt">提示词：「不对，接着猜。」</span><button type="button" class="copy-btn" data-copy="不对，接着猜。"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
         </ul>
-        <img src="images/H-002.jpg" alt="H-002 题目图" loading="lazy">
         <details class="answer"><summary>查看答案</summary>已开测，答案稍后公布。</details>
         <div class="hell-res">
           <div><span>Gemini 4 Hydrogen</span><span class="ok">第 1 轮答对 · 5 分</span></div>
           <div><span>pickle</span><span class="ok">第 1 轮答对 · 5 分</span></div>
           <div><span>淘汰线以上的其余选手</span><span class="na">尚未开测</span></div>
         </div>
+        </div></div>
       </div>
       <div class="card qcard hellcard" id="q-H-003">
         <div class="num">H-003 · 绝望炼狱 · 三次机会 · 最高 5 分</div>
         <h3>这是什么角色？</h3>
+        <div class="qcard-body"><div class="qcard-media"><img src="images/H-003.jpg" alt="H-003 题目图" loading="lazy"></div><div class="qcard-info">
         <ul class="hell-rounds">
-          <li><b>第 1 轮 · 5 分</b>　提示词：「这是谁？」<button type="button" class="copy-btn" data-copy="这是谁？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
-          <li><b>第 2 轮 · 2 分</b>　提示词：「再看看，这是一款手游里的角色，画的是 Q 版，背景是游戏里的一个界面主题。」<button type="button" class="copy-btn" data-copy="再看看，这是一款手游里的角色，画的是 Q 版，背景是游戏里的一个界面主题。"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
-          <li><b>第 3 轮 · 1 分</b>　提示词：「不对，继续找。」<button type="button" class="copy-btn" data-copy="不对，继续找。"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
+          <li><b>第 1 轮 · 5 分</b><span class="pt">提示词：「这是谁？」</span><button type="button" class="copy-btn" data-copy="这是谁？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
+          <li><b>第 2 轮 · 2 分</b><span class="pt">提示词：「再看看，这是一款手游里的角色，画的是 Q 版，背景是游戏里的一个界面主题。」</span><button type="button" class="copy-btn" data-copy="再看看，这是一款手游里的角色，画的是 Q 版，背景是游戏里的一个界面主题。"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
+          <li><b>第 3 轮 · 1 分</b><span class="pt">提示词：「不对，继续找。」</span><button type="button" class="copy-btn" data-copy="不对，继续找。"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></li>
         </ul>
-        <img src="images/H-003.jpg" alt="H-003 题目图" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>可露希尔，《明日方舟》角色（出自卫戍协议终端主题「“全能的”可露希尔」）。<br><b>判定：</b>说出可露希尔并认出是卫戍协议终端主题算全对；只说出可露希尔、没认出卫戍协议主题算答对一半，计 2 分。</details>
         <div class="hell-res">
           <div><span>pickle</span><span class="ok">第 1 轮答对 · 5 分</span></div>
@@ -368,6 +416,7 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
           <div><span>Claude Opus 5.5</span><span class="partial">答对一半 · 2 分</span></div>
           <div><span>ChatGPT-6-luna(深度思考)</span><span class="bad">三轮全错 · 0 分</span></div>
         </div>
+        </div></div>
       </div>
     </div>
   </section>
@@ -384,14 +433,14 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
     </div>
     <p class="qhint">点下面的题号查看无间地狱题：</p>
     <div class="qtabs">
-      <button class="active" data-q="VH-001"><b>VH-001</b><span>无间地狱 · 5 分</span></button>
+      <button class="active" data-q="VH-001"><b>VH-001</b><span>答对 5 分</span></button>
     </div>
     <div class="qview">
       <div class="card qcard abysscard active" id="q-VH-001">
         <div class="num">VH-001 · 无间地狱 · 一次机会 · 5 分</div>
         <h3>这是谁？出自于哪里？</h3>
+        <div class="qcard-body"><div class="qcard-media"><img src="images/VH-001.jpg" alt="VH-001 题目图" loading="lazy"></div><div class="qcard-info">
         <div class="prompt-line">提示词：「这是谁？出自于哪里？」<button type="button" class="copy-btn" data-copy="这是谁？出自于哪里？"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> 复制</button></div>
-        <img src="images/VH-001.jpg" alt="VH-001 题目图" loading="lazy">
         <details class="answer"><summary>查看答案</summary><b>答案：</b>hanser（知名配音演员兼 UP 主），画面出自她 2026 年举办的「花生与葱花」个人演唱会。<br><b>判定：</b>人物和出处都答对才得 5 分。AI 拒绝作答记为「拒答」，计 0 分。</details>
         <div class="hell-res">
           <div><span>Gemini 4 Carbon</span><span class="ok">一次答对 · 5 分</span></div>
@@ -403,27 +452,29 @@ footer{color:var(--mut);font-size:12px;line-height:1.9;text-align:center;margin-
           <div><span>Gemini 4 Argon(高)</span><span class="na">尚未挑战</span></div>
           <div><span>ChatGPT-6-luna(深度思考)</span><span class="na">尚未挑战</span></div>
         </div>
+        </div></div>
       </div>
     </div>
   </section>
 
   <section class="panel" id="panel-players">
     <h2>排行榜 · 本轮积分</h2>
+    <div class="legend"><span><i style="background:var(--green)"></i>全对</span><span><i style="background:var(--amber)"></i>答对一半</span><span><i style="background:var(--red)"></i>0 分</span><span><i style="background:#b4b8bd"></i>拒答</span><span><i style="border:1px dashed var(--t3)"></i>未挑战</span><span>长按或悬停格子看详情</span></div>
     <div class="board">
-      <div class="row"><div class="row-top"><span class="row-rank">第 1 名</span><span class="row-name">Gemini 4 Carbon</span><span class="row-total">21 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span><span class="score">H-003：<b>5 分 · 第 1 轮答对</b></span><span class="score">VH-001：<b>5 分 · 一次答对</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">第 2 名</span><span class="row-name">pickle</span><span class="row-total">19 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>0 分</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span><span class="score">H-002：<b>5 分 · 第 1 轮答对</b></span><span class="score">H-003：<b>5 分 · 第 1 轮答对</b></span><span class="score">VH-001：<b>尚未挑战</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">第 3 名</span><span class="row-name">豆包 Free Plan</span><span class="row-total">16 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 最终答对</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span><span class="score">H-003：<b>5 分 · 第 1 轮答对</b></span><span class="score">VH-001：<b>尚未挑战</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">第 3 名</span><span class="row-name">Muse</span><span class="row-total">16 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 慢答后全对</b></span><span class="score">W-001：<b>3 分 · 慢答后全对</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span><span class="score">H-003：<b>5 分 · 第 1 轮答对</b></span><span class="score">VH-001：<b>尚未挑战</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">第 4 名</span><span class="row-name">Gemini 4 Hydrogen</span><span class="row-total">15 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>0 分 · 三轮全错</b></span><span class="score">H-002：<b>5 分 · 第 1 轮答对</b></span><span class="score">H-003：<b>5 分 · 第 1 轮答对</b></span><span class="score">VH-001：<b>尚未挑战</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">第 5 名</span><span class="row-name">Gemini 4 Argon(高)</span><span class="row-total">12 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>3 分 · 秒答</b></span><span class="score">H-001：<b>5 分 · 第 1 轮答对</b></span><span class="score">H-003：<b>2 分 · 答对一半</b></span><span class="score">VH-001：<b>尚未挑战</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">第 6 名</span><span class="row-name">Claude Opus 5.5</span><span class="row-total">8 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 秒答</b></span><span class="score">W-001：<b>3 分 · 秒答</b></span><span class="score">H-001：<b>0 分 · 三轮全错</b></span><span class="score">H-003：<b>2 分 · 答对一半</b></span><span class="score">VH-001：<b>0 分 · 拒答</b></span></div></div>
-      <div class="row"><div class="row-top"><span class="row-rank">第 7 名</span><span class="row-name">ChatGPT-6-luna(深度思考)</span><span class="row-total">6 分</span></div><div class="row-scores"><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>2 分 · 未拿额外加分</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>0 分 · 三轮全错</b></span><span class="score">H-003：<b>0 分 · 三轮全错</b></span><span class="score">VH-001：<b>尚未挑战</b></span></div></div>
+      <div class="row top1"><div class="row-top"><span class="row-rank">1</span><span class="row-name">Gemini 4 Carbon</span><span class="row-total">21<small>分</small></span></div><div class="mx"><span class="full" title="B-001 · 1 分"><i>B</i><b>1</b></span><span class="full" title="R-001 · 2 分"><i>R</i><b>2</b></span><span class="full" title="W-001 · 3 分"><i>W</i><b>3</b></span><span class="full hellc" title="H-001 · 5 分 · 第 1 轮答对"><i>H1</i><b>5</b></span><span class="none hellc" title="H-002 · 未挑战"><i>H2</i><b>–</b></span><span class="full hellc" title="H-003 · 5 分 · 第 1 轮答对"><i>H3</i><b>5</b></span><span class="full abyssc" title="VH-001 · 5 分 · 一次答对"><i>VH</i><b>5</b></span></div></div>
+      <div class="row top2"><div class="row-top"><span class="row-rank">2</span><span class="row-name">pickle</span><span class="row-total">19<small>分</small></span></div><div class="mx"><span class="full" title="B-001 · 1 分"><i>B</i><b>1</b></span><span class="zero" title="R-001 · 0 分"><i>R</i><b>0</b></span><span class="full" title="W-001 · 3 分"><i>W</i><b>3</b></span><span class="full hellc" title="H-001 · 5 分 · 第 1 轮答对"><i>H1</i><b>5</b></span><span class="full hellc" title="H-002 · 5 分 · 第 1 轮答对"><i>H2</i><b>5</b></span><span class="full hellc" title="H-003 · 5 分 · 第 1 轮答对"><i>H3</i><b>5</b></span><span class="none abyssc" title="VH-001 · 尚未挑战"><i>VH</i><b>–</b></span></div></div>
+      <div class="row top3"><div class="row-top"><span class="row-rank">3</span><span class="row-name">豆包 Free Plan</span><span class="row-total">16<small>分</small></span></div><div class="mx"><span class="full" title="B-001 · 1 分"><i>B</i><b>1</b></span><span class="full" title="R-001 · 2 分 · 最终答对"><i>R</i><b>2</b></span><span class="full" title="W-001 · 3 分"><i>W</i><b>3</b></span><span class="full hellc" title="H-001 · 5 分 · 第 1 轮答对"><i>H1</i><b>5</b></span><span class="none hellc" title="H-002 · 未挑战"><i>H2</i><b>–</b></span><span class="full hellc" title="H-003 · 5 分 · 第 1 轮答对"><i>H3</i><b>5</b></span><span class="none abyssc" title="VH-001 · 尚未挑战"><i>VH</i><b>–</b></span></div></div>
+      <div class="row top3"><div class="row-top"><span class="row-rank">3</span><span class="row-name">Muse</span><span class="row-total">16<small>分</small></span></div><div class="mx"><span class="full" title="B-001 · 1 分"><i>B</i><b>1</b></span><span class="full" title="R-001 · 2 分 · 慢答后全对"><i>R</i><b>2</b></span><span class="full" title="W-001 · 3 分 · 慢答后全对"><i>W</i><b>3</b></span><span class="full hellc" title="H-001 · 5 分 · 第 1 轮答对"><i>H1</i><b>5</b></span><span class="none hellc" title="H-002 · 未挑战"><i>H2</i><b>–</b></span><span class="full hellc" title="H-003 · 5 分 · 第 1 轮答对"><i>H3</i><b>5</b></span><span class="none abyssc" title="VH-001 · 尚未挑战"><i>VH</i><b>–</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">4</span><span class="row-name">Gemini 4 Hydrogen</span><span class="row-total">15<small>分</small></span></div><div class="mx"><span class="full" title="B-001 · 1 分"><i>B</i><b>1</b></span><span class="half" title="R-001 · 1 分 · 答对一半"><i>R</i><b>1</b></span><span class="full" title="W-001 · 3 分"><i>W</i><b>3</b></span><span class="zero hellc" title="H-001 · 0 分 · 三轮全错"><i>H1</i><b>0</b></span><span class="full hellc" title="H-002 · 5 分 · 第 1 轮答对"><i>H2</i><b>5</b></span><span class="full hellc" title="H-003 · 5 分 · 第 1 轮答对"><i>H3</i><b>5</b></span><span class="none abyssc" title="VH-001 · 尚未挑战"><i>VH</i><b>–</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">5</span><span class="row-name">Gemini 4 Argon(高)</span><span class="row-total">12<small>分</small></span></div><div class="mx"><span class="full" title="B-001 · 1 分"><i>B</i><b>1</b></span><span class="half" title="R-001 · 1 分 · 答对一半"><i>R</i><b>1</b></span><span class="full" title="W-001 · 3 分 · 秒答"><i>W</i><b>3</b></span><span class="full hellc" title="H-001 · 5 分 · 第 1 轮答对"><i>H1</i><b>5</b></span><span class="none hellc" title="H-002 · 未挑战"><i>H2</i><b>–</b></span><span class="half hellc" title="H-003 · 2 分 · 答对一半"><i>H3</i><b>2</b></span><span class="none abyssc" title="VH-001 · 尚未挑战"><i>VH</i><b>–</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">6</span><span class="row-name">Claude Opus 5.5</span><span class="row-total">8<small>分</small></span></div><div class="mx"><span class="full" title="B-001 · 1 分"><i>B</i><b>1</b></span><span class="full" title="R-001 · 2 分 · 秒答"><i>R</i><b>2</b></span><span class="full" title="W-001 · 3 分 · 秒答"><i>W</i><b>3</b></span><span class="zero hellc" title="H-001 · 0 分 · 三轮全错"><i>H1</i><b>0</b></span><span class="none hellc" title="H-002 · 未挑战"><i>H2</i><b>–</b></span><span class="half hellc" title="H-003 · 2 分 · 答对一半"><i>H3</i><b>2</b></span><span class="refuse abyssc" title="VH-001 · 0 分 · 拒答"><i>VH</i><b>0</b></span></div></div>
+      <div class="row"><div class="row-top"><span class="row-rank">7</span><span class="row-name">ChatGPT-6-luna(深度思考)</span><span class="row-total">6<small>分</small></span></div><div class="mx"><span class="full" title="B-001 · 1 分"><i>B</i><b>1</b></span><span class="full" title="R-001 · 2 分 · 未拿额外加分"><i>R</i><b>2</b></span><span class="full" title="W-001 · 3 分"><i>W</i><b>3</b></span><span class="zero hellc" title="H-001 · 0 分 · 三轮全错"><i>H1</i><b>0</b></span><span class="none hellc" title="H-002 · 未挑战"><i>H2</i><b>–</b></span><span class="zero hellc" title="H-003 · 0 分 · 三轮全错"><i>H3</i><b>0</b></span><span class="none abyssc" title="VH-001 · 尚未挑战"><i>VH</i><b>–</b></span></div></div>
       <div class="cutline"><svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg> 淘汰线 · 低于 5 分不再挑战后续炼狱题 <svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg></div>
-      <div class="row doomed"><div class="row-top"><span class="row-rank">第 8 名</span><span class="row-name">GLM-5.3</span><span class="row-total">4 分</span></div><div class="row-scores"><span class="pill out"><svg class="ico" aria-hidden="true"><use href="#i-circle-slash"/></svg> 淘汰 · 不再挑战后续炼狱题</span><span class="score">B-001：<b>0 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>3 分</b></span><span class="score">H-001：<b>0 分 · 第 2 轮放弃</b></span></div></div>
-      <div class="row doomed"><div class="row-top"><span class="row-rank">第 9 名</span><span class="row-name">DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="row-total">2 分</span></div><div class="row-scores"><span class="pill out"><svg class="ico" aria-hidden="true"><use href="#i-circle-slash"/></svg> 淘汰 · 不再挑战后续炼狱题</span><span class="score">B-001：<b>1 分</b></span><span class="score">R-001：<b>0 分</b></span><span class="score">W-001：<b>0 分</b></span><span class="score">H-001：<b>1 分 · 第 3 轮答对</b></span></div></div>
-      <div class="row doomed"><div class="row-top"><span class="row-rank">第 10 名</span><span class="row-name">Claude Haiku 5.5(极高)</span><span class="row-total">1 分</span></div><div class="row-scores"><span class="pill out"><svg class="ico" aria-hidden="true"><use href="#i-circle-slash"/></svg> 淘汰 · 不再挑战后续炼狱题</span><span class="score">B-001：<b>0 分</b></span><span class="score">R-001：<b>1 分 · 答对一半</b></span><span class="score">W-001：<b>0 分</b></span><span class="score">H-001：<b>因 KYC 验证暂未挑战</b></span></div></div>
+      <div class="row doomed"><div class="row-top"><span class="row-rank">8</span><span class="row-name">GLM-5.3</span><span class="row-total">4<small>分</small></span></div><div class="mx"><span class="zero" title="B-001 · 0 分"><i>B</i><b>0</b></span><span class="half" title="R-001 · 1 分 · 答对一半"><i>R</i><b>1</b></span><span class="full" title="W-001 · 3 分"><i>W</i><b>3</b></span><span class="zero hellc" title="H-001 · 0 分 · 第 2 轮放弃"><i>H1</i><b>0</b></span><span class="none hellc" title="H-002 · 未挑战"><i>H2</i><b>–</b></span><span class="none hellc" title="H-003 · 未挑战"><i>H3</i><b>–</b></span><span class="none abyssc" title="VH-001 · 未挑战"><i>VH</i><b>–</b></span></div><div class="row-flag"><svg class="ico" aria-hidden="true"><use href="#i-circle-slash"/></svg> 淘汰 · 不再挑战后续炼狱题</div></div>
+      <div class="row doomed"><div class="row-top"><span class="row-rank">9</span><span class="row-name">DeepSeek V4 Pro(深度思考+联网搜索)</span><span class="row-total">2<small>分</small></span></div><div class="mx"><span class="full" title="B-001 · 1 分"><i>B</i><b>1</b></span><span class="zero" title="R-001 · 0 分"><i>R</i><b>0</b></span><span class="zero" title="W-001 · 0 分"><i>W</i><b>0</b></span><span class="full hellc" title="H-001 · 1 分 · 第 3 轮答对"><i>H1</i><b>1</b></span><span class="none hellc" title="H-002 · 未挑战"><i>H2</i><b>–</b></span><span class="none hellc" title="H-003 · 未挑战"><i>H3</i><b>–</b></span><span class="none abyssc" title="VH-001 · 未挑战"><i>VH</i><b>–</b></span></div><div class="row-flag"><svg class="ico" aria-hidden="true"><use href="#i-circle-slash"/></svg> 淘汰 · 不再挑战后续炼狱题</div></div>
+      <div class="row doomed"><div class="row-top"><span class="row-rank">10</span><span class="row-name">Claude Haiku 5.5(极高)</span><span class="row-total">1<small>分</small></span></div><div class="mx"><span class="zero" title="B-001 · 0 分"><i>B</i><b>0</b></span><span class="half" title="R-001 · 1 分 · 答对一半"><i>R</i><b>1</b></span><span class="zero" title="W-001 · 0 分"><i>W</i><b>0</b></span><span class="none hellc" title="H-001 · 因 KYC 验证暂未挑战"><i>H1</i><b>–</b></span><span class="none hellc" title="H-002 · 未挑战"><i>H2</i><b>–</b></span><span class="none hellc" title="H-003 · 未挑战"><i>H3</i><b>–</b></span><span class="none abyssc" title="VH-001 · 未挑战"><i>VH</i><b>–</b></span></div><div class="row-flag"><svg class="ico" aria-hidden="true"><use href="#i-circle-slash"/></svg> 淘汰 · 不再挑战后续炼狱题</div></div>
     </div>
-    <p class="small">本轮满分 26 分（B-001 1 分 + R-001 2 分 + W-001 3 分 + H-001 最高 5 分 + H-002 最高 5 分 + H-003 最高 5 分 + VH-001 最高 5 分）。H-001、H-003 已完成测试并计入总分。H-002 已开测并计入总分，目前 Gemini 4 Hydrogen、pickle 已测过，淘汰线以上的其余选手尚未挑战。VH-001 已开测并计入总分，目前 Gemini 4 Carbon 一次答对、Claude Opus 5.5 拒答，淘汰线以上的其余选手尚未挑战。排名按分数段算：21 分第 1 名，19 分第 2 名，16 分第 3 名，15 分第 4 名，12 分第 5 名，8 分第 6 名，6 分第 7 名，4 分第 8 名，2 分第 9 名，1 分第 10 名，不按人数顺延。低于 5 分的选手仍留在本榜，只是不再挑战后面的炼狱题，也不可挑战无间地狱。Claude Haiku 5.5(极高) 因试用 Pro 时触发 KYC 验证，暂未挑战 H-001，目前 1 分，位于淘汰线以下。</p>
+    <details class="answer"><summary>计分与排名说明</summary>本轮满分 26 分（B-001 1 分 + R-001 2 分 + W-001 3 分 + H-001 最高 5 分 + H-002 最高 5 分 + H-003 最高 5 分 + VH-001 最高 5 分）。H-001、H-003 已完成测试并计入总分。H-002 已开测并计入总分，目前 Gemini 4 Hydrogen、pickle 已测过，淘汰线以上的其余选手尚未挑战。VH-001 已开测并计入总分，目前 Gemini 4 Carbon 一次答对、Claude Opus 5.5 拒答，淘汰线以上的其余选手尚未挑战。排名按分数段算：21 分第 1 名，19 分第 2 名，16 分第 3 名，15 分第 4 名，12 分第 5 名，8 分第 6 名，6 分第 7 名，4 分第 8 名，2 分第 9 名，1 分第 10 名，不按人数顺延。低于 5 分的选手仍留在本榜，只是不再挑战后面的炼狱题，也不可挑战无间地狱。Claude Haiku 5.5(极高) 因试用 Pro 时触发 KYC 验证，暂未挑战 H-001，目前 1 分，位于淘汰线以下。</details>
   </section>
 
   <section class="panel" id="panel-rules">
