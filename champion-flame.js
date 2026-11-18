@@ -212,7 +212,7 @@
   }
 
   function shouldSchedule(s) {
-    return !!(s.canvasOk && !s.userPaused && !s.reducedMotion && s.panelActive && s.inView && !s.documentHidden);
+    return !!(s.canvasOk && !s.reducedMotion && s.panelActive && s.inView && !s.documentHidden);
   }
 
   function stepEmbers(embers, t, dt) {
@@ -277,14 +277,12 @@
     var layer = row.querySelector('.champion-fire');
     var canvas = row.querySelector('.champion-fire-canvas');
     var fallback = row.querySelector('.champion-fire-static');
-    var toggle = row.querySelector('.champion-fire-toggle');
     var panel = document.getElementById('panel-players');
     if (!layer) return;
 
     var reducedMq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
     var state = {
       canvasOk: false,
-      userPaused: false,
       reducedMotion: !!(reducedMq && reducedMq.matches),
       panelActive: !!(panel && panel.classList.contains('active')),
       inView: false,
@@ -306,7 +304,6 @@
     function showFallback() {
       if (canvas) canvas.hidden = true;
       if (fallback) fallback.hidden = false;
-      if (toggle) toggle.hidden = true;
     }
 
     function showCanvas() {
@@ -375,20 +372,7 @@
       if (stepped) paint(time);
     }
 
-    function syncToggle() {
-      if (!toggle) return;
-      var hide = !state.canvasOk || state.reducedMotion;
-      toggle.hidden = hide;
-      if (hide) return;
-      var paused = state.userPaused;
-      toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
-      toggle.setAttribute('aria-label', paused ? '恢复火焰' : '暂停火焰');
-      toggle.setAttribute('title', paused ? '恢复火焰' : '暂停火焰');
-      toggle.textContent = paused ? '恢复' : '暂停';
-    }
-
     function applyMode() {
-      syncToggle();
       if (!state.canvasOk) {
         stopLoop();
         showFallback();
@@ -400,11 +384,6 @@
         stopLoop();
         embers = makeEmbers();
         paint(STATIC_TIME);
-        return;
-      }
-      if (state.userPaused) {
-        stopLoop();
-        if (!image) paint(time || STATIC_TIME);
         return;
       }
       if (shouldSchedule(state)) {
@@ -435,7 +414,6 @@
         state.canvasOk = false;
         stopLoop();
         showFallback();
-        syncToggle();
       });
       canvas.addEventListener('contextrestored', function () {
         try {
@@ -450,14 +428,6 @@
 
     initCanvas();
     applyMode();
-
-    if (toggle) {
-      toggle.addEventListener('click', function () {
-        if (!state.canvasOk || state.reducedMotion) return;
-        state.userPaused = !state.userPaused;
-        applyMode();
-      });
-    }
 
     if (reducedMq) {
       var onReduce = function () {
